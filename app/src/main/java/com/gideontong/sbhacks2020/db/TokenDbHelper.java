@@ -1,4 +1,6 @@
 package com.gideontong.sbhacks2020.db;
 
-public class TokenDbHelper {
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class TokenDbHelper extends SQLiteOpenHelper {
 }
