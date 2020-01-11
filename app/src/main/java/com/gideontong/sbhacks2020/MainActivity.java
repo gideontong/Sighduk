@@ -10,7 +10,6 @@ import android.os.Bundle;
 import com.gideontong.sbhacks2020.db.ShowContract;
 import com.gideontong.sbhacks2020.db.ShowDbHelper;
 import com.gideontong.sbhacks2020.db.TokenDbHelper;
-import com.gideontong.sbhacks2020.search.Networking;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,14 +26,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     private static final String TAG = "MainActivity";
-    private ShowDbHelper mHelper;
-    private ListView mShowListView;
-    private ArrayAdapter<String> mAdapter;
 
+    private ShowDbHelper mHelper;
+    private ArrayAdapter<String> mAdapter;
     private TokenDbHelper tHelper;
 
+    private ListView mShowListView;
     private Button testSearchButton;
 
     @Override
@@ -45,10 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new ShowDbHelper(this);
         tHelper = new TokenDbHelper(this);
 
-        // Networking networking = new Networking(tHelper);
-
         testSearchButton = findViewById(R.id.searchBtn);
-
         testSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mShowListView = (ListView) findViewById(R.id.list_show);
+        mShowListView = findViewById(R.id.list_show);
         updateUI();
     }
 
@@ -116,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String show = String.valueOf(taskEditText.getText());
-                                // Log.d(TAG, "Will add task with name " + show);
 
                                 SQLiteDatabase db = mHelper.getWritableDatabase();
                                 ContentValues values = new ContentValues();
@@ -133,7 +127,6 @@ public class MainActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
-
 
                 return true;
 

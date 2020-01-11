@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gideontong.sbhacks2020.db.ShowContract;
 import com.gideontong.sbhacks2020.db.ShowDbHelper;
-import com.gideontong.sbhacks2020.search.Networking;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -27,7 +26,6 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
