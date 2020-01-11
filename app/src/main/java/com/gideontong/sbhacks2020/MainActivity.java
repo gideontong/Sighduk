@@ -123,5 +123,7 @@ public class MainActivity extends AppCompatActivity {
     public void deleteShow(View view) {
         View parent = (View) view.getParent();
         TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
+        String show = String.valueOf(showTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
     }
 }
