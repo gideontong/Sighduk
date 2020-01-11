@@ -88,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
             // Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
             // urlCursor.moveToNext();
             String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
+            new DownloadImage().execute(grabUrl);
             // urlCursor.moveToNext();
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
