@@ -1,5 +1,6 @@
 package com.gideontong.sbhacks2020;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +17,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -24,6 +29,8 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> rAdapter;
     private ListView rShowListView;
+
+    String export = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +67,7 @@ public class SearchActivity extends AppCompatActivity {
         // JSONObject jo;
 
         ArrayList<String> resultsList = new ArrayList<>();
-        
+
         try {
             Object obj = new JSONParser().parse(string);
             JSONObject jo = (JSONObject) obj;
@@ -88,6 +95,87 @@ public class SearchActivity extends AppCompatActivity {
             rAdapter.clear();
             rAdapter.addAll(resultsList);
             rAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private class BackgroundSearch extends AsyncTask<String, Void, String> {
+        private static final String TAG = "BackgroundSearch";
+        private static final String DOMAIN = "https://api.thetvdb.com";
+        private static final String TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzkzNDE1NTgsImlkIjoiUmlkZ2xpbmdDYXNpbm8iLCJvcmlnX2lhdCI6MTU3ODczNjc1OH0.mMGjnkr8b052bOqk0x0hZy8O1HlRhqCUbMVaVV05OqjsLqW44p3FvufU8yROaX2AlItnT-kVXQrupNmv26ybSw2gUJGDLLfp3W6tXliZKFZbzrcG5yCeqeyClM3o1RguyMVFqjmO7iOt44r7oiJNb0Ul3vtEIR1GpFWrjEefvkkGCdLHMRL7_VD0L5R2gnkNi3fsbsK4Bp4HGYRXAiy5cU4hru6iDADZVv1bL1pJFUbbi2cBqI1ZmKrPCdviniYqIOSoHUHlGMNhVgBxYS_LCX7_eh_3aEREX4nn7RPBBVf-nmt8d6iKs8Dmc47hpnnOPtXaekkeKbbzPqtfuL3YEQ";
+
+        @Override
+        protected String doInBackground(String... queries) {
+            Log.d(TAG, "Started background download of search query " + queries[0]);
+            URL route;
+            try {
+                route = new URL(DOMAIN + "/search/series" + "?name=" + queries[0]);
+            } catch (Exception e) {
+                route = null;
+            }
+            String readLine = null;
+            HttpURLConnection connection;
+            try {
+                connection = (HttpURLConnection) route.openConnection();
+            } catch (Exception e) {
+                connection = null;
+            }
+            Log.d(TAG, "Hello a connection was opened");
+
+            connection.setConnectTimeout(10 * 1000);
+            connection.setReadTimeout(10 * 1000);
+            try {
+                connection.setRequestMethod("GET");
+            } catch (Exception e) {
+                Log.d(TAG, "Exception occurred with request method " + e);
+                // do nothing
+            }
+            connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
+            // connection.setRequestProperty("name", queries[0]); // set userId its a sample here
+            Log.d(TAG, "I set some cool stuff");
+
+            int responseCode;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (Exception e) {
+                Log.d(TAG, "A exception was generated with exception " + e);
+                responseCode = -1;
+            }
+            Log.d(TAG, "Response code " + responseCode);
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                BufferedReader in;
+                try {
+                    in = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
+                } catch (Exception e) {
+                    in = null;
+                }
+                StringBuffer response = new StringBuffer();
+                try {
+                    while ((readLine = in.readLine()) != null) {
+                        response.append(readLine);
+                    }
+                } catch (Exception e) {
+                    // do nothing
+                }
+                try {
+                    in.close();
+                } catch (Exception e) {
+                    // do nothing
+                }
+
+                Log.d(TAG, "Result: " + response.toString());
+                return response.toString();
+            } else {
+                Log.d(TAG, "GET request failed with response code " + responseCode);
+                return null;
+            }
+        }
+
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(String result) {
+            export = result;
+            // new SearchActivity().searchCallback(result);
         }
     }
 }
