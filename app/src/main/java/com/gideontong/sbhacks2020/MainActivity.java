@@ -125,5 +125,10 @@ public class MainActivity extends AppCompatActivity {
         TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
         String show = String.valueOf(showTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        db.delete(ShowContract.ShowEntry.TABLE,
+                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
+                new String[]{show});
+        db.close();
     }
 }
