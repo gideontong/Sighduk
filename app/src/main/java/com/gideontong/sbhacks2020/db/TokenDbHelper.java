@@ -12,7 +12,7 @@ public class TokenDbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String createTable = "CREATE TABLE " + TokenData.TokenEntry.TABLE + " ( " +
-                TokenData.TokenEntry._ID = " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                TokenData.TokenEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TokenData.TokenEntry.COL_TOKEN_TITLE + " TEXT NOT NULL);";
 
         db.execSQL(createTable);
