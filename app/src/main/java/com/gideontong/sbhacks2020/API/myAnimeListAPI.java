@@ -158,12 +158,15 @@ public class myAnimeListAPI {
                 ArrayList<String> synopsis = new ArrayList<>();
                 ArrayList<Long> episodes = new ArrayList<>();
                 ArrayList<String> score = new ArrayList<>();
-                System.out.println(results);
                 for (int i = 0; i < results.size(); i++) {
                     title.add(i, ((JSONObject) results.toArray()[i]).get("title").toString());
                     image_url.add(i, ((JSONObject) results.toArray()[i]).get("image_url").toString());
                     url.add(i, ((JSONObject) results.toArray()[i]).get("url").toString());
-                    synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
+                    if ((((JSONObject) results.toArray()[i])).get("synopsis") != null){
+                        synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
+                    } else {
+                        synopsis.add(i, null);
+                    }
                     episodes.add(i, ((Long) ((JSONObject) results.toArray()[i]).get("episodes")));
                     if ((((JSONObject) results.toArray()[i]).get("score")) != null) {
                         score.add(i, (((JSONObject) results.toArray()[i]).get("score")).toString());
@@ -171,21 +174,22 @@ public class myAnimeListAPI {
                         score.add(i, null);
                     }
                 }
+                System.out.println(results);
                 return json;
             }
             else if (type == "people") {
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
-                JSONArray results = ((JSONArray)json.get("results"));
-                ArrayList<String> name = new ArrayList<>();
+                JSONArray results = ((JSONArray)json.get("top"));
+                ArrayList<String> title = new ArrayList<>();
                 ArrayList<String> image_url = new ArrayList<>();
                 ArrayList<String> url = new ArrayList<>();
 
                 for(int i = 0; i < results.size(); i++){
-                    name.add(i, ((JSONObject)results.toArray()[i]).get("name").toString());
+                    title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
                     image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
                     url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
                 }
-                System.out.println(name);
+                System.out.println(title);
                 System.out.println(image_url);
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
@@ -194,13 +198,14 @@ public class myAnimeListAPI {
             }
             else if (type == "characters"){
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
-                JSONArray results = ((JSONArray)json.get("results"));
+                System.out.println(json);
+                JSONArray results = ((JSONArray)json.get("top"));
                 ArrayList<String> title = new ArrayList<>();
                 ArrayList<String> image_url = new ArrayList<>();
                 ArrayList<String> url = new ArrayList<>();
 
                 for(int i = 0; i < results.size(); i++){
-                    title.add(i, ((JSONObject)results.toArray()[i]).get("name").toString());
+                    title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
                     image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
                     url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
                 }
@@ -290,17 +295,17 @@ public class myAnimeListAPI {
             }
             else if (type == "people") {
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
-                JSONArray results = ((JSONArray)json.get("results"));
-                ArrayList<String> name = new ArrayList<>();
+                JSONArray results = ((JSONArray)json.get("top"));
+                ArrayList<String> title = new ArrayList<>();
                 ArrayList<String> image_url = new ArrayList<>();
                 ArrayList<String> url = new ArrayList<>();
 
                 for(int i = 0; i < results.size(); i++){
-                    name.add(i, ((JSONObject)results.toArray()[i]).get("name").toString());
+                    title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
                     image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
                     url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
                 }
-                System.out.println(name);
+                System.out.println(title);
                 System.out.println(image_url);
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
