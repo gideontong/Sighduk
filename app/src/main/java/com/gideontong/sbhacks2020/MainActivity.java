@@ -194,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            ImageView imageView = (ImageView) findViewById(ID OF YOUR IMAGE VIEW);
+            ImageView imageView = (ImageView) findViewById(R.id.show_image);
             imageView.setImageBitmap(result);
         }
     }
