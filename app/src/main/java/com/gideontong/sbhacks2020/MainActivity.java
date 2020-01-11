@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TokenDbHelper tHelper;
 
+    private Button testSearchButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +46,16 @@ public class MainActivity extends AppCompatActivity {
         tHelper = new TokenDbHelper(this);
 
         Networking networking = new Networking(tHelper);
+
+        testSearchButton = findViewById(R.id.searchBtn);
+
+        testSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, search_item.class);
+                startActivity(intent);
+            }
+        });
 
         mShowListView = (ListView) findViewById(R.id.list_show);
         updateUI();
