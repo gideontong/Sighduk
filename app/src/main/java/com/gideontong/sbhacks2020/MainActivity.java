@@ -2,6 +2,7 @@ package com.gideontong.sbhacks2020;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -122,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
 
 
                 return true;
+
+            case R.id.action_search:
+                Intent intent = new Intent(this, SearchActivity.class);
 
             default:
                 return super.onOptionsItemSelected(item);
