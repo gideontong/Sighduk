@@ -8,4 +8,13 @@ public class ShowDbHelper extends SQLiteOpenHelper {
     public ShowDbHelper(Context context) {
         super(context, ShowContract.DB_NAME, null, ShowContract.DB_VERSION);
     }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        String createTable = "CREATE TABLE " + ShowContract.ShowEntry.TABLE + " ( " +
+                ShowContract.ShowEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                ShowContract.ShowEntry.COL_TASK_TITLE + " TEXT NOT NULL);";
+
+        db.execSQL(createTable);
+    }
 }
