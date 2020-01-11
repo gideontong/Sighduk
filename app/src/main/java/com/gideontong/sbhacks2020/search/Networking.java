@@ -15,6 +15,7 @@ public class Networking {
 
     public static void Login() throws IOException {
         URL login = new URL(DOMAIN + "/login");
+        URL keepAlive = new URL(DOMAIN + "/refresh_token");
     }
 
     public static void GetRequest(String Uri) throws IOException {
