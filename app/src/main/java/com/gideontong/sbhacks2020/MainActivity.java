@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
+        mTaskListView = (ListView) findViewById(R.id.list_show);
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
