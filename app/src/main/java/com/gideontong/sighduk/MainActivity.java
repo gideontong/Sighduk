@@ -36,8 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ShowDbHelper mHelper;
-    private ArrayAdapter<String> mAdapter;
-    private TokenDbHelper tHelper;
+    private ArrayAdapter<EntryData> mAdapter;
+    // private TokenDbHelper tHelper;
 
     private ListView mShowListView;
     private Button testSearchButton;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
-        tHelper = new TokenDbHelper(this);
+        // tHelper = new TokenDbHelper(this);
 
         testSearchButton = findViewById(R.id.searchBtn);
         testSearchButton.setOnClickListener(new View.OnClickListener() {
