@@ -2,6 +2,7 @@ package com.gideontong.sighduk;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 class HomeAdapter implements ListAdapter {
+    public static final String TAG = "HomeAdapter";
+
     ArrayList<EntryData> arrayList;
     Context context;
 
     public HomeAdapter(Context context, ArrayList<EntryData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
+
+        Log.d(TAG, "Setting home adapter with an ArrayList");
     }
 
     @Override
