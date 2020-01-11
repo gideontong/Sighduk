@@ -1,15 +1,18 @@
-package com.gideontong.sbhacks2020;
+package com.gideontong.sighduk;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.gideontong.sbhacks2020.db.ShowContract;
-import com.gideontong.sbhacks2020.db.ShowDbHelper;
-import com.gideontong.sbhacks2020.db.TokenDbHelper;
+import com.gideontong.sighduk.db.ShowContract;
+import com.gideontong.sighduk.db.ShowDbHelper;
+import com.gideontong.sighduk.db.TokenDbHelper;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,9 +23,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -34,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mShowListView;
     private Button testSearchButton;
+
+    ArrayList<Bitmap> picList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,14 +74,25 @@ public class MainActivity extends AppCompatActivity {
     // A function that updates the UI with new database updates
     private void updateUI() {
         ArrayList<String> showList = new ArrayList<>();
+        picList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
                 new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
                 null, null, null, null, null);
+        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
+                null, null, null, null, null);
         while(cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
             showList.add(cursor.getString(idx));
+            urlCursor.moveToNext();
+            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+            // Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
+            // urlCursor.moveToNext();
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
+            new DownloadImage().execute(grabUrl);
+            // urlCursor.moveToNext();
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
 
@@ -157,5 +177,29 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
         updateUI();
+    }
+
+    private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                URL url = new URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            }catch (Exception e){
+                Log.d(TAG,e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            ImageView imageView = (ImageView) findViewById(R.id.show_image);
+            imageView.setImageBitmap(result);
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.gideontong.sbhacks2020.API;
+package com.gideontong.sighduk.API;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -7,7 +7,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

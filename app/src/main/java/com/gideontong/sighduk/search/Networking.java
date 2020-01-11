@@ -1,15 +1,9 @@
-package com.gideontong.sbhacks2020.search;
+package com.gideontong.sighduk.search;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import android.os.AsyncTask;
-import android.util.Log;
 
-import com.gideontong.sbhacks2020.SearchActivity;
-import com.gideontong.sbhacks2020.db.TokenDbHelper;
+import com.gideontong.sighduk.db.TokenDbHelper;
 
 public class Networking {
     private static final String TAG = "AppNetworking";

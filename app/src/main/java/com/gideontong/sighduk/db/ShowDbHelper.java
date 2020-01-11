@@ -1,4 +1,4 @@
-package com.gideontong.sbhacks2020.db;
+package com.gideontong.sighduk.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
