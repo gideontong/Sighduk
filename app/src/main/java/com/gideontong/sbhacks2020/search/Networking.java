@@ -36,30 +36,59 @@ public class Networking {
 
     }
 
-    private class BackgroundSearch extends AsyncTask<URL, Integer, String> {
-        private static final String TAG = "AppNetworking/BackgroundSearch";
+    private class BackgroundSearch extends AsyncTask<String, Integer, String> {
+        private static final String TAG = "BackgroundSearch";
         private static final String DOMAIN = "https://api.thetvdb.com";
         private static final String TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzkzNDE1NTgsImlkIjoiUmlkZ2xpbmdDYXNpbm8iLCJvcmlnX2lhdCI6MTU3ODczNjc1OH0.mMGjnkr8b052bOqk0x0hZy8O1HlRhqCUbMVaVV05OqjsLqW44p3FvufU8yROaX2AlItnT-kVXQrupNmv26ybSw2gUJGDLLfp3W6tXliZKFZbzrcG5yCeqeyClM3o1RguyMVFqjmO7iOt44r7oiJNb0Ul3vtEIR1GpFWrjEefvkkGCdLHMRL7_VD0L5R2gnkNi3fsbsK4Bp4HGYRXAiy5cU4hru6iDADZVv1bL1pJFUbbi2cBqI1ZmKrPCdviniYqIOSoHUHlGMNhVgBxYS_LCX7_eh_3aEREX4nn7RPBBVf-nmt8d6iKs8Dmc47hpnnOPtXaekkeKbbzPqtfuL3YEQ";
 
-        protected String doInBackground(URL... urls) {
-            URL route = new URL(DOMAIN + "/search/series");
+        protected String doInBackground(String... queries) {
+            URL route;
+            try {
+                route = new URL(DOMAIN + "/search/series");
+            } catch (Exception e) {
+                route = null;
+            }
             String readLine = null;
-            HttpURLConnection connection = (HttpURLConnection) route.openConnection();
+            HttpURLConnection connection;
+            try {
+                connection = (HttpURLConnection) route.openConnection();
+            } catch (Exception e) {
+                connection = null;
+            }
             Log.d(TAG, "Hello a connection was opened");
 
             connection.setConnectTimeout(10 * 1000);
             connection.setReadTimeout(10 * 1000);
-            connection.setRequestMethod("GET");
+            try {
+                connection.setRequestMethod("GET");
+            } catch (Exception e) {
+                // do nothing
+            }
             connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
-            connection.setRequestProperty("name", query); // set userId its a sample here
+            connection.setRequestProperty("name", queries[0]); // set userId its a sample here
             Log.d(TAG, "I set some cool stuff");
 
-            int responseCode = connection.getResponseCode();
+            int responseCode;
+            try {
+                responseCode = connection.getResponseCode();
+            } catch (Exception e) {
+                responseCode = -1;
+            }
             Log.d(TAG, "Reasponse code " + responseCode);
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(connection.getInputStream()));
+                BufferedReader in;
+                try {
+                    in = new BufferedReader(
+                            new InputStreamReader(connection.getInputStream()));
+                } catch (Exception e) {
+                    in = null;
+                }
                 StringBuffer response = new StringBuffer();
+                try {
+                    readLine = in.readLine();
+                } catch (Exception e) {
+                    // do nothing
+                }
                 while ((readLine = in.readLine()) != null) {
                     response.append(readLine);
                 }
@@ -75,12 +104,12 @@ public class Networking {
 
         // This is called each time you call publishProgress()
         protected void onProgressUpdate(Integer... progress) {
-            setProgressPercent(progress[0]);
+            // setProgressPercent(progress[0]);
         }
 
         // This is called when doInBackground() is finished
         protected void onPostExecute(Long result) {
-            showNotification("Downloaded " + result + " bytes");
+            // showNotification("Downloaded " + result + " bytes");
         }
     }
 
