@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
+import com.gideontong.sbhacks2020.db.ShowContract;
 import com.gideontong.sbhacks2020.db.ShowDbHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -64,11 +65,13 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                String task = String.valueOf(taskEditText.getText());
-                                Log.d(TAG, "Will add task with name " + task);
+                                String show = String.valueOf(taskEditText.getText());
+                                Log.d(TAG, "Will add task with name " + show);
 
                                 SQLiteDatabase db = mHelper.getWritableDatabase();
                                 ContentValues values = new ContentValues();
+
+                                values.put(ShowContract.ShowEntry.COL_TASK_TITLE, show);
                             }
                         })
                         .setNegativeButton("Cancel", null)
