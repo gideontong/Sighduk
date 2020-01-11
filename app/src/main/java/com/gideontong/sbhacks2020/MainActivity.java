@@ -1,7 +1,10 @@
 package com.gideontong.sbhacks2020;
 
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import com.gideontong.sbhacks2020.db.ShowDbHelper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -17,6 +20,7 @@ import android.widget.EditText;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+    private ShowDbHelper mHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
