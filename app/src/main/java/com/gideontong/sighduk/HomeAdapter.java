@@ -8,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 class HomeAdapter implements ListAdapter {
@@ -59,7 +62,7 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        EntryData EntryData = arrayList.get(position);
+        EntryData entryData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             // convertView = layoutInflater.inflate(R.layout.list_show, null);
@@ -71,9 +74,9 @@ class HomeAdapter implements ListAdapter {
             TextView tittle = convertView.findViewById(R.id.title);
             // ImageView imag = convertView.findViewById(R.id.list_image);
             tittle.setText(EntryData.SubjectName);
-            /*Picasso.with(context)
-                    .load(subjectData.Image)
-                    .into(imag);*/
+            Picasso.with(context)
+                    .load(entryData.Image)
+                    .into(imag);
         }
         return convertView;
     }
