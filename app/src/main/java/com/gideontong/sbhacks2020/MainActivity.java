@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new ShowDbHelper(this);
         mShowListView = (ListView) findViewById(R.id.list_show);
+        updateUI();
     }
 
     // A function that updates the UI with new database updates
@@ -106,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
                         .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
+
+                updateUI();
 
                 return true;
 
