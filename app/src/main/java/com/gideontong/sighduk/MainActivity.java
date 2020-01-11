@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 return true;
 
             case R.id.searchBtn:
-                Intent searchIntent = new Intent(MainActivity.this, search_item.class);
+                Intent searchIntent = new Intent(MainActivity.this, LocalSearchActivity.class);
                 startActivity(searchIntent);
                 return true;
 
