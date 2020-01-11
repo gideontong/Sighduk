@@ -168,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
-    private class SendHttpRequestTask extends AsyncTask<String, Void, Bitmap> {
+    private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
         @Override
         protected Bitmap doInBackground(String... params) {
             try {
