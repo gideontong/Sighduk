@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +21,9 @@ import java.util.Iterator;
 
 public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
+
+    private ArrayAdapter<String> rAdapter;
+    private ListView rShowListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
