@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity {
             showList.add(cursor.getString(idx));
             urlCursor.moveToNext();
             int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
-            Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
+            // Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
             // urlCursor.moveToNext();
-            // String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
             // urlCursor.moveToNext();
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
@@ -166,5 +166,29 @@ public class MainActivity extends AppCompatActivity {
         db.close();
 
         updateUI();
+    }
+
+    private class SendHttpRequestTask extends AsyncTask<String, Void, Bitmap> {
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                URL url = new URL("http://xxx.xxx.xxx/image.jpg");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                Bitmap myBitmap = BitmapFactory.decodeStream(input);
+                return myBitmap;
+            }catch (Exception e){
+                Log.d(TAG,e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap result) {
+            ImageView imageView = (ImageView) findViewById(ID OF YOUR IMAGE VIEW);
+            imageView.setImageBitmap(result);
+        }
     }
 }
