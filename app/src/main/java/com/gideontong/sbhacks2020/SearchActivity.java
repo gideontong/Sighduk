@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gideontong.sbhacks2020.search.Networking;
 
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
 
@@ -40,5 +43,16 @@ public class SearchActivity extends AppCompatActivity {
             String result = null;
         }
         Log.d(TAG, "EOL");
+    }
+
+    public void searchCallback(String string) {
+        Object obj;
+        JSONObject jo;
+        try {
+            obj = new JSONParser().parse(string);
+            jo = (JSONObject) obj;
+        } catch (Exception e) {
+            //do nothing
+        }
     }
 }

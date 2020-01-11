@@ -8,6 +8,7 @@ import java.net.URL;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.gideontong.sbhacks2020.SearchActivity;
 import com.gideontong.sbhacks2020.db.TokenDbHelper;
 
 public class Networking {
@@ -115,6 +116,7 @@ public class Networking {
         @Override
         protected void onPostExecute(String result) {
             export = result;
+            new SearchActivity().searchCallback(result);
         }
     }
 
