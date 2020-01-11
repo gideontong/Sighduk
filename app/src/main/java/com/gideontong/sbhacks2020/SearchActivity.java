@@ -52,9 +52,10 @@ public class SearchActivity extends AppCompatActivity {
         String query = String.valueOf(searchBox.getText());
         try {
             Log.d(TAG, "Searching " + query);
-            Networking test = new Networking();
-            String result = test.search(query);
-            Log.d(TAG, "Result was " + result);
+            // Networking test = new Networking();
+            // String result = test.search(query);
+            new BackgroundSearch().execute(query);
+            Log.d(TAG, "Result was " + export);
         } catch(Exception e) {
             Log.d(TAG, "We tried but we got " + e);
             String result = null;
@@ -82,6 +83,7 @@ public class SearchActivity extends AppCompatActivity {
                 resultsList.add(name);
             }
         } catch (Exception e) {
+            Log.d(TAG, "Failed to draw table " + e);
             //do nothing
         }
 
@@ -175,6 +177,7 @@ public class SearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             export = result;
+            searchCallback(result);
             // new SearchActivity().searchCallback(result);
         }
     }
