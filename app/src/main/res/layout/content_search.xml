@@ -19,7 +19,7 @@
             android:layout_width="217dp"
             android:layout_height="match_parent"
             android:ems="10"
-            android:hint="Hi friends"
+            android:hint="Search TVdb..."
             android:inputType="text"
             android:textSize="20sp" />
 
