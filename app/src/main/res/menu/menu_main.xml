@@ -4,6 +4,12 @@
     tools:context="com.gideontong.sighduk.MainActivity" >
 
     <item
+        android:id="@+id/searchBtn"
+        android:icon="@android:drawable/ic_menu_search"
+        android:title="Search Entries"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_search"
         android:icon="@android:drawable/ic_menu_add"
         android:title="Search"

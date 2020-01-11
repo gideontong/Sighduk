@@ -45,15 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new ShowDbHelper(this);
 
-        testSearchButton = findViewById(R.id.searchBtn);
-        testSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, search_item.class);
-                startActivity(intent);
-            }
-        });
-
         mShowListView = findViewById(R.id.list_show);
         updateUI();
     }
@@ -142,6 +133,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 Intent intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.searchBtn:
+                Intent searchIntent = new Intent(MainActivity.this, search_item.class);
+                startActivity(searchIntent);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
