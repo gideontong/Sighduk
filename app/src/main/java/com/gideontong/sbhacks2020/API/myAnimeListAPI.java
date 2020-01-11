@@ -21,7 +21,7 @@ public class myAnimeListAPI {
     private static HashMap<String, Integer> AnimeGenres = new HashMap<>();
     private static HashMap<String, Integer> MangaGenres = new HashMap<>();
 
-    public static JSONObject searchAnime(String animeName, int limit, int page) throws IOException, ParseException{
+    public static ArrayList<String> searchAnime(String animeName, int limit, int page) throws IOException, ParseException{
 
         if (animeName == null || animeName == "") return null;
         OkHttpClient client = new OkHttpClient();
@@ -64,11 +64,11 @@ public class myAnimeListAPI {
             System.out.println("-----------------------------------------------------------------------------------------");
             System.out.println(json);
 
-            return json;
+            return title;
         }
     }
 
-    public static JSONObject searchGenre(String genre, String type, int limit, int page) throws IOException, ParseException{
+    public static ArrayList<String> searchGenre(String genre, String type, int limit, int page) throws IOException, ParseException{
 
         if (type != "anime" && type != "manga") return null;
         if (!AnimeGenres.containsKey(genre) && !MangaGenres.containsKey(genre)) return null;
@@ -107,7 +107,7 @@ public class myAnimeListAPI {
                 }
             }
             System.out.println(results);
-            return json;
+            return title;
         }
     }
 
@@ -140,7 +140,7 @@ public class myAnimeListAPI {
         }
     }
 
-    public static JSONObject topItems(String type, int page) throws IOException, ParseException{
+    public static ArrayList<String> topItems(String type, int page) throws IOException, ParseException{
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -175,7 +175,7 @@ public class myAnimeListAPI {
                     }
                 }
                 System.out.println(results);
-                return json;
+                return title;
             }
             else if (type == "people") {
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
@@ -194,7 +194,7 @@ public class myAnimeListAPI {
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
-                return json;
+                return title;
             }
             else if (type == "characters"){
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
@@ -214,7 +214,7 @@ public class myAnimeListAPI {
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
-                return json;
+                return title;
             }
             else {
                 System.out.println("Something went wrong... Sorry!");
