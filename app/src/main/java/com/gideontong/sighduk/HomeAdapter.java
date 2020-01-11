@@ -13,6 +13,7 @@ import java.util.ArrayList;
 class HomeAdapter implements ListAdapter {
     ArrayList<EntryData> arrayList;
     Context context;
+
     public HomeAdapter(Context context, ArrayList<EntryData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
@@ -61,18 +62,15 @@ class HomeAdapter implements ListAdapter {
         EntryData EntryData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.list_row, null);
+            // convertView = layoutInflater.inflate(R.layout.list_show, null);
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 }
             });
             TextView tittle = convertView.findViewById(R.id.title);
-            ImageView imag = convertView.findViewById(R.id.list_image);
+            // ImageView imag = convertView.findViewById(R.id.list_image);
             tittle.setText(EntryData.SubjectName);
-            Picasso.with(context)
-                    .load(EntryData.Image)
-                    .into(imag);
         }
         return convertView;
     }
