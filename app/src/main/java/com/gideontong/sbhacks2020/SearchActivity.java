@@ -22,5 +22,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void searchOnline(View view) {
+        View parent = (View) view.getParent();
     }
 }
