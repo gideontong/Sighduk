@@ -2,28 +2,37 @@ package com.gideontong.sbhacks2020;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import com.gideontong.sbhacks2020.db.ShowContract;
 import com.gideontong.sbhacks2020.db.ShowDbHelper;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.gideontong.sbhacks2020.db.TokenDbHelper;
+import com.gideontong.sbhacks2020.search.Networking;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private ShowDbHelper mHelper;
+    private ListView mShowListView;
+    private ArrayAdapter<String> mAdapter;
+
+    private TokenDbHelper tHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +40,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
+        tHelper = new TokenDbHelper(this);
+
+        Networking networking = new Networking(tHelper);
+
+        mShowListView = (ListView) findViewById(R.id.list_show);
+        updateUI();
+    }
+
+    // A function that updates the UI with new database updates
+    private void updateUI() {
+        ArrayList<String> showList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
@@ -38,7 +58,20 @@ public class MainActivity extends AppCompatActivity {
                 null, null, null, null, null);
         while(cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
+            showList.add(cursor.getString(idx));
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
+        }
+
+        if (mAdapter == null) {
+            mAdapter = new ArrayAdapter<>(this,
+                    R.layout.item_show,
+                    R.id.show_title,
+                    showList);
+            mShowListView.setAdapter(mAdapter);
+        } else {
+            mAdapter.clear();
+            mAdapter.addAll(showList);
+            mAdapter.notifyDataSetChanged();
         }
 
         cursor.close();
@@ -70,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String show = String.valueOf(taskEditText.getText());
-                                Log.d(TAG, "Will add task with name " + show);
+                                // Log.d(TAG, "Will add task with name " + show);
 
                                 SQLiteDatabase db = mHelper.getWritableDatabase();
                                 ContentValues values = new ContentValues();
@@ -81,16 +114,36 @@ public class MainActivity extends AppCompatActivity {
                                         values,
                                         SQLiteDatabase.CONFLICT_REPLACE);
                                 db.close();
+                                updateUI();
                             }
                         })
                         .setNegativeButton("Cancel", null)
                         .create();
                 dialog.show();
 
+
                 return true;
+
+            case R.id.action_search:
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
 
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public void deleteShow(View view) {
+        View parent = (View) view.getParent();
+        TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
+        String show = String.valueOf(showTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        db.delete(ShowContract.ShowEntry.TABLE,
+                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
+                new String[]{show});
+        db.close();
+
+        updateUI();
     }
 }
