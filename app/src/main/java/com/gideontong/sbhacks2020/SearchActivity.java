@@ -29,6 +29,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+        rShowListView = (ListView) findViewById(R.id.list_results);
     }
 
     @Override
@@ -57,12 +58,15 @@ public class SearchActivity extends AppCompatActivity {
     public void searchCallback(String string) {
         // Object obj;
         // JSONObject jo;
+
+        ArrayList<String> resultsList = new ArrayList<>();
+        
         try {
             Object obj = new JSONParser().parse(string);
             JSONObject jo = (JSONObject) obj;
             JSONArray data = (JSONArray) jo.get("data");
 
-            ArrayList<String> resultsList = new ArrayList<>();
+            // resultsList = new ArrayList<>();
 
             for(int i = 0; i < data.length(); i++) {
                 JSONObject nextObject = data.getJSONObject(i);
@@ -74,6 +78,16 @@ public class SearchActivity extends AppCompatActivity {
             //do nothing
         }
 
-
+        if (rAdapter == null) {
+            rAdapter = new ArrayAdapter<>(this,
+                    R.layout.item_show,
+                    R.id.show_title,
+                    resultsList);
+            rShowListView.setAdapter(rAdapter);
+        } else {
+            rAdapter.clear();
+            rAdapter.addAll(resultsList);
+            rAdapter.notifyDataSetChanged();
+        }
     }
 }
