@@ -15,12 +15,23 @@
 
         <EditText
             android:id="@+id/searchText"
-            android:layout_width="206dp"
+            android:layout_width="217dp"
             android:layout_height="match_parent"
             android:ems="10"
             android:hint="Enter the keywords"
             android:inputType="text"
             android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:text="Search">
+
+        </Button>
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
