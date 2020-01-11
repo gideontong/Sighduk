@@ -59,7 +59,6 @@ public class Networking {
                 response.append(inputLine);
             }
             in.close();
-            // print result
             System.out.println(response.toString());
         } else {
             System.out.println("POST NOT WORKED");
