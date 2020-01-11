@@ -1,6 +1,6 @@
 package com.gideontong.sighduk;
 
-class SubjectData {
+class EntryData {
     String SubjectName;
     String Link;
     String Image;
