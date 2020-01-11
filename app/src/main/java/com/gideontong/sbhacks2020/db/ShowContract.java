@@ -8,6 +8,6 @@ public class ShowContract {
 
     public class ShowEntry implements BaseColumns {
         public static final String TABLE = "shows";
-        public static final String COL_TASK_TITLE = "title";
+        public static final String COL_SHOW_TITLE = "title";
     }
 }

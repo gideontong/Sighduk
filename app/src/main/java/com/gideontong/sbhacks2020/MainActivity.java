@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                                 SQLiteDatabase db = mHelper.getWritableDatabase();
                                 ContentValues values = new ContentValues();
 
-                                values.put(ShowContract.ShowEntry.COL_TASK_TITLE, show);
+                                values.put(ShowContract.ShowEntry.COL_SHOW_TITLE, show);
                             }
                         })
                         .setNegativeButton("Cancel", null)
