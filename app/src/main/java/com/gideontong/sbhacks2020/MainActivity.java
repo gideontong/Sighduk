@@ -17,6 +17,8 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
@@ -34,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
     // A function that updates the UI with new database updates
     private void updateUI() {
+        ArrayList<String> showList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
