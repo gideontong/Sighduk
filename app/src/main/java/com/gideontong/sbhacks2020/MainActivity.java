@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private ShowDbHelper mHelper;
+    private ListView mTaskListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
