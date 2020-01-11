@@ -26,14 +26,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-
     private static final String TAG = "MainActivity";
-    private ShowDbHelper mHelper;
-    private ListView mShowListView;
-    private ArrayAdapter<String> mAdapter;
 
+    private ShowDbHelper mHelper;
+    private ArrayAdapter<String> mAdapter;
     private TokenDbHelper tHelper;
 
+    private ListView mShowListView;
     private Button testSearchButton;
 
     @Override
@@ -44,10 +43,7 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new ShowDbHelper(this);
         tHelper = new TokenDbHelper(this);
 
-        // Networking networking = new Networking(tHelper);
-
         testSearchButton = findViewById(R.id.searchBtn);
-
         testSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mShowListView = (ListView) findViewById(R.id.list_show);
+        mShowListView = findViewById(R.id.list_show);
         updateUI();
     }
 
