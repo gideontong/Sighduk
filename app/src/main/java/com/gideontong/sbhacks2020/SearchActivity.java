@@ -46,11 +46,12 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void searchCallback(String string) {
-        Object obj;
-        JSONObject jo;
+        // Object obj;
+        // JSONObject jo;
         try {
-            obj = new JSONParser().parse(string);
-            jo = (JSONObject) obj;
+            Object obj = new JSONParser().parse(string);
+            JSONObject jo = (JSONObject) obj;
+
         } catch (Exception e) {
             //do nothing
         }
