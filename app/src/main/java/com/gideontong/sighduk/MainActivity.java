@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
                 null, null, null, null, null);
         while(cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
-            showList.add(cursor.getString(idx));
+            String nextName = cursor.getString(idx);
             urlCursor.moveToNext();
             int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
             // Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
