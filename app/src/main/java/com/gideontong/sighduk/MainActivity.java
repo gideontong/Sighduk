@@ -31,12 +31,14 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ShowDbHelper mHelper;
     private ArrayAdapter<EntryData> mAdapter;
+    private ArrayList<EntryData> showList;
     // private TokenDbHelper tHelper;
 
     private ListView mShowListView;
@@ -73,8 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
     // A function that updates the UI with new database updates
     private void updateUI() {
-        ArrayList<String> showList = new ArrayList<>();
-        picList = new ArrayList<>();
+        ArrayList<EntryData> showList = new ArrayList<>();
+        // picList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
