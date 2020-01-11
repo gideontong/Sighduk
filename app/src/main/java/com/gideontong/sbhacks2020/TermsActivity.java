@@ -1,6 +1,8 @@
 package com.gideontong.sbhacks2020;
 
-public class TermsActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class TermsActivity extends AppCompatActivity {
     // This needs to be a screen for terms and conditions
 
     // It needs to say
