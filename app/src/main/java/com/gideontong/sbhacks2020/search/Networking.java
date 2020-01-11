@@ -11,6 +11,11 @@ import android.util.Log;
 
 public class Networking {
     private static final String TAG = "AppNetworking";
+    private static final String DOMAIN = "https://api.tvdb.com";
+
+    public static void Login() throws IOException {
+        URL login = new URL(DOMAIN + "/login");
+    }
 
     public static void GetRequest(String Uri) throws IOException {
         URL urlForGetRequest = new URL(Uri);
