@@ -8,7 +8,7 @@
     tools:context=".MainActivity" >
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/animeImage"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
@@ -45,11 +45,11 @@
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/animeImage"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/addWatchList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
@@ -72,14 +72,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:paddingLeft="8"
+        android:paddingLeft="12dp"
         android:text="Synopsis:"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@+id/animeImage" />
 
     <TextView
         android:id="@+id/synopsisText"
@@ -117,7 +116,7 @@
         android:paddingRight="8dp"
         android:paddingBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/animeImage"
         app:layout_constraintTop_toTopOf="@+id/guideline9">
 
         <TextView
@@ -201,7 +200,7 @@
         app:layout_constraintGuide_begin="76dp" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/animeTitle"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="16dp"
