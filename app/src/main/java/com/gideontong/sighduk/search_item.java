@@ -21,7 +21,7 @@ public class search_item extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_item);
 
-        setContentView(R.layout.activity_search_item);
+        //setContentView(R.layout.activity_search_item);
 
     }
 }

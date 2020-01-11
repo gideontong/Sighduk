@@ -130,7 +130,12 @@ public class SearchActivity extends AppCompatActivity {
                 values,
                 SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
+
+        // go back to MainActivity view
+        setContentView(R.layout.activity_search);
+        finish();
     }
+
 
     private class BackgroundSearch extends AsyncTask<String, Void, String> {
         private static final String TAG = "BackgroundSearch";
