@@ -94,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
             String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
             // new DownloadImage().execute(grabUrl);
 
+            showList.add(new EntryData(nextName, grabUrl));
+
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
 
