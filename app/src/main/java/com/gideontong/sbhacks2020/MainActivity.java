@@ -56,6 +56,12 @@ public class MainActivity extends AppCompatActivity {
         updateUI();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateUI();
+    }
+
     // A function that updates the UI with new database updates
     private void updateUI() {
         ArrayList<String> showList = new ArrayList<>();
