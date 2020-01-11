@@ -1,6 +1,7 @@
 package com.gideontong.sbhacks2020;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void searchOnline(View view) {
+        Log.d(TAG, "Search button was pressed!");
         View parent = (View) view.getParent();
         EditText searchBox = (EditText) parent.findViewById(R.id.searchText);
         String query = String.valueOf(searchBox.getText());
