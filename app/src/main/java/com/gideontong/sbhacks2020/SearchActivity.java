@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -101,6 +102,8 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void addToDatabase(View view) {
+        TextView nameBox = (TextView) findViewById(R.id.show_title);
+        new MainActivity().addShowInBackground("");
     }
 
     private class BackgroundSearch extends AsyncTask<String, Void, String> {
