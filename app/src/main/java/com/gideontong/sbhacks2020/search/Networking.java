@@ -1,8 +1,8 @@
 package com.gideontong.sbhacks2020.search;
 
 public class Networking {
-    public static void GetRequest() throws IOException {
-        URL urlForGetRequest = new URL("https://jsonplaceholder.typicode.com/posts/1");
+    public static void GetRequest(String Uri) throws IOException {
+        URL urlForGetRequest = new URL(Uri);
         String readLine = null;
         HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
         conection.setRequestMethod("GET");
