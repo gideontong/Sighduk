@@ -1,17 +1,24 @@
 package com.gideontong.sbhacks2020.API;
 
+import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.io.IOException;
 import java.util.HashMap;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+
 public class myAnimeListAPI {
+
+    static JSONParser parser = new JSONParser();
 
     private static HashMap<String, Integer> AnimeGenres = new HashMap<>();
     private static HashMap<String, Integer> MangaGenres = new HashMap<>();
 
-    public static String searchAnime(String animeName, int limit, int page) throws IOException{
+    public static String searchAnime(String animeName, int limit, int page) throws IOException, ParseException{
 
         if (animeName == null || animeName == "") return null;
         OkHttpClient client = new OkHttpClient();
@@ -22,7 +29,9 @@ public class myAnimeListAPI {
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            System.out.println(response.body().string());
+            //System.out.println(response.body().string());
+            JSONObject json = (JSONObject) parser.parse(response.body().string());
+            System.out.println(json);
             return response.body().string();
         }
     }
@@ -76,7 +85,7 @@ public class myAnimeListAPI {
             return response.body().string();
         }
     }
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, ParseException {
 
         AnimeGenres.put("Action", 1); AnimeGenres.put("Martial Arts", 17); AnimeGenres.put("Yaoi", 33);
         AnimeGenres.put("Adventure", 2); AnimeGenres.put("Mecha", 18); AnimeGenres.put("Yuri", 34);
@@ -115,13 +124,14 @@ public class myAnimeListAPI {
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
-                .url("https://api.jikan.moe/v3/top/"+"anime")
+                .url("https://api.jikan.moe/v3/search/anime?q="+"Naruto"+"&limit=30")
                 .get()
                 .build();
 
         try (Response response = client.newCall(request).execute()) {
-            System.out.println(response.body().string());
-            //return response.body().string();
+            //System.out.println(response.body().string());
+            JSONObject json = (JSONObject) parser.parse(response.body().string());
+            System.out.println(json);
         }
 
 
