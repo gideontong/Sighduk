@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
 
+        /*
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<>(this,
                     R.layout.item_show,
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
             mAdapter.addAll(showList);
             mAdapter.notifyDataSetChanged();
         }
+         */
 
         cursor.close();
         db.close();
