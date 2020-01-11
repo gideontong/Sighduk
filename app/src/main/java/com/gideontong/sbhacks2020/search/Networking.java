@@ -36,9 +36,8 @@ public class Networking {
 
     }
 
-    private class DownloadFilesTask extends AsyncTask<URL, Integer, Long> {
-        // Do the long-running work in here
-        protected Long doInBackground(URL... urls) {
+    private class BackgroundSearch extends AsyncTask<URL, Integer, String> {
+        protected String doInBackground(URL... urls) {
             int count = urls.length;
             long totalSize = 0;
             for (int i = 0; i < count; i++) {
