@@ -1,5 +1,6 @@
 package com.gideontong.sbhacks2020;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -65,6 +66,9 @@ public class MainActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 String task = String.valueOf(taskEditText.getText());
                                 Log.d(TAG, "Will add task with name " + task);
+
+                                SQLiteDatabase db = mHelper.getWritableDatabase();
+                                ContentValues values = new ContentValues();
                             }
                         })
                         .setNegativeButton("Cancel", null)
