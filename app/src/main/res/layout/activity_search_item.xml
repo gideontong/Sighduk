@@ -18,7 +18,8 @@
             android:layout_width="217dp"
             android:layout_height="match_parent"
             android:ems="10"
-            android:hint="Enter the keywords"
+            android:gravity="center"
+            android:hint="Enter Show Name"
             android:inputType="text"
             android:textSize="20sp" />
 
