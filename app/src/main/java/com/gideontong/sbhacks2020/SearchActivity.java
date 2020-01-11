@@ -15,6 +15,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gideontong.sbhacks2020.db.ShowContract;
+import com.gideontong.sbhacks2020.db.ShowDbHelper;
 import com.gideontong.sbhacks2020.search.Networking;
 
 import org.json.simple.JSONArray;
@@ -33,6 +34,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private ArrayAdapter<String> rAdapter;
     private ListView rShowListView;
+    private ShowDbHelper mHelper;
 
     String export = "";
 
@@ -41,6 +43,7 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         rShowListView = (ListView) findViewById(R.id.list_results);
+        mHelper = new ShowDbHelper(this);
     }
 
     @Override
@@ -107,7 +110,7 @@ public class SearchActivity extends AppCompatActivity {
     public void addToDatabase(View view) {
         TextView nameBox = findViewById(R.id.show_title);
         String name = String.valueOf(nameBox.getText());
-        new MainActivity().addShowInBackground(name);
+        // new MainActivity().addShowInBackground(name);
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
 

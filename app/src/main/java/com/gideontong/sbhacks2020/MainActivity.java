@@ -159,8 +159,4 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
     }
-
-    public void addShowInBackground(String name) {
-
-    }
 }
