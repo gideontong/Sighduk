@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
 
         mHelper = new ShowDbHelper(this);
         mTaskListView = (ListView) findViewById(R.id.list_show);
+    }
+
+    // A function that updates the UI with new database updates
+    private void updateUI() {
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
@@ -42,11 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         cursor.close();
         db.close();
-    }
-
-    // A function that updates the UI with new database updates
-    private void updateUI() {
-        // Update the UI
     }
 
     @Override
