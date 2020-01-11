@@ -36,19 +36,13 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
                 new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
                 null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
+            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
+        }
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-
-       FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        cursor.close();
+        db.close();
     }
 
     @Override
