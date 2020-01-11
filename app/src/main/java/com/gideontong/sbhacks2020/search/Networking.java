@@ -100,6 +100,7 @@ public class Networking {
 
 private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
     private static final String TAG = "AppNetworking";
+    private static final String DOMAIN = "https://api.thetvdb.com";
 
     // Do the long-running work in here
     protected String doInBackground(String query) {
