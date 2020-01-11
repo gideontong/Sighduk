@@ -23,8 +23,6 @@ public class Networking {
 
     private TokenDbHelper tHelper;
 
-    // private String token;
-
     public Networking(TokenDbHelper helperObject) {
         // tHelper = helperObject;
     }
