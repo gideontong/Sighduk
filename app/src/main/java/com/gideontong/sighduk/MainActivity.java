@@ -88,13 +88,12 @@ public class MainActivity extends AppCompatActivity {
         while(cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
             String nextName = cursor.getString(idx);
+
             urlCursor.moveToNext();
             int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
-            // Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
-            // urlCursor.moveToNext();
             String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
-            new DownloadImage().execute(grabUrl);
-            // urlCursor.moveToNext();
+            // new DownloadImage().execute(grabUrl);
+
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
 
