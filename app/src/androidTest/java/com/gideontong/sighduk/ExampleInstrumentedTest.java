@@ -1,4 +1,4 @@
-package com.gideontong.sbhacks2020;
+package com.gideontong.sighduk;
 
 import android.content.Context;
 import androidx.test.platform.app.InstrumentationRegistry;

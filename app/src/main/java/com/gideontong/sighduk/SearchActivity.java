@@ -1,4 +1,4 @@
-package com.gideontong.sbhacks2020;
+package com.gideontong.sighduk;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gideontong.sbhacks2020.db.ShowContract;
-import com.gideontong.sbhacks2020.db.ShowDbHelper;
+import com.gideontong.sighduk.db.ShowContract;
+import com.gideontong.sighduk.db.ShowDbHelper;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

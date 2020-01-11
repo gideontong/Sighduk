@@ -1,4 +1,4 @@
-package com.gideontong.sbhacks2020;
+package com.gideontong.sighduk;
 
 import android.os.Bundle;
 import android.view.Menu;

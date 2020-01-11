@@ -1,4 +1,4 @@
-package com.gideontong.sbhacks2020;
+package com.gideontong.sighduk;
 
 import org.junit.Test;
 
