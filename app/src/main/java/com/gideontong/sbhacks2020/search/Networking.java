@@ -57,7 +57,7 @@ public class Networking {
         }
     }
 
-    public String Search(String search) throws IOException{
+    public static String search(String search) throws IOException{
         URL route = new URL(DOMAIN + "/search/series");
         String readLine = null;
         HttpURLConnection connection = (HttpURLConnection) route.openConnection();
