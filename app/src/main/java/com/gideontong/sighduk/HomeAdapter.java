@@ -71,18 +71,23 @@ class HomeAdapter implements ListAdapter {
         Log.d(TAG, "Starting entryList arrayList tagging");
 
         EntryData entryData = arrayList.get(position);
+
+        Log.d(TAG, "entryData memory address is " + entryData);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            convertView = layoutInflater.inflate(R.layout.show_info, null);
+            convertView = layoutInflater.inflate(R.layout.item_show, null);
 
-            ListView listView = (ListView) convertView.findViewById(R.id.list_show);
+            // ListView listView = (ListView) convertView.findViewById(R.id.list_show);
+
+            // Log.d(TAG, "ListView memory address is " + listView);
             /* convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 }
             }); */
-            TextView title = listView.findViewById(R.id.show_title);
-            ImageView imag = listView.findViewById(R.id.show_image);
+            TextView title = convertView.findViewById(R.id.show_title);
+            Log.d(TAG, "title memory address is " + title);
+            ImageView imag = convertView.findViewById(R.id.show_image);
             // Log.d(TAG, "title is " + convert);
             title.setText(entryData.SubjectName);
             Picasso.with(context)
