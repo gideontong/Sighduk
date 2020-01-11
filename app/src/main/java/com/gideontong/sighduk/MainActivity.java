@@ -91,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
             urlCursor.moveToNext();
             int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
-            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
             // new DownloadImage().execute(grabUrl);
 
             showList.add(new EntryData(nextName, grabUrl));
