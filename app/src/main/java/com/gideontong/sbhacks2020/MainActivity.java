@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Bitmap doInBackground(String... params) {
             try {
-                URL url = new URL("http://xxx.xxx.xxx/image.jpg");
+                URL url = new URL(params[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.connect();
