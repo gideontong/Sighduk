@@ -88,7 +88,8 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return arrayList.size();
+        return 1;
+        // return arrayList.size();
     }
 
     @Override
