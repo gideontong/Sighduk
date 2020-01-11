@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.gideontong.sbhacks2020.db.TokenData;
 import com.gideontong.sbhacks2020.db.TokenDbHelper;
 
 public class Networking {
@@ -19,15 +21,17 @@ public class Networking {
 
     private TokenDbHelper tHelper;
 
+    private String token;
+
     public Networking(TokenDbHelper helperObject) {
-        tHelper = helperObject;
+        // tHelper = helperObject;
     }
 
     public void Login() throws IOException {
         URL login = new URL(DOMAIN + "/login");
         URL keepAlive = new URL(DOMAIN + "/refresh_token");
 
-        SQLiteDatabase db = tHelper.getWritableDatabase();
+
     }
 
     public static void GetRequest(String Uri) throws IOException {
@@ -50,6 +54,31 @@ public class Networking {
             Log.d(TAG, "Result: " + response.toString());
         } else {
             System.out.println("GET request failed with response code " + responseCode);
+        }
+    }
+
+    public String Search(String search) throws IOException{
+        URL route = new URL(DOMAIN + "/search/series");
+        String readLine = null;
+        HttpURLConnection connection = (HttpURLConnection) route.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("name", search); // set userId its a sample here
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+            StringBuffer response = new StringBuffer();
+            while ((readLine = in.readLine()) != null) {
+                response.append(readLine);
+            }
+            in.close();
+
+            Log.d(TAG, "Result: " + response.toString());
+            return response.toString();
+        } else {
+            System.out.println("GET request failed with response code " + responseCode);
+            return null;
         }
     }
 
