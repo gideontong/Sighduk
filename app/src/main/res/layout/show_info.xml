@@ -13,6 +13,8 @@
         android:layout_height="162dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />
@@ -35,5 +37,12 @@
         app:layout_constraintStart_toEndOf="@+id/imageView"
         tools:layout_editor_absoluteY="33dp"
         tools:text="SCORE" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="188dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
