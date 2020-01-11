@@ -17,4 +17,10 @@ public class TokenDbHelper extends SQLiteOpenHelper {
 
         db.execSQL(createTable);
     }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + TokenData.TokenEntry.TABLE);
+        onCreate(db);
+    }
 }
