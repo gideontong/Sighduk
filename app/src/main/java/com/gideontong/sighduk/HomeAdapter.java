@@ -86,7 +86,7 @@ class HomeAdapter implements ListAdapter {
     public int getViewTypeCount() {
         return arrayList.size();
     }
-    
+
     @Override
     public boolean isEmpty() {
         return false;
