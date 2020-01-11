@@ -9,6 +9,7 @@ import java.net.URL;
 
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import com.gideontong.sbhacks2020.db.TokenData;
@@ -59,9 +60,7 @@ public class Networking {
     }
 
     public static String search(String search) throws IOException{
-
-        // Log.d(TAG, "THIS LOG SHOULD NOT EXIST");
-        // return null;
+        return null
     }
 
     public static void PostRequest(String Uri) throws IOException {
@@ -100,8 +99,10 @@ public class Networking {
 }
 
 private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
+    private static final String TAG = "AppNetworking";
+
     // Do the long-running work in here
-    protected Long doInBackground(String query) {
+    protected String doInBackground(String query) {
         URL route = new URL(DOMAIN + "/search/series");
         String readLine = null;
         HttpURLConnection connection = (HttpURLConnection) route.openConnection();
@@ -131,11 +132,6 @@ private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
             Log.d(TAG, "GET request failed with response code " + responseCode);
             return null;
         }
-    }
-
-    // This is called each time you call publishProgress()
-    protected void onProgressUpdate(Integer... progress) {
-        setProgressPercent(progress[0]);
     }
 
     // This is called when doInBackground() is finished
