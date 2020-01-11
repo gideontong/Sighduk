@@ -73,7 +73,7 @@ class HomeAdapter implements ListAdapter {
             });
             TextView tittle = convertView.findViewById(R.id.title);
             ImageView imag = convertView.findViewById(R.id.show_image);
-            tittle.setText(EntryData.SubjectName);
+            tittle.setText(entryData.SubjectName);
             Picasso.with(context)
                     .load(entryData.Image)
                     .into(imag);
