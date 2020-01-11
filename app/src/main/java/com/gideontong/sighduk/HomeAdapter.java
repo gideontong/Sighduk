@@ -10,7 +10,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import java.util.ArrayList;
 
-class CustomAdapter implements ListAdapter {
+class HomeAdapter implements ListAdapter {
     ArrayList<SubjectData> arrayList;
     Context context;
     public CustomAdapter(Context context, ArrayList<SubjectData> arrayList) {
