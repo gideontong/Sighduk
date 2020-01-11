@@ -2,6 +2,7 @@ package com.gideontong.sbhacks2020;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,5 +19,8 @@ public class SearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    public void searchOnline(View view) {
     }
 }
