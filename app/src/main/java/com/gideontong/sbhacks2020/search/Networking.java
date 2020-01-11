@@ -9,9 +9,13 @@ import java.net.URL;
 
 import android.util.Log;
 
+import com.gideontong.sbhacks2020.db.TokenDbHelper;
+
 public class Networking {
     private static final String TAG = "AppNetworking";
     private static final String DOMAIN = "https://api.tvdb.com";
+
+    private TokenDbHelper tHelper;
 
     public static void Login() throws IOException {
         URL login = new URL(DOMAIN + "/login");

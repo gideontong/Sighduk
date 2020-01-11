@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.gideontong.sbhacks2020.db.ShowContract;
 import com.gideontong.sbhacks2020.db.ShowDbHelper;
+import com.gideontong.sbhacks2020.db.TokenDbHelper;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
