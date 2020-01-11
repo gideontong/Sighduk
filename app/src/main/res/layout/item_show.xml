@@ -13,4 +13,12 @@
         android:text="Testing Show Title"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/show_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="Done" />
+
 </RelativeLayout>
