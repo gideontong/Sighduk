@@ -2,6 +2,7 @@ package com.gideontong.sighduk;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -13,6 +14,8 @@ import com.gideontong.sighduk.db.ShowDbHelper;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
+
 public class animeInfoActivity extends AppCompatActivity {
 
     @Override
@@ -20,14 +23,25 @@ public class animeInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anime_show_info);
 
-        TextView animeTitle = findViewById(R.id.animeTitle);
-        TextView animeScore = findViewById(R.id.scoreValue);
-        TextView animeRank = findViewById(R.id.rankValue);
-        TextView synopsisText = findViewById(R.id.synopsisText);
-        ImageView animeImage = findViewById(R.id.animeImage);
-        Button addWatchList = findViewById(R.id.addWatchList);
+        getIntent().getSerializableExtra("pulledData");
+        
+        final TextView animeTitle = findViewById(R.id.animeTitle);
+        final TextView animeScore = findViewById(R.id.scoreValue);
+        final TextView animeRank = findViewById(R.id.rankValue);
+        final TextView synopsisText = findViewById(R.id.synopsisText);
+        final ImageView animeImage = findViewById(R.id.animeImage);
+        final Button addWatchList = findViewById(R.id.addWatchList);
 
-        Intent intent = new Intent(animeInfoActivity.this, search_item.class);
-        startActivity(intent);
+        addWatchList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("YO BRUH I ADDED "+animeTitle.getText());
+            }
+        });
+
+
+
+        //Intent intent = new Intent(animeInfoActivity.this, search_item.class);
+        //startActivity(intent);
     }
 }

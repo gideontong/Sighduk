@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.gideontong.sighduk.API.myAnimeListAPI;
+import com.gideontong.sighduk.API.pulledData;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 
@@ -26,6 +28,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -42,6 +47,23 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+//---------------------------------------------------------------------------------------------
+        try {
+            pulledData animeData = myAnimeListAPI.searchAnime("Naruto", 16, 1);
+            Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
+            intent.putExtra("pulledData", animeData);
+            startActivity(intent);
+        } catch (IOException e) {
+            System.out.println("ow an IOException");
+        }
+        catch (ParseException e) {
+            System.out.println("ow a ParseException");
+        }
+
+
+//---------------------------------------------------------------------------------------------
+
 
         mHelper = new ShowDbHelper(this);
 

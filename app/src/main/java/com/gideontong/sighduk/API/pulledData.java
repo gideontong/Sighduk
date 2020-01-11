@@ -1,9 +1,10 @@
-package com.gideontong.sbhacks2020.API;
+package com.gideontong.sighduk.API;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class pulledData {
+public class pulledData implements Serializable {
     private ArrayList<String> title = null;
     private ArrayList<String> name = null;
     private ArrayList<String> image_url = null;

@@ -1,6 +1,6 @@
 package com.gideontong.sighduk.API;
 
-import com.gideontong.sbhacks2020.API.pulledData;
+import com.gideontong.sighduk.API.pulledData;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
