@@ -34,6 +34,9 @@ public class SearchActivity extends AppCompatActivity {
     private ListView rShowListView;
     private ShowDbHelper mHelper;
 
+    ArrayList<String> resultsList;
+    ArrayList<String> uriList;
+
     String export = "";
 
     @Override
@@ -72,7 +75,8 @@ public class SearchActivity extends AppCompatActivity {
         // Object obj;
         // JSONObject jo;
 
-        ArrayList<String> resultsList = new ArrayList<>();
+        resultsList = new ArrayList<>();
+        uriList = new ArrayList<>();
 
         try {
             Object obj = new JSONParser().parse(string);
@@ -84,8 +88,10 @@ public class SearchActivity extends AppCompatActivity {
             for(Object nextNext: data) {
                 JSONObject nextObject = (JSONObject) nextNext;
                 String name = (String) nextObject.get("seriesName");
-                Log.d(TAG, "Found a name " + name);
+                String uri = (String) nextObject.get("banner");
+                Log.d(TAG, "Found a name " + name + " with uri");
                 resultsList.add(name);
+                uriList.add(uri);
             }
         } catch (Exception e) {
             Log.d(TAG, "Failed to draw table " + e);
@@ -114,6 +120,9 @@ public class SearchActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
         values.put(ShowContract.ShowEntry.COL_SHOW_TITLE, name);
+
+        int i = resultsList.indexOf(name);
+        values.put(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL, uriList.get(i));
 
         db.insertWithOnConflict(ShowContract.ShowEntry.TABLE,
                 null,
