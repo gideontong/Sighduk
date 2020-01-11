@@ -2,6 +2,7 @@ package com.gideontong.sbhacks2020.search;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -30,7 +31,7 @@ public class Networking {
         }
     }
 
-    public static void POSTRequest() throws IOException {
+    public static void PostRequest() throws IOException {
         final String POST_PARAMS = "{\n" + "\"userId\": 101,\r\n" +
                 "    \"id\": 101,\r\n" +
                 "    \"title\": \"Test Title\",\r\n" +
