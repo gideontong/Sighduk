@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private ShowDbHelper mHelper;
-    private ListView mTaskListView;
+    private ListView mShowListView;
     private ArrayAdapter<String> mAdapter;
 
     @Override
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
-        mTaskListView = (ListView) findViewById(R.id.list_show);
+        mShowListView = (ListView) findViewById(R.id.list_show);
     }
 
     // A function that updates the UI with new database updates
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
                     R.layout.item_show,
                     R.id.show_title,
                     showList);
-            mTaskListView.setAdapter(mAdapter);
+            mShowListView.setAdapter(mAdapter);
         }
 
         cursor.close();
