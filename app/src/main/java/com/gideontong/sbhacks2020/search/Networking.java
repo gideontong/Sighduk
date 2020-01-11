@@ -2,22 +2,17 @@ package com.gideontong.sbhacks2020.search;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import android.content.ContentValues;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import com.gideontong.sbhacks2020.db.TokenData;
 import com.gideontong.sbhacks2020.db.TokenDbHelper;
 
 public class Networking {
     private static final String TAG = "AppNetworking";
-    private static final String DOMAIN = "https://api.tvdb.com";
+    private static final String DOMAIN = "https://api.thetvdb.com";
     private static final String API = "f777969b76262ceb54369c4912ba66d4"; // REVOKE THIS KEY LATER!
     private static final String TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzkzNDE1NTgsImlkIjoiUmlkZ2xpbmdDYXNpbm8iLCJvcmlnX2lhdCI6MTU3ODczNjc1OH0.mMGjnkr8b052bOqk0x0hZy8O1HlRhqCUbMVaVV05OqjsLqW44p3FvufU8yROaX2AlItnT-kVXQrupNmv26ybSw2gUJGDLLfp3W6tXliZKFZbzrcG5yCeqeyClM3o1RguyMVFqjmO7iOt44r7oiJNb0Ul3vtEIR1GpFWrjEefvkkGCdLHMRL7_VD0L5R2gnkNi3fsbsK4Bp4HGYRXAiy5cU4hru6iDADZVv1bL1pJFUbbi2cBqI1ZmKrPCdviniYqIOSoHUHlGMNhVgBxYS_LCX7_eh_3aEREX4nn7RPBBVf-nmt8d6iKs8Dmc47hpnnOPtXaekkeKbbzPqtfuL3YEQ";
 
@@ -53,7 +48,7 @@ public class Networking {
             Log.d(TAG, "Started background download of search query " + queries[0]);
             URL route;
             try {
-                route = new URL(DOMAIN + "/search/series");
+                route = new URL(DOMAIN + "/search/series" + "?name=" + queries[0]);
             } catch (Exception e) {
                 route = null;
             }
@@ -71,10 +66,11 @@ public class Networking {
             try {
                 connection.setRequestMethod("GET");
             } catch (Exception e) {
+                Log.d(TAG, "Exception occurred with request method " + e);
                 // do nothing
             }
             connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
-            connection.setRequestProperty("name", queries[0]); // set userId its a sample here
+            // connection.setRequestProperty("name", queries[0]); // set userId its a sample here
             Log.d(TAG, "I set some cool stuff");
 
             int responseCode;
@@ -95,12 +91,11 @@ public class Networking {
                 }
                 StringBuffer response = new StringBuffer();
                 try {
-                    readLine = in.readLine();
+                    while ((readLine = in.readLine()) != null) {
+                        response.append(readLine);
+                    }
                 } catch (Exception e) {
                     // do nothing
-                }
-                while (readLine != null) {
-                    response.append(readLine);
                 }
                 try {
                     in.close();
