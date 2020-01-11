@@ -35,14 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ShowDbHelper mHelper;
-    private ArrayAdapter<EntryData> mAdapter;
-    private ArrayList<EntryData> showList;
-    // private TokenDbHelper tHelper;
-
     private ListView mShowListView;
     private Button testSearchButton;
-
-    // ArrayList<Bitmap> picList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
-        // tHelper = new TokenDbHelper(this);
 
         testSearchButton = findViewById(R.id.searchBtn);
         testSearchButton.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
     // A function that updates the UI with new database updates
     private void updateUI() {
         ArrayList<EntryData> showList = new ArrayList<>();
-        // picList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
@@ -90,26 +82,11 @@ public class MainActivity extends AppCompatActivity {
             urlCursor.moveToNext();
             int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
             String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
-            // new DownloadImage().execute(grabUrl);
 
             showList.add(new EntryData(nextName, grabUrl));
 
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
-
-        /*
-        if (mAdapter == null) {
-            mAdapter = new ArrayAdapter<>(this,
-                    R.layout.item_show,
-                    R.id.show_title,
-                    showList);
-            mShowListView.setAdapter(mAdapter);
-        } else {
-            mAdapter.clear();
-            mAdapter.addAll(showList);
-            mAdapter.notifyDataSetChanged();
-        }
-         */
 
         HomeAdapter listAdapter = new HomeAdapter(this, showList);
         mShowListView.setAdapter(listAdapter);
@@ -204,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            ImageView imageView = (ImageView) findViewById(R.id.show_image);
+            ImageView imageView = findViewById(R.id.show_image);
             imageView.setImageBitmap(result);
         }
     }
