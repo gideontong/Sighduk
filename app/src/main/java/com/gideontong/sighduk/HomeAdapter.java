@@ -67,6 +67,8 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "Starting entryList arrayList tagging");
+
         EntryData entryData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
