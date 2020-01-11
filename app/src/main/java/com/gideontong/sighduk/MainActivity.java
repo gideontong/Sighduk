@@ -113,6 +113,9 @@ public class MainActivity extends AppCompatActivity {
         }
          */
 
+        HomeAdapter listAdapter = new HomeAdapter(this, showList);
+        mShowListView.setAdapter(listAdapter);
+
         cursor.close();
         db.close();
     }
