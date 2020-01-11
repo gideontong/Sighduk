@@ -1,8 +1,14 @@
 package com.gideontong.sbhacks2020;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class TermsActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+    }
     // This needs to be a screen for terms and conditions
 
     // It needs to say
