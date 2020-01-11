@@ -23,14 +23,17 @@ public class Networking {
 
     private TokenDbHelper tHelper;
 
+    String export = "";
+
     public Networking() {
         // tHelper = helperObject;
     }
 
     public String search(String query) {
-        String[] queries = {query};
+        // String[] queries = {query};
         BackgroundSearch passed = new BackgroundSearch();
-        return passed.doInBackground(queries);
+        passed.execute(query);
+        return export;
     }
 
     public void Login() throws IOException {
@@ -40,12 +43,14 @@ public class Networking {
 
     }
 
-    private class BackgroundSearch extends AsyncTask<String, Integer, String> {
+    private class BackgroundSearch extends AsyncTask<String, Void, String> {
         private static final String TAG = "BackgroundSearch";
         private static final String DOMAIN = "https://api.thetvdb.com";
         private static final String TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzkzNDE1NTgsImlkIjoiUmlkZ2xpbmdDYXNpbm8iLCJvcmlnX2lhdCI6MTU3ODczNjc1OH0.mMGjnkr8b052bOqk0x0hZy8O1HlRhqCUbMVaVV05OqjsLqW44p3FvufU8yROaX2AlItnT-kVXQrupNmv26ybSw2gUJGDLLfp3W6tXliZKFZbzrcG5yCeqeyClM3o1RguyMVFqjmO7iOt44r7oiJNb0Ul3vtEIR1GpFWrjEefvkkGCdLHMRL7_VD0L5R2gnkNi3fsbsK4Bp4HGYRXAiy5cU4hru6iDADZVv1bL1pJFUbbi2cBqI1ZmKrPCdviniYqIOSoHUHlGMNhVgBxYS_LCX7_eh_3aEREX4nn7RPBBVf-nmt8d6iKs8Dmc47hpnnOPtXaekkeKbbzPqtfuL3YEQ";
 
+        @Override
         protected String doInBackground(String... queries) {
+            Log.d(TAG, "Started background download of search query " + queries[0]);
             URL route;
             try {
                 route = new URL(DOMAIN + "/search/series");
@@ -76,9 +81,10 @@ public class Networking {
             try {
                 responseCode = connection.getResponseCode();
             } catch (Exception e) {
+                Log.d(TAG, "A exception was generated with exception " + e);
                 responseCode = -1;
             }
-            Log.d(TAG, "Reasponse code " + responseCode);
+            Log.d(TAG, "Response code " + responseCode);
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 BufferedReader in;
                 try {
@@ -110,14 +116,10 @@ public class Networking {
             }
         }
 
-        // This is called each time you call publishProgress()
-        protected void onProgressUpdate(Integer... progress) {
-            // setProgressPercent(progress[0]);
-        }
-
         // This is called when doInBackground() is finished
-        protected void onPostExecute(Long result) {
-            // showNotification("Downloaded " + result + " bytes");
+        @Override
+        protected void onPostExecute(String result) {
+            export = result;
         }
     }
 
