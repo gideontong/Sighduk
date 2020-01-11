@@ -6,6 +6,18 @@ def getAPI_KEY() {
     return properties.getProperty("API_KEY_VALUE")
 }
 
+def getUsername() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("username")
+}
+
+def getUserkey() {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    return properties.getProperty("userkey")
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -17,6 +29,8 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField "String", "myAPI_KEY", "\""+getAPI_KEY()+"\""
+        buildConfigField "String", "username", "\""+getUsername()+"\""
+        buildConfigField "String", "userkey", "\""+getUserkey()+"\""
     }
     buildTypes {
         release {
