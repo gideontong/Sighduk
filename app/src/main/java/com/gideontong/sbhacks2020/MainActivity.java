@@ -44,6 +44,11 @@ public class MainActivity extends AppCompatActivity {
         db.close();
     }
 
+    // A function that updates the UI with new database updates
+    private void updateUI() {
+        // Update the UI
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
