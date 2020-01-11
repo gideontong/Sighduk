@@ -8,6 +8,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import android.os.AsyncTask;
 
+public class BackgroundSearch {
+
+}
+
 private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
     private static final String TAG = "AppNetworking";
     private static final String DOMAIN = "https://api.thetvdb.com";
