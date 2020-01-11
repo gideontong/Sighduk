@@ -70,12 +70,16 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
                 new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
                 null, null, null, null, null);
-        /* Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
+        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
                 new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
-                null, null, null, null, null); */
+                null, null, null, null, null);
         while(cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
             showList.add(cursor.getString(idx));
+            urlCursor.moveToNext();
+            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+            Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
+            // urlCursor.moveToNext();
             // String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
             // urlCursor.moveToNext();
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));

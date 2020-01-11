@@ -89,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
                 JSONObject nextObject = (JSONObject) nextNext;
                 String name = (String) nextObject.get("seriesName");
                 String uri = (String) nextObject.get("banner");
-                Log.d(TAG, "Found a name " + name + " with uri");
+                Log.d(TAG, "Found a name " + name + " with uri" + uri);
                 resultsList.add(name);
                 uriList.add(uri);
             }
@@ -123,6 +123,7 @@ public class SearchActivity extends AppCompatActivity {
 
         int i = resultsList.indexOf(name);
         values.put(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL, uriList.get(i));
+        Log.d(TAG, "Attempting to add uri " + uriList.get(i));
 
         db.insertWithOnConflict(ShowContract.ShowEntry.TABLE,
                 null,
