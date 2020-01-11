@@ -12,6 +12,7 @@ public class TermsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        return true;
     }
     // This needs to be a screen for terms and conditions
 
