@@ -2,7 +2,7 @@ package com.gideontong.sbhacks2020.db;
 
 import android.provider.BaseColumns;
 
-public class TaskContract {
+public class ShowContract {
     public static final String DB_NAME = "com.gideontong.sbhacks2020.db";
     public static final int DB_VERSION = 1;
 
