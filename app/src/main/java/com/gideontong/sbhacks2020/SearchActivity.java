@@ -32,7 +32,8 @@ public class SearchActivity extends AppCompatActivity {
         String query = String.valueOf(searchBox.getText());
         try {
             Log.d(TAG, "Searching " + query);
-            String result = Networking.search(query);
+            Networking test = new Networking();
+            String result = test.search(query);
             Log.d(TAG, "Result was " + result);
         } catch(Exception e) {
             Log.d(TAG, "We tried but we got " + e);

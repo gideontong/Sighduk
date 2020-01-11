@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new ShowDbHelper(this);
         tHelper = new TokenDbHelper(this);
 
-        Networking networking = new Networking(tHelper);
+        // Networking networking = new Networking(tHelper);
 
         testSearchButton = findViewById(R.id.searchBtn);
 

@@ -23,8 +23,14 @@ public class Networking {
 
     private TokenDbHelper tHelper;
 
-    public Networking(TokenDbHelper helperObject) {
+    public Networking() {
         // tHelper = helperObject;
+    }
+
+    public String search(String query) {
+        String[] queries = {query};
+        BackgroundSearch passed = new BackgroundSearch();
+        return passed.doInBackground(queries);
     }
 
     public void Login() throws IOException {
