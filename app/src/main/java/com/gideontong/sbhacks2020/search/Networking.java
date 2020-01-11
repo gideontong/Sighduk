@@ -36,6 +36,7 @@ public class Networking {
 
     }
 
+    /*
     public static void GetRequest(String Uri) throws IOException {
         URL urlForGetRequest = new URL(Uri);
         String readLine = null;
@@ -58,11 +59,9 @@ public class Networking {
             System.out.println("GET request failed with response code " + responseCode);
         }
     }
+    */
 
-    public static String search(String search) throws IOException{
-        return null;
-    }
-
+    /*
     public static void PostRequest(String Uri) throws IOException {
         final String POST_PARAMS = "{\n" + "\"userId\": 101,\r\n" +
                 "    \"id\": 101,\r\n" +
@@ -96,4 +95,5 @@ public class Networking {
             System.out.println("POST NOT WORKED");
         }
     }
+    */
 }
