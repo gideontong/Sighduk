@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteOpenHelper;
 
 public class TokenDbHelper extends SQLiteOpenHelper {
-    public TokenDbHelper(Context contet) {
+    public TokenDbHelper(Context context) {
+        super(context)
     }
 }
