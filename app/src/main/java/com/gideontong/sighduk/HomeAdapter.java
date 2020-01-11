@@ -13,7 +13,7 @@ import java.util.ArrayList;
 class HomeAdapter implements ListAdapter {
     ArrayList<SubjectData> arrayList;
     Context context;
-    public CustomAdapter(Context context, ArrayList<SubjectData> arrayList) {
+    public HomeAdapter(Context context, ArrayList<SubjectData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
     }
