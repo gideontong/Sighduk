@@ -11,9 +11,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 class HomeAdapter implements ListAdapter {
-    ArrayList<SubjectData> arrayList;
+    ArrayList<EntryData> arrayList;
     Context context;
-    public HomeAdapter(Context context, ArrayList<SubjectData> arrayList) {
+    public HomeAdapter(Context context, ArrayList<EntryData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
     }
@@ -58,7 +58,7 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SubjectData subjectData = arrayList.get(position);
+        EntryData EntryData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.list_row, null);
@@ -69,9 +69,9 @@ class HomeAdapter implements ListAdapter {
             });
             TextView tittle = convertView.findViewById(R.id.title);
             ImageView imag = convertView.findViewById(R.id.list_image);
-            tittle.setText(subjectData.SubjectName);
+            tittle.setText(EntryData.SubjectName);
             Picasso.with(context)
-                    .load(subjectData.Image)
+                    .load(EntryData.Image)
                     .into(imag);
         }
         return convertView;
