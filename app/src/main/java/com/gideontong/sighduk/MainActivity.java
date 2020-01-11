@@ -12,7 +12,6 @@ import android.os.Bundle;
 
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
-import com.gideontong.sighduk.db.TokenDbHelper;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,8 +35,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     private ShowDbHelper mHelper;
-    private ArrayAdapter<String> mAdapter;
-    private TokenDbHelper tHelper;
+    private ArrayAdapter<EntryData> mAdapter;
+    private ArrayList<EntryData> showList;
+    // private TokenDbHelper tHelper;
 
     private ListView mShowListView;
     private Button testSearchButton;
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
-        tHelper = new TokenDbHelper(this);
+        // tHelper = new TokenDbHelper(this);
 
         testSearchButton = findViewById(R.id.searchBtn);
         testSearchButton.setOnClickListener(new View.OnClickListener() {
@@ -73,8 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
     // A function that updates the UI with new database updates
     private void updateUI() {
-        ArrayList<String> showList = new ArrayList<>();
-        picList = new ArrayList<>();
+        ArrayList<EntryData> showList = new ArrayList<>();
+        // picList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
@@ -85,17 +85,19 @@ public class MainActivity extends AppCompatActivity {
                 null, null, null, null, null);
         while(cursor.moveToNext()) {
             int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
-            showList.add(cursor.getString(idx));
+            String nextName = cursor.getString(idx);
+
             urlCursor.moveToNext();
             int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
-            // Log.d(TAG, "Trying to see uri " + urlCursor.getString(idx));
-            // urlCursor.moveToNext();
-            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(idx);
-            new DownloadImage().execute(grabUrl);
-            // urlCursor.moveToNext();
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
+            // new DownloadImage().execute(grabUrl);
+
+            showList.add(new EntryData(nextName, grabUrl));
+
             Log.d(TAG, "Task was added with name " + cursor.getString(idx));
         }
 
+        /*
         if (mAdapter == null) {
             mAdapter = new ArrayAdapter<>(this,
                     R.layout.item_show,
@@ -107,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
             mAdapter.addAll(showList);
             mAdapter.notifyDataSetChanged();
         }
+         */
+
+        HomeAdapter listAdapter = new HomeAdapter(this, showList);
+        mShowListView.setAdapter(listAdapter);
 
         cursor.close();
         db.close();
