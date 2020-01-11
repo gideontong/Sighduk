@@ -32,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
         mHelper = new ShowDbHelper(this);
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
+        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
+                null, null, null, null, null);
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
