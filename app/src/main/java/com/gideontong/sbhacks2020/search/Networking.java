@@ -60,7 +60,7 @@ public class Networking {
     }
 
     public static String search(String search) throws IOException{
-        return null
+        return null;
     }
 
     public static void PostRequest(String Uri) throws IOException {
@@ -97,45 +97,3 @@ public class Networking {
         }
     }
 }
-
-private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
-    private static final String TAG = "AppNetworking";
-    private static final String DOMAIN = "https://api.thetvdb.com";
-
-    // Do the long-running work in here
-    protected String doInBackground(String query) {
-        URL route = new URL(DOMAIN + "/search/series");
-        String readLine = null;
-        HttpURLConnection connection = (HttpURLConnection) route.openConnection();
-        Log.d(TAG, "Hello a connection was opened");
-
-        connection.setConnectTimeout(10 * 1000);
-        connection.setReadTimeout(10 * 1000);
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
-        connection.setRequestProperty("name", search); // set userId its a sample here
-        Log.d(TAG, "I set some cool stuff");
-
-        int responseCode = connection.getResponseCode();
-        Log.d(TAG, "Reasponse code " + responseCode);
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()));
-            StringBuffer response = new StringBuffer();
-            while ((readLine = in.readLine()) != null) {
-                response.append(readLine);
-            }
-            in.close();
-
-            Log.d(TAG, "Result: " + response.toString());
-            return response.toString();
-        } else {
-            Log.d(TAG, "GET request failed with response code " + responseCode);
-            return null;
-        }
-    }
-
-    // This is called when doInBackground() is finished
-    protected void onPostExecute(Long result) {
-        showNotification("Downloaded " + result + " bytes");
-    }
