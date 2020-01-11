@@ -89,10 +89,14 @@ public class Networking {
                 } catch (Exception e) {
                     // do nothing
                 }
-                while ((readLine = in.readLine()) != null) {
+                while (readLine != null) {
                     response.append(readLine);
                 }
-                in.close();
+                try {
+                    in.close();
+                } catch (Exception e) {
+                    // do nothing
+                }
 
                 Log.d(TAG, "Result: " + response.toString());
                 return response.toString();
