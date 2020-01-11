@@ -13,8 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.gideontong.sbhacks2020.search.Networking;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.BufferedReader;
@@ -76,8 +76,8 @@ public class SearchActivity extends AppCompatActivity {
 
             // resultsList = new ArrayList<>();
 
-            for(int i = 0; i < data.length(); i++) {
-                JSONObject nextObject = data.getJSONObject(i);
+            for(Object nextNext: data) {
+                JSONObject nextObject = (JSONObject) nextNext;
                 String name = (String) nextObject.get("seriesName");
                 Log.d(TAG, "Found a name " + name);
                 resultsList.add(name);
