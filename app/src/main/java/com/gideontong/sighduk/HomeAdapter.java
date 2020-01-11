@@ -2,6 +2,7 @@ package com.gideontong.sighduk;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 class HomeAdapter implements ListAdapter {
+    public static final String TAG = "HomeAdapter";
+
     ArrayList<EntryData> arrayList;
     Context context;
 
     public HomeAdapter(Context context, ArrayList<EntryData> arrayList) {
         this.arrayList=arrayList;
         this.context=context;
+
+        Log.d(TAG, "Setting home adapter with an ArrayList");
     }
 
     @Override
@@ -62,18 +67,20 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Log.d(TAG, "Starting entryList arrayList tagging");
+
         EntryData entryData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            // convertView = layoutInflater.inflate(R.layout.list_show, null);
-            convertView.setOnClickListener(new View.OnClickListener() {
+            convertView = layoutInflater.inflate(R.layout.show_info, null);
+            /* convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 }
-            });
-            TextView tittle = convertView.findViewById(R.id.title);
+            }); */
+            TextView title = convertView.findViewById(R.id.show_title);
             ImageView imag = convertView.findViewById(R.id.show_image);
-            tittle.setText(entryData.SubjectName);
+            title.setText(entryData.SubjectName);
             Picasso.with(context)
                     .load(entryData.Image)
                     .into(imag);
@@ -88,7 +95,8 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public int getViewTypeCount() {
-        return arrayList.size();
+        return 1;
+        // return arrayList.size();
     }
 
     @Override

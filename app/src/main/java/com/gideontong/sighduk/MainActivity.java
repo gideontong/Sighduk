@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mShowListView;
     private Button testSearchButton;
 
-    ArrayList<Bitmap> picList;
+    // ArrayList<Bitmap> picList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
