@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     private ListView mShowListView;
     private Button testSearchButton;
 
+    ArrayList<Bitmap> picList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
     // A function that updates the UI with new database updates
     private void updateUI() {
         ArrayList<String> showList = new ArrayList<>();
+        picList = new ArrayList<>();
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
