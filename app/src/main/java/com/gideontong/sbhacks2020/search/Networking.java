@@ -10,23 +10,23 @@ public class Networking {
     public static void GetRequest(String Uri) throws IOException {
         URL urlForGetRequest = new URL(Uri);
         String readLine = null;
-        HttpURLConnection conection = (HttpURLConnection) urlForGetRequest.openConnection();
-        conection.setRequestMethod("GET");
-        conection.setRequestProperty("userId", "a1bcdef"); // set userId its a sample here
-        int responseCode = conection.getResponseCode();
+        HttpURLConnection connection = (HttpURLConnection) urlForGetRequest.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("userId", "a1bcdef"); // set userId its a sample here
+
+        int responseCode = connection.getResponseCode();
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(
-                    new InputStreamReader(conection.getInputStream()));
+                    new InputStreamReader(connection.getInputStream()));
             StringBuffer response = new StringBuffer();
             while ((readLine = in.readLine()) != null) {
                 response.append(readLine);
             }
             in.close();
-            // print result
-            System.out.println("JSON String Result " + response.toString());
-            //GetAndPost.POSTRequest(response.toString());
+
+            System.out.println("Result: " + response.toString());
         } else {
-            System.out.println("GET NOT WORKED");
+            System.out.println("GET request failed with response code " + responseCode);
         }
     }
 }
