@@ -1,13 +1,7 @@
 package com.gideontong.sbhacks2020.API;
 
-import org.apache.http.auth.AuthenticationException;
-
-
-import com.gideontong.sbhacks2020.BuildConfig;
-
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
