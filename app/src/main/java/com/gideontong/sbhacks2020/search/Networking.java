@@ -18,10 +18,11 @@ public class Networking {
     private static final String TAG = "AppNetworking";
     private static final String DOMAIN = "https://api.tvdb.com";
     private static final String API = "f777969b76262ceb54369c4912ba66d4"; // REVOKE THIS KEY LATER!
+    private static final String TOKEN = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE1NzkzNDE1NTgsImlkIjoiUmlkZ2xpbmdDYXNpbm8iLCJvcmlnX2lhdCI6MTU3ODczNjc1OH0.mMGjnkr8b052bOqk0x0hZy8O1HlRhqCUbMVaVV05OqjsLqW44p3FvufU8yROaX2AlItnT-kVXQrupNmv26ybSw2gUJGDLLfp3W6tXliZKFZbzrcG5yCeqeyClM3o1RguyMVFqjmO7iOt44r7oiJNb0Ul3vtEIR1GpFWrjEefvkkGCdLHMRL7_VD0L5R2gnkNi3fsbsK4Bp4HGYRXAiy5cU4hru6iDADZVv1bL1pJFUbbi2cBqI1ZmKrPCdviniYqIOSoHUHlGMNhVgBxYS_LCX7_eh_3aEREX4nn7RPBBVf-nmt8d6iKs8Dmc47hpnnOPtXaekkeKbbzPqtfuL3YEQ";
 
     private TokenDbHelper tHelper;
 
-    private String token;
+    // private String token;
 
     public Networking(TokenDbHelper helperObject) {
         // tHelper = helperObject;
@@ -61,10 +62,17 @@ public class Networking {
         URL route = new URL(DOMAIN + "/search/series");
         String readLine = null;
         HttpURLConnection connection = (HttpURLConnection) route.openConnection();
+        Log.d(TAG, "Hello a connection was opened");
+
+        connection.setConnectTimeout(10 * 1000);
+        connection.setReadTimeout(10 * 1000);
         connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
         connection.setRequestProperty("name", search); // set userId its a sample here
+        Log.d(TAG, "I set some cool stuff");
 
         int responseCode = connection.getResponseCode();
+        Log.d(TAG, "Reasponse code " + responseCode);
         if (responseCode == HttpURLConnection.HTTP_OK) {
             BufferedReader in = new BufferedReader(
                     new InputStreamReader(connection.getInputStream()));
@@ -77,9 +85,11 @@ public class Networking {
             Log.d(TAG, "Result: " + response.toString());
             return response.toString();
         } else {
-            System.out.println("GET request failed with response code " + responseCode);
+            Log.d(TAG, "GET request failed with response code " + responseCode);
             return null;
         }
+        // Log.d(TAG, "THIS LOG SHOULD NOT EXIST");
+        // return null;
     }
 
     public static void PostRequest(String Uri) throws IOException {
@@ -116,3 +126,27 @@ public class Networking {
         }
     }
 }
+
+private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
+    // Do the long-running work in here
+    protected Long doInBackground(String query) {
+        int count = urls.length;
+        long totalSize = 0;
+        for (int i = 0; i < count; i++) {
+            totalSize += Downloader.downloadFile(urls[i]);
+            publishProgress((int) ((i / (float) count) * 100));
+            // Escape early if cancel() is called
+            if (isCancelled()) break;
+        }
+        return totalSize;
+    }
+
+    // This is called each time you call publishProgress()
+    protected void onProgressUpdate(Integer... progress) {
+        setProgressPercent(progress[0]);
+    }
+
+    // This is called when doInBackground() is finished
+    protected void onPostExecute(Long result) {
+        showNotification("Downloaded " + result + " bytes");
+    }

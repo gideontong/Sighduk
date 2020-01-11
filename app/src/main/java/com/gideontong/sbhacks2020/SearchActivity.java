@@ -31,9 +31,13 @@ public class SearchActivity extends AppCompatActivity {
         EditText searchBox = (EditText) parent.findViewById(R.id.searchText);
         String query = String.valueOf(searchBox.getText());
         try {
+            Log.d(TAG, "Searching " + query);
             String result = Networking.search(query);
+            Log.d(TAG, "Result was " + result);
         } catch(Exception e) {
+            Log.d(TAG, "We tried but we got " + e);
             String result = null;
         }
+        Log.d(TAG, "EOL");
     }
 }
