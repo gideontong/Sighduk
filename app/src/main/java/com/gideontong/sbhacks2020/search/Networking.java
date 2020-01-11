@@ -59,35 +59,7 @@ public class Networking {
     }
 
     public static String search(String search) throws IOException{
-        URL route = new URL(DOMAIN + "/search/series");
-        String readLine = null;
-        HttpURLConnection connection = (HttpURLConnection) route.openConnection();
-        Log.d(TAG, "Hello a connection was opened");
 
-        connection.setConnectTimeout(10 * 1000);
-        connection.setReadTimeout(10 * 1000);
-        connection.setRequestMethod("GET");
-        connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
-        connection.setRequestProperty("name", search); // set userId its a sample here
-        Log.d(TAG, "I set some cool stuff");
-
-        int responseCode = connection.getResponseCode();
-        Log.d(TAG, "Reasponse code " + responseCode);
-        if (responseCode == HttpURLConnection.HTTP_OK) {
-            BufferedReader in = new BufferedReader(
-                    new InputStreamReader(connection.getInputStream()));
-            StringBuffer response = new StringBuffer();
-            while ((readLine = in.readLine()) != null) {
-                response.append(readLine);
-            }
-            in.close();
-
-            Log.d(TAG, "Result: " + response.toString());
-            return response.toString();
-        } else {
-            Log.d(TAG, "GET request failed with response code " + responseCode);
-            return null;
-        }
         // Log.d(TAG, "THIS LOG SHOULD NOT EXIST");
         // return null;
     }
@@ -130,15 +102,35 @@ public class Networking {
 private class BackgroundSearch extends AsyncTask<URL, Integer, Long> {
     // Do the long-running work in here
     protected Long doInBackground(String query) {
-        int count = urls.length;
-        long totalSize = 0;
-        for (int i = 0; i < count; i++) {
-            totalSize += Downloader.downloadFile(urls[i]);
-            publishProgress((int) ((i / (float) count) * 100));
-            // Escape early if cancel() is called
-            if (isCancelled()) break;
+        URL route = new URL(DOMAIN + "/search/series");
+        String readLine = null;
+        HttpURLConnection connection = (HttpURLConnection) route.openConnection();
+        Log.d(TAG, "Hello a connection was opened");
+
+        connection.setConnectTimeout(10 * 1000);
+        connection.setReadTimeout(10 * 1000);
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("Authorization", "Bearer " + TOKEN);
+        connection.setRequestProperty("name", search); // set userId its a sample here
+        Log.d(TAG, "I set some cool stuff");
+
+        int responseCode = connection.getResponseCode();
+        Log.d(TAG, "Reasponse code " + responseCode);
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(connection.getInputStream()));
+            StringBuffer response = new StringBuffer();
+            while ((readLine = in.readLine()) != null) {
+                response.append(readLine);
+            }
+            in.close();
+
+            Log.d(TAG, "Result: " + response.toString());
+            return response.toString();
+        } else {
+            Log.d(TAG, "GET request failed with response code " + responseCode);
+            return null;
         }
-        return totalSize;
     }
 
     // This is called each time you call publishProgress()
