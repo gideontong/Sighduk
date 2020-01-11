@@ -130,5 +130,7 @@ public class MainActivity extends AppCompatActivity {
                 ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
                 new String[]{show});
         db.close();
+
+        updateUI();
     }
 }
