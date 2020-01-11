@@ -89,7 +89,7 @@ public class SearchActivity extends AppCompatActivity {
 
         if (rAdapter == null) {
             rAdapter = new ArrayAdapter<>(this,
-                    R.layout.item_show,
+                    R.layout.item_search_entry,
                     R.id.show_title,
                     resultsList);
             rShowListView.setAdapter(rAdapter);
@@ -98,6 +98,9 @@ public class SearchActivity extends AppCompatActivity {
             rAdapter.addAll(resultsList);
             rAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void addToDatabase(View view) {
     }
 
     private class BackgroundSearch extends AsyncTask<String, Void, String> {
