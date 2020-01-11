@@ -1,8 +1,8 @@
 package com.gideontong.sighduk;
 
 class EntryData {
-    String SubjectName;
-    String Image;
+    public String SubjectName;
+    public String Image;
 
     public EntryData(String subjectName, String image) {
         this.SubjectName = subjectName;
