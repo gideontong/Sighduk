@@ -17,36 +17,45 @@ class HomeAdapter implements ListAdapter {
         this.arrayList=arrayList;
         this.context=context;
     }
+
     @Override
     public boolean areAllItemsEnabled() {
         return false;
     }
+
     @Override
     public boolean isEnabled(int position) {
         return true;
     }
+
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
     }
+
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
     }
+
     @Override
     public int getCount() {
         return arrayList.size();
     }
+
     @Override
     public Object getItem(int position) {
         return position;
     }
+
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     @Override
     public boolean hasStableIds() {
         return false;
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         SubjectData subjectData = arrayList.get(position);
@@ -67,14 +76,17 @@ class HomeAdapter implements ListAdapter {
         }
         return convertView;
     }
+
     @Override
     public int getItemViewType(int position) {
         return position;
     }
+
     @Override
     public int getViewTypeCount() {
         return arrayList.size();
     }
+    
     @Override
     public boolean isEmpty() {
         return false;
