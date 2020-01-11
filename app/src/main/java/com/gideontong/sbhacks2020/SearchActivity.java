@@ -1,4 +1,8 @@
 package com.gideontong.sbhacks2020;
 
-public class SearchActivity {
+import android.app.AppComponentFactory;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class SearchActivity extends AppCompatActivity {
 }
