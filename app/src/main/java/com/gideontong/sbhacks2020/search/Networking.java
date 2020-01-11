@@ -14,6 +14,7 @@ import com.gideontong.sbhacks2020.db.TokenDbHelper;
 public class Networking {
     private static final String TAG = "AppNetworking";
     private static final String DOMAIN = "https://api.tvdb.com";
+    private static final String API = "f777969b76262ceb54369c4912ba66d4"; // REVOKE THIS KEY LATER!
 
     private TokenDbHelper tHelper;
 
