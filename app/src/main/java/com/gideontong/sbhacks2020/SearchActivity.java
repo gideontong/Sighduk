@@ -102,8 +102,9 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void addToDatabase(View view) {
-        TextView nameBox = (TextView) findViewById(R.id.show_title);
-        new MainActivity().addShowInBackground("");
+        TextView nameBox = findViewById(R.id.show_title);
+        String name = String.valueOf(nameBox.getText());
+        new MainActivity().addShowInBackground(name);
     }
 
     private class BackgroundSearch extends AsyncTask<String, Void, String> {
