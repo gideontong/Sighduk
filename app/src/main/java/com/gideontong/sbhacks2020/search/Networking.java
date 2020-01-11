@@ -1,5 +1,11 @@
 package com.gideontong.sbhacks2020.search;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class Networking {
     public static void GetRequest(String Uri) throws IOException {
         URL urlForGetRequest = new URL(Uri);
