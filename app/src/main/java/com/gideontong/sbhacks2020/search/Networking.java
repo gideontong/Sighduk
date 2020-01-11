@@ -7,7 +7,11 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.util.Log;
+
 public class Networking {
+    private static final String TAG = "AppNetworking";
+
     public static void GetRequest(String Uri) throws IOException {
         URL urlForGetRequest = new URL(Uri);
         String readLine = null;
@@ -25,7 +29,7 @@ public class Networking {
             }
             in.close();
 
-            System.out.println("Result: " + response.toString());
+            Log.d(TAG, "Result: " + response.toString());
         } else {
             System.out.println("GET request failed with response code " + responseCode);
         }

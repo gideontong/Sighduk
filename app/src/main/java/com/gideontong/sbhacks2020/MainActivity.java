@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String show = String.valueOf(taskEditText.getText());
-                                Log.d(TAG, "Will add task with name " + show);
+                                // Log.d(TAG, "Will add task with name " + show);
 
                                 SQLiteDatabase db = mHelper.getWritableDatabase();
                                 ContentValues values = new ContentValues();
