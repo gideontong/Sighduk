@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.gideontong.sbhacks2020.db.TokenDbHelper;
@@ -22,9 +23,11 @@ public class Networking {
         tHelper = helperObject;
     }
 
-    public static void Login() throws IOException {
+    public void Login() throws IOException {
         URL login = new URL(DOMAIN + "/login");
         URL keepAlive = new URL(DOMAIN + "/refresh_token");
+
+        SQLiteDatabase db = tHelper.getWritableDatabase();
     }
 
     public static void GetRequest(String Uri) throws IOException {
