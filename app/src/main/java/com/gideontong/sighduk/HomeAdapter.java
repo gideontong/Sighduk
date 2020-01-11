@@ -65,15 +65,15 @@ class HomeAdapter implements ListAdapter {
         EntryData entryData = arrayList.get(position);
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
-            // convertView = layoutInflater.inflate(R.layout.list_show, null);
-            convertView.setOnClickListener(new View.OnClickListener() {
+            convertView = layoutInflater.inflate(R.layout.show_info, null);
+            /* convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 }
-            });
-            TextView tittle = convertView.findViewById(R.id.title);
+            }); */
+            TextView title = convertView.findViewById(R.id.show_title);
             ImageView imag = convertView.findViewById(R.id.show_image);
-            tittle.setText(entryData.SubjectName);
+            title.setText(entryData.SubjectName);
             Picasso.with(context)
                     .load(entryData.Image)
                     .into(imag);
