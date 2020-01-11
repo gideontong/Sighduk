@@ -18,6 +18,10 @@ public class Networking {
 
     private TokenDbHelper tHelper;
 
+    public Networking(TokenDbHelper helperObject) {
+        tHelper = helperObject;
+    }
+
     public static void Login() throws IOException {
         URL login = new URL(DOMAIN + "/login");
         URL keepAlive = new URL(DOMAIN + "/refresh_token");

@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.gideontong.sbhacks2020.db.ShowContract;
 import com.gideontong.sbhacks2020.db.ShowDbHelper;
 import com.gideontong.sbhacks2020.db.TokenDbHelper;
+import com.gideontong.sbhacks2020.search.Networking;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +31,18 @@ public class MainActivity extends AppCompatActivity {
     private ListView mShowListView;
     private ArrayAdapter<String> mAdapter;
 
+    private TokenDbHelper tHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mHelper = new ShowDbHelper(this);
+        tHelper = new TokenDbHelper(this);
+
+        Networking networking = new Networking(tHelper);
+
         mShowListView = (ListView) findViewById(R.id.list_show);
         updateUI();
     }
