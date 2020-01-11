@@ -31,13 +31,13 @@ public class Networking {
         }
     }
 
-    public static void PostRequest() throws IOException {
+    public static void PostRequest(String Uri) throws IOException {
         final String POST_PARAMS = "{\n" + "\"userId\": 101,\r\n" +
                 "    \"id\": 101,\r\n" +
                 "    \"title\": \"Test Title\",\r\n" +
                 "    \"body\": \"Test Body\"" + "\n}";
         System.out.println(POST_PARAMS);
-        URL obj = new URL("https://jsonplaceholder.typicode.com/posts");
+        URL obj = new URL(Uri);
         HttpURLConnection postConnection = (HttpURLConnection) obj.openConnection();
         postConnection.setRequestMethod("POST");
         postConnection.setRequestProperty("userId", "a1bcdefgh");
