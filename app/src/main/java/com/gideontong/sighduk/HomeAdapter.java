@@ -8,8 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
+
 class CustomAdapter implements ListAdapter {
     ArrayList<SubjectData> arrayList;
     Context context;
