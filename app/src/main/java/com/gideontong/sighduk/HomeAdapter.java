@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -73,13 +74,16 @@ class HomeAdapter implements ListAdapter {
         if(convertView == null) {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.show_info, null);
+
+            ListView listView = (ListView) convertView.findViewById(R.id.list_show);
             /* convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                 }
             }); */
-            TextView title = convertView.findViewById(R.id.show_title);
-            ImageView imag = convertView.findViewById(R.id.show_image);
+            TextView title = listView.findViewById(R.id.show_title);
+            ImageView imag = listView.findViewById(R.id.show_image);
+            // Log.d(TAG, "title is " + convert);
             title.setText(entryData.SubjectName);
             Picasso.with(context)
                     .load(entryData.Image)
