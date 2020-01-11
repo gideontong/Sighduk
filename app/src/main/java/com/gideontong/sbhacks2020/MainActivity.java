@@ -55,6 +55,10 @@ public class MainActivity extends AppCompatActivity {
                     R.id.show_title,
                     showList);
             mShowListView.setAdapter(mAdapter);
+        } else {
+            mAdapter.clear();
+            mAdapter.addAll(showList);
+            mAdapter.notifyDataSetChanged();
         }
 
         cursor.close();
