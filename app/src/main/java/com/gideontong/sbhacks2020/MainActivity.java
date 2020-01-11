@@ -159,4 +159,17 @@ public class MainActivity extends AppCompatActivity {
 
         updateUI();
     }
+
+    public void addShowInBackground(String name) {
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ShowContract.ShowEntry.COL_SHOW_TITLE, name);
+
+        db.insertWithOnConflict(ShowContract.ShowEntry.TABLE,
+                null,
+                values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        db.close();
+    }
 }

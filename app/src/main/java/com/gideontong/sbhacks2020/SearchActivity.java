@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -89,7 +90,7 @@ public class SearchActivity extends AppCompatActivity {
 
         if (rAdapter == null) {
             rAdapter = new ArrayAdapter<>(this,
-                    R.layout.item_show,
+                    R.layout.item_search_entry,
                     R.id.show_title,
                     resultsList);
             rShowListView.setAdapter(rAdapter);
@@ -98,6 +99,12 @@ public class SearchActivity extends AppCompatActivity {
             rAdapter.addAll(resultsList);
             rAdapter.notifyDataSetChanged();
         }
+    }
+
+    public void addToDatabase(View view) {
+        TextView nameBox = findViewById(R.id.show_title);
+        String name = String.valueOf(nameBox.getText());
+        new MainActivity().addShowInBackground(name);
     }
 
     private class BackgroundSearch extends AsyncTask<String, Void, String> {
