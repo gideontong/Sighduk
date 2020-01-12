@@ -16,6 +16,10 @@
             android:label="Search locally...">
         </activity>
         <activity
+            android:name="com.gideontong.sighduk.animeInfoActivity"
+            android:label="Information">
+        </activity>
+        <activity
             android:name="com.gideontong.sighduk.WatchlistActivity"
             android:label="@string/app_name"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">

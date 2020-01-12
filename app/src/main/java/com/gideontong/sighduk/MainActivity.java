@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
+import com.gideontong.sighduk.API.myAnimeListAPI;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 import com.google.android.material.tabs.TabLayout;
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         setPagerAdapter();
+
+        //new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
+
         setTabLayout();
     }
 

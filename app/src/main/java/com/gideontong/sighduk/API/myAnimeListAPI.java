@@ -1,5 +1,17 @@
 package com.gideontong.sighduk.API;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.gideontong.sighduk.animeInfoActivity;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -8,6 +20,7 @@ import org.json.simple.parser.ParseException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -15,59 +28,312 @@ import okhttp3.Response;
 
 public class myAnimeListAPI {
 
+    private Context context;
+
+    // pulledData returnData;
+
+    public void searchCallback(pulledData data){
+
+        Intent intent = new Intent(context, animeInfoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("pulledData", data);
+        context.startActivity(intent);
+    }
+
+    public myAnimeListAPI(Context context){
+        this.context = context;
+    }
+
+    public void backgroundSearchAnime(String animeName){
+        try {
+            new searchAnime().execute(animeName);
+        } catch (Exception e) {
+            System.out.println("kind of ran into an exception...");
+        }
+    }
+
+
     static JSONParser parser = new JSONParser();
 
     private static HashMap<String, Integer> AnimeGenres = new HashMap<>();
     private static HashMap<String, Integer> MangaGenres = new HashMap<>();
 
-    public static ArrayList<String> searchAnime(String animeName, int limit, int page) throws IOException, ParseException{
+    private class searchAnime extends AsyncTask<String, Void, pulledData> {
 
-        if (animeName == null || animeName == "") return null;
-        OkHttpClient client = new OkHttpClient();
+        @Override
+        protected pulledData doInBackground(String... queries) {
 
-        Request request = new Request.Builder()
-                .url("https://api.jikan.moe/v3/search/anime?q="+animeName+"&limit=30")
-                .get()
-                .build();
+            String animeName = queries[0];
+            if (animeName == null || animeName == "") return null;
+            OkHttpClient client = new OkHttpClient();
 
-        try (Response response = client.newCall(request).execute()) {
-            //System.out.println(response.body().string());
-            JSONObject json = (JSONObject)parser.parse(response.body().string());
-            JSONArray results = ((JSONArray)json.get("results"));
-            ArrayList<String> title = new ArrayList<>();
-            ArrayList<String> image_url = new ArrayList<>();
-            ArrayList<String> url = new ArrayList<>();
-            ArrayList<String> synopsis = new ArrayList<>();
-            ArrayList<Long> episodes = new ArrayList<>();
-            ArrayList<String> score = new ArrayList<>();
+            Request request = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/search/anime?q="+animeName+"&limit=30")
+                    .get()
+                    .build();
 
-            for(int i = 0; i < results.size(); i++){
-                title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
-                image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
-                url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
-                synopsis.add(i, ((JSONObject)results.toArray()[i]).get("synopsis").toString());
-                episodes.add(i, ((Long)((JSONObject)results.toArray()[i]).get("episodes")));
-                if ((((JSONObject)results.toArray()[i]).get("score")) != null) {
-                    score.add(i, (((JSONObject)results.toArray()[i]).get("score")).toString());
+            try (Response response = client.newCall(request).execute()) {
+                //System.out.println(response.body().string());
+
+
+
+                JSONObject json = (JSONObject)parser.parse(response.body().string());
+                JSONArray results = ((JSONArray)json.get("results"));
+                ArrayList<String> title = new ArrayList<>();
+                ArrayList<String> image_url = new ArrayList<>();
+                ArrayList<String> url = new ArrayList<>();
+                ArrayList<String> synopsis = new ArrayList<>();
+                ArrayList<Long> episodes = new ArrayList<>();
+                ArrayList<String> score = new ArrayList<>();
+                ArrayList<String> rank = new ArrayList<>();
+
+                for(int i = 0; i < results.size(); i++){
+                    Request request2 = new Request.Builder()
+                            .url("https://api.jikan.moe/v3/anime/"+((JSONObject)results.toArray()[i]).get("mal_id").toString())
+                            .get()
+                            .build();
+                    try (Response response2 = client.newCall(request2).execute()) {
+                        JSONObject importantResponse = (JSONObject)parser.parse(response2.body().string());
+                        title.add(i, (importantResponse).get("title").toString());
+                        image_url.add(i, (importantResponse).get("image_url").toString());
+                        url.add(i, (importantResponse).get("url").toString());
+                        synopsis.add(i, (importantResponse).get("synopsis").toString());
+                        episodes.add(i, ((Long)(importantResponse).get("episodes")));
+                        if (((importantResponse).get("rank")) != null) {
+                            rank.add(i, ((importantResponse).get("rank")).toString());
+                        } else {
+                            rank.add(i, null);
+                        }
+                        if (((importantResponse).get("score")) != null) {
+                            score.add(i, ((importantResponse).get("score")).toString());
+                        } else {
+                            score.add(i, null);
+                        }
+                    }
+                    catch (IOException e){
+                        return null;
+                    }
                 }
-                else {
-                    score.add(i, null);
-                }
+                System.out.println(title);
+                System.out.println(image_url);
+                System.out.println(url);
+                System.out.println(synopsis);
+                System.out.println(episodes);
+                System.out.println(score);
+                System.out.println("-----------------------------------------------------------------------------------------");
+                System.out.println(json);
+
+                return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
             }
-            System.out.println(title);
-            System.out.println(image_url);
-            System.out.println(url);
-            System.out.println(synopsis);
-            System.out.println(episodes);
-            System.out.println(score);
-            System.out.println("-----------------------------------------------------------------------------------------");
-            System.out.println(json);
+            catch (IOException e) {
+                return null;
+            }
+            catch (ParseException e){
+                return null;
+            }
+        }
 
-            return title;
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(pulledData result) {
+            searchCallback(result);
+
+            // new SearchActivity().searchCallback(result);
         }
     }
 
-    public static ArrayList<String> searchGenre(String genre, String type, int limit, int page) throws IOException, ParseException{
+    private class searchGenre extends AsyncTask<String, Void, pulledData> {
+
+        @Override
+        protected pulledData doInBackground(String... queries) {
+
+            String genre = queries[0];
+            String type = queries[1];
+            if (type != "anime" && type != "manga") return null;
+            if (!AnimeGenres.containsKey(genre) && !MangaGenres.containsKey(genre)) return null;
+
+            int id = (type.toLowerCase() == "anime") ? AnimeGenres.get(genre) : MangaGenres.get(genre);
+            System.out.println(id);
+            OkHttpClient client = new OkHttpClient();
+
+            System.out.println("https://api.jikan.moe/v3/genre/"+type+"/"+id+"");
+            Request request = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/genre/"+type+"/"+id+"")
+                    .get()
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                JSONObject json = (JSONObject)parser.parse(response.body().string());
+                JSONArray results = ((JSONArray)json.get(type));
+                ArrayList<String> title = new ArrayList<>();
+                ArrayList<String> image_url = new ArrayList<>();
+                ArrayList<String> url = new ArrayList<>();
+                ArrayList<String> rank = new ArrayList<>();
+                ArrayList<String> synopsis = new ArrayList<>();
+                ArrayList<Long> episodes = new ArrayList<>();
+                ArrayList<String> score = new ArrayList<>();
+
+                for(int i = 0; i < results.size(); i++){
+                    title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
+                    image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
+                    url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
+                    synopsis.add(i, ((JSONObject)results.toArray()[i]).get("synopsis").toString());
+                    episodes.add(i, ((Long)((JSONObject)results.toArray()[i]).get("episodes")));
+                    if ((((JSONObject)results.toArray()[i]).get("rank")) != null) {
+                        rank.add(i, (((JSONObject)results.toArray()[i]).get("rank")).toString());
+                    }
+                    else {
+                        rank.add(i, null);
+                    }
+                    if ((((JSONObject)results.toArray()[i]).get("score")) != null) {
+                        score.add(i, (((JSONObject)results.toArray()[i]).get("score")).toString());
+                    }
+                    else {
+                        score.add(i, null);
+                    }
+                }
+                System.out.println(results);
+                if (type == "anime"){
+                    return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                }
+                else if (type == "manga"){
+                    return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                }
+                return null;
+            }
+            catch (IOException e){
+                System.out.println("IOException");
+                return null;
+            }
+            catch (ParseException e) {
+                return null;
+            }
+        }
+
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(pulledData result) {
+            //searchCallback(result);
+            /*Intent intent = new Intent(getApplicationContext(), animeInfoActivity.class);
+            intent.putExtra("pulledData", result);
+            startActivity(intent);*/
+            // new SearchActivity().searchCallback(result);
+        }
+    }
+
+
+    private class topItems extends AsyncTask<String, Void, pulledData> {
+
+        @Override
+        protected pulledData doInBackground(String... queries) {
+
+            OkHttpClient client = new OkHttpClient();
+            String type = queries[0];
+            Request request = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/top/"+type+"/"+1)
+                    .get()
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (type == "anime" || type == "manga") {
+                    JSONObject json = (JSONObject) parser.parse(response.body().string());
+                    JSONArray results = ((JSONArray) json.get("top"));
+                    ArrayList<String> title = new ArrayList<>();
+                    ArrayList<String> image_url = new ArrayList<>();
+                    ArrayList<String> url = new ArrayList<>();
+                    ArrayList<String> synopsis = new ArrayList<>();
+                    ArrayList<String> rank = new ArrayList<>();
+                    ArrayList<Long> episodes = new ArrayList<>();
+                    ArrayList<String> score = new ArrayList<>();
+                    for (int i = 0; i < results.size(); i++) {
+                        title.add(i, ((JSONObject) results.toArray()[i]).get("title").toString());
+                        image_url.add(i, ((JSONObject) results.toArray()[i]).get("image_url").toString());
+                        url.add(i, ((JSONObject) results.toArray()[i]).get("url").toString());
+                        rank.add(i, ((JSONObject) results.toArray()[i]).get("rank").toString());
+                        if ((((JSONObject) results.toArray()[i])).get("synopsis") != null){
+                            synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
+                        } else {
+                            synopsis.add(i, null);
+                        }
+                        episodes.add(i, ((Long) ((JSONObject) results.toArray()[i]).get("episodes")));
+                        if ((((JSONObject) results.toArray()[i]).get("score")) != null) {
+                            score.add(i, (((JSONObject) results.toArray()[i]).get("score")).toString());
+                        } else {
+                            score.add(i, null);
+                        }
+                    }
+                    System.out.println(results);
+                    if (type == "anime"){
+                        return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                    }
+                    else if (type == "manga"){
+                        return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                    }
+                    else return null;
+                }
+                else if (type == "people") {
+                    JSONObject json = (JSONObject)parser.parse(response.body().string());
+                    JSONArray results = ((JSONArray)json.get("top"));
+                    ArrayList<String> title = new ArrayList<>();
+                    ArrayList<String> image_url = new ArrayList<>();
+                    ArrayList<String> url = new ArrayList<>();
+
+                    for(int i = 0; i < results.size(); i++){
+                        title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
+                        image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
+                        url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
+                    }
+                    System.out.println(title);
+                    System.out.println(image_url);
+                    System.out.println(url);
+                    System.out.println("-----------------------------------------------------------------------------------------");
+                    System.out.println(json);
+                    return new pulledData(title, image_url, url, null, null, null, null, null);
+
+                }
+                else if (type == "characters"){
+                    JSONObject json = (JSONObject)parser.parse(response.body().string());
+                    System.out.println(json);
+                    JSONArray results = ((JSONArray)json.get("top"));
+                    ArrayList<String> title = new ArrayList<>();
+                    ArrayList<String> image_url = new ArrayList<>();
+                    ArrayList<String> url = new ArrayList<>();
+
+                    for(int i = 0; i < results.size(); i++){
+                        title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
+                        image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
+                        url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
+                    }
+                    System.out.println(title);
+                    System.out.println(image_url);
+                    System.out.println(url);
+                    System.out.println("-----------------------------------------------------------------------------------------");
+                    System.out.println(json);
+                    return new pulledData(title, image_url, url, null, null, null, null, null);
+
+                }
+                else {
+                    System.out.println("Something went wrong... Sorry!");
+                    return null;
+                }
+            }
+            catch (IOException e){
+                return null;
+            }
+            catch (ParseException e){
+                return null;
+            }
+        }
+
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(pulledData result) {
+            searchCallback(result);
+            // new SearchActivity().searchCallback(result);
+        }
+    }
+
+    /*public static pulledData searchGenre(String genre, String type, int limit, int page) throws IOException, ParseException{
 
         if (type != "anime" && type != "manga") return null;
         if (!AnimeGenres.containsKey(genre) && !MangaGenres.containsKey(genre)) return null;
@@ -88,6 +354,7 @@ public class myAnimeListAPI {
             ArrayList<String> title = new ArrayList<>();
             ArrayList<String> image_url = new ArrayList<>();
             ArrayList<String> url = new ArrayList<>();
+            ArrayList<String> rank = new ArrayList<>();
             ArrayList<String> synopsis = new ArrayList<>();
             ArrayList<Long> episodes = new ArrayList<>();
             ArrayList<String> score = new ArrayList<>();
@@ -98,6 +365,12 @@ public class myAnimeListAPI {
                 url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
                 synopsis.add(i, ((JSONObject)results.toArray()[i]).get("synopsis").toString());
                 episodes.add(i, ((Long)((JSONObject)results.toArray()[i]).get("episodes")));
+                if ((((JSONObject)results.toArray()[i]).get("rank")) != null) {
+                    rank.add(i, (((JSONObject)results.toArray()[i]).get("rank")).toString());
+                }
+                else {
+                    rank.add(i, null);
+                }
                 if ((((JSONObject)results.toArray()[i]).get("score")) != null) {
                     score.add(i, (((JSONObject)results.toArray()[i]).get("score")).toString());
                 }
@@ -106,9 +379,15 @@ public class myAnimeListAPI {
                 }
             }
             System.out.println(results);
-            return title;
+            if (type == "anime"){
+                return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+            }
+            else if (type == "manga"){
+                return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+            }
+            return null;
         }
-    }
+    }*/
 
     public static JSONObject searchPeople(String person, int limit, int page) throws IOException, ParseException{
         OkHttpClient client = new OkHttpClient();
@@ -139,7 +418,7 @@ public class myAnimeListAPI {
         }
     }
 
-    public static ArrayList<String> topItems(String type, int page) throws IOException, ParseException{
+    public static pulledData topItems(String type, int page) throws IOException, ParseException{
         OkHttpClient client = new OkHttpClient();
 
         Request request = new Request.Builder()
@@ -155,12 +434,14 @@ public class myAnimeListAPI {
                 ArrayList<String> image_url = new ArrayList<>();
                 ArrayList<String> url = new ArrayList<>();
                 ArrayList<String> synopsis = new ArrayList<>();
+                ArrayList<String> rank = new ArrayList<>();
                 ArrayList<Long> episodes = new ArrayList<>();
                 ArrayList<String> score = new ArrayList<>();
                 for (int i = 0; i < results.size(); i++) {
                     title.add(i, ((JSONObject) results.toArray()[i]).get("title").toString());
                     image_url.add(i, ((JSONObject) results.toArray()[i]).get("image_url").toString());
                     url.add(i, ((JSONObject) results.toArray()[i]).get("url").toString());
+                    rank.add(i, ((JSONObject) results.toArray()[i]).get("rank").toString());
                     if ((((JSONObject) results.toArray()[i])).get("synopsis") != null){
                         synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
                     } else {
@@ -174,7 +455,13 @@ public class myAnimeListAPI {
                     }
                 }
                 System.out.println(results);
-                return title;
+                if (type == "anime"){
+                    return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                }
+                else if (type == "manga"){
+                    return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                }
+                else return null;
             }
             else if (type == "people") {
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
@@ -193,7 +480,8 @@ public class myAnimeListAPI {
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
-                return title;
+                return new pulledData(title, image_url, url, null, null, null, null, null);
+
             }
             else if (type == "characters"){
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
@@ -213,7 +501,8 @@ public class myAnimeListAPI {
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
-                return title;
+                return new pulledData(title, image_url, url, null, null, null, null, null);
+
             }
             else {
                 System.out.println("Something went wrong... Sorry!");
@@ -257,8 +546,8 @@ public class myAnimeListAPI {
         MangaGenres.put("Kids", 15); MangaGenres.put("Super Power", 31);
         MangaGenres.put("Magic", 16); MangaGenres.put("Vampire", 32);
 
-        OkHttpClient client = new OkHttpClient();
-        String type = "people";
+        /*OkHttpClient client = new OkHttpClient();
+        String type = "anime";
         Request request = new Request.Builder()
                 .url("https://api.jikan.moe/v3/top/"+type+"/"+1)
                 .get()
@@ -332,7 +621,7 @@ public class myAnimeListAPI {
             else {
                 System.out.println("Something went wrong... Sorry!");
             }
-        }
+        }*/
 
 
     }
