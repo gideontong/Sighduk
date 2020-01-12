@@ -26,7 +26,7 @@ public class CollectionFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        demoCollectionPagerAdapter = new DemoCollectionPagerAdapter(getChildFragmentManager());
+        demoCollectionPagerAdapter = new CollectionPagerAdapter(getChildFragmentManager());
         viewPager = view.findViewById(R.id.pager);
         viewPager.setAdapter(demoCollectionPagerAdapter);
     }
