@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -40,13 +41,14 @@ public class WatchlistFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // RelativeLayout content = (RelativeLayout) rootView
         // setContentView(R.layout.activity_watchlist);
 
         mHelper = new ShowDbHelper(getContext());
 
         // mShowListView = getView().findViewById(R.id.list_show);
-        Log.d(TAG, "Attempting to find view, found " + mShowListView);
-        updateUI();
+        // Log.d(TAG, "Attempting to find view, found " + mShowListView);
+        // updateUI();
     }
 
     @Override
@@ -60,13 +62,18 @@ public class WatchlistFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View viewer = inflater.inflate(R.layout.fragment_watchlist, container, false);
-        mShowListView = viewer.findViewById(R.id.list_show);
+        // mShowListView = (ListView) viewer.findViewById(R.id.list_show);
+        // mShowListView.addView();
+        // mShowListView = viewer.findViewById(R.id.list_show);
         Log.d(TAG, "Setting created view, list view is at " + mShowListView);
         return viewer;
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) 
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        // mShowListView = getView().findViewById(R.id.list_show);
+        // Log.d(TAG, "Setting created view, list view is at " + mShowListView);
+        // updateUI();
     }
 
     public void deleteShow(View view) {

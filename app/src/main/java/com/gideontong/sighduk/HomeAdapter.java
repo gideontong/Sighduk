@@ -73,6 +73,7 @@ class HomeAdapter implements ListAdapter {
 
         Log.d(TAG, "entryData memory address is " + entryData);
         if(convertView == null) {
+            Log.d(TAG, "The context should be " + context);
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.item_show, null);
 
