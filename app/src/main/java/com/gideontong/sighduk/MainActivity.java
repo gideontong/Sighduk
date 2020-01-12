@@ -37,7 +37,9 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         setPagerAdapter();
-        new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
+
+        //new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
+
         setTabLayout();
     }
 
