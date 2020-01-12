@@ -110,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.searchBtn:
+            /*case R.id.searchBtn:
                 Intent searchIntent = new Intent(this, LocalSearchActivity.class);
                 startActivity(searchIntent);
-                return true;
+                return true;*/
 
             default:
                 return super.onOptionsItemSelected(item);
