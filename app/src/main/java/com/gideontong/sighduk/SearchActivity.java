@@ -62,15 +62,6 @@ public class SearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         rShowListView = (ListView) findViewById(R.id.list_results);
-        rShowListView.setAdapter(rAdapter);
-        rShowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(SearchActivity.this, items.get(position)+"", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
 
         mHelper = new ShowDbHelper(this);
 
@@ -136,8 +127,7 @@ public class SearchActivity extends AppCompatActivity {
         this.data = data;
         if (rAdapter == null) {
             rAdapter = new ArrayAdapter<>(this,
-                    R.layout.item_search_entry,
-                    android.R.layout.,
+                    android.R.layout.simple_list_item_1,
                     data.getTitle());
 
             //Button button = (Button)findViewById(R.id.show_title);
