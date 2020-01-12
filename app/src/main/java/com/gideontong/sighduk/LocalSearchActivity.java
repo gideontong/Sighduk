@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class search_item extends AppCompatActivity {
+public class LocalSearchActivity extends AppCompatActivity {
 
     /*
     private Button search_button;

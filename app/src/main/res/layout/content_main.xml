@@ -7,19 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/activity_main"
-    tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/searchBtn"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="searchLocalInfo"
-        android:textSize="15dp" >
-
-    </Button>
-
+    tools:showIn="@layout/activity_watchlist"
+    tools:context=".WatchlistActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -112,9 +113,13 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void addToDatabase(View view) {
-        TextView nameBox = findViewById(R.id.show_title);
-        String name = String.valueOf(nameBox.getText());
-        // new MainActivity().addShowInBackground(name);
+        // TextView nameBox = findViewById(R.id.show_title);
+        // String name = String.valueOf(nameBox.getText());
+        // new WatchlistActivity().addShowInBackground(name);
+
+        RelativeLayout row = (RelativeLayout)view.getParent();
+        TextView child = (TextView)row.getChildAt(0);
+        String name = child.getText().toString();
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
@@ -131,7 +136,7 @@ public class SearchActivity extends AppCompatActivity {
                 SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
 
-        // go back to MainActivity view
+        // go back to WatchlistActivity view
         setContentView(R.layout.activity_search);
         finish();
     }

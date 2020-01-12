@@ -21,8 +21,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -37,12 +35,11 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+public class WatchlistActivity extends AppCompatActivity {
+    private static final String TAG = "WatchlistActivity";
 
     private ShowDbHelper mHelper;
     private ListView mShowListView;
-    private Button testSearchButton;
 
     public void createAnimeInfo(pulledData data) {
         Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
@@ -52,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_watchlist);
 
 //---------------------------------------------------------------------------------------------
             new myAnimeListAPI(this.getApplicationContext()).backgroundSearchAnime("Naruto");
@@ -65,15 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         mHelper = new ShowDbHelper(this);
-
-        testSearchButton = findViewById(R.id.searchBtn);
-        testSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, search_item.class);
-                startActivity(intent);
-            }
-        });
 
         mShowListView = findViewById(R.id.list_show);
         updateUI();
@@ -151,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
                                         values,
                                         SQLiteDatabase.CONFLICT_REPLACE);
                                 db.close();
-                                updateUI();
+                                // updateUI();
                             }
                         })
                         .setNegativeButton("Cancel", null)
@@ -163,6 +151,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.action_search:
                 Intent intent = new Intent(this, SearchActivity.class);
                 startActivity(intent);
+                return true;
+
+            case R.id.searchBtn:
+                Intent searchIntent = new Intent(this, LocalSearchActivity.class);
+                startActivity(searchIntent);
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
