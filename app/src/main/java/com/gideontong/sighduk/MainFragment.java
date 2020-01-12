@@ -8,8 +8,6 @@ import com.gideontong.sighduk.db.ShowDbHelper;
 public class MainFragment extends Fragment {
     public static final String TAG = "MainFragment";
 
-    private ShowDbHelper mHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
