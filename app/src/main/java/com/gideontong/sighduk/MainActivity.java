@@ -1,4 +1,6 @@
 package com.gideontong.sighduk;
 
-public class MainActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
 }
