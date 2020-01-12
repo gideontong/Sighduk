@@ -100,6 +100,7 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {    }
 
+    /*
     public void deleteShow(View view) {
         Log.d(TAG, "deleteShow was called with view at " + view);
         View parent = (View) view.getParent();
@@ -115,8 +116,11 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
         // updateUI();
     }
 
+     */
+
     @Override
     public void onClick(View view) {
+        /*
         Log.d(TAG, "A button press was detected!");
         switch(view.getId()) {
             case R.id.show_delete:
@@ -124,7 +128,10 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
                 deleteShow(view);
                 break;
         }
+         */
     }
+
+    /*
 
     private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
         @Override
@@ -149,6 +156,8 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
             // imageView.setImageBitmap(result);
         }
     }
+
+     */
 
 
 }

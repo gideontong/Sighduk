@@ -60,6 +60,15 @@ public class HistoryFragment extends Fragment {
             Log.d(TAG, "New task was added to the view with name " + nextName + " and uri " + grabUri);
         }
 
+        db.close();
+        HomeAdapter adapter = new HomeAdapter(
+                getActivity().getApplicationContext(),
+                showList
+        );
+
+        ListView listInfo = view.findViewById(R.id.list_saved);
+        listInfo.setAdapter(adapter);
+
         return view;
     }
 
