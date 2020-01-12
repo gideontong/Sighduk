@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class FirstFragment extends Fragment {
+public class WatchlistFragment extends Fragment {
 
-    public FirstFragment() {}
+    public WatchlistFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
