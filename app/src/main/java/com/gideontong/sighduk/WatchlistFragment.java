@@ -23,6 +23,7 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
 
     private ShowDbHelper mHelper;
     private ListView mShowListView;
+    private HomeAdapter mAdapter;
 
     public WatchlistFragment() {
         // mHelper = new ShowDbHelper(context);
@@ -43,8 +44,12 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onResume() {
+        Log.d(TAG, "Resume waws called!");
         super.onResume();
         getView().findViewById(R.id.list_show).invalidate();
+        mShowListView.invalidate();
+        mAdapter.notifyDataSetChanged();
+        mShowListView.refreshDrawableState();
         // updateUI();
     }
 
@@ -79,13 +84,13 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
 
         db.close();
 
-        HomeAdapter adapter = new HomeAdapter(
+        mAdapter = new HomeAdapter(
                 getActivity().getApplicationContext(),
                 showList
         );
 
-        ListView listInfo = (ListView) viewer.findViewById(R.id.list_show);
-        listInfo.setAdapter(adapter);
+        mShowListView = (ListView) viewer.findViewById(R.id.list_show);
+        mShowListView.setAdapter(mAdapter);
 
         return viewer;
     }

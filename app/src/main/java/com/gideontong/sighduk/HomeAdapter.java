@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
@@ -22,7 +23,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-class HomeAdapter implements ListAdapter {
+class HomeAdapter extends BaseAdapter implements ListAdapter {
     public static final String TAG = "HomeAdapter";
 
     ArrayList<EntryData> arrayList;

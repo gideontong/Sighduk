@@ -22,6 +22,7 @@ public class HistoryFragment extends Fragment {
 
     private SavedDbHelper kHelper;
     private ListView kShowListView;
+    private HomeAdapter kAdapter;
 
     public HistoryFragment() {}
 
@@ -61,20 +62,23 @@ public class HistoryFragment extends Fragment {
         }
 
         db.close();
-        HomeAdapter adapter = new HomeAdapter(
+
+        kAdapter = new HomeAdapter(
                 getActivity().getApplicationContext(),
                 showList
         );
 
-        ListView listInfo = view.findViewById(R.id.list_saved);
-        listInfo.setAdapter(adapter);
+        kShowListView = view.findViewById(R.id.list_saved);
+        kShowListView.setAdapter(kAdapter);
 
         return view;
     }
 
     @Override
     public void onResume() {
+        Log.d(TAG, "Resumed!");
         super.onResume();
-        getView().findViewById(R.id.list_saved).invalidate();
+        kShowListView.invalidate();
+        kAdapter.notifyDataSetChanged();
     }
 }
