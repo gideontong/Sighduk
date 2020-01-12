@@ -1,5 +1,6 @@
 package com.gideontong.sighduk;
 
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -31,8 +32,8 @@ public class WatchlistFragment extends Fragment {
     private ShowDbHelper mHelper;
     private ListView mShowListView;
 
-    public WatchlistFragment(ShowDbHelper helper) {
-        mHelper = helper;
+    public WatchlistFragment(Context context) {
+        mHelper = new ShowDbHelper(context);
     }
 
     @Override

@@ -15,7 +15,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new WatchlistFragment();
+                return new WatchlistFragment(new MainActivity());
             case 1:
                 return new HistoryFragment();
             default:
