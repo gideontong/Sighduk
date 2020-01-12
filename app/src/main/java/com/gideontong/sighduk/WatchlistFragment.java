@@ -60,14 +60,6 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View viewer = inflater.inflate(R.layout.fragment_watchlist, container, false);
-        // ListView listView = (ListView) viewer.findViewById(R.id.list_show);
-        // View listViewer = (View) listView.getView
-        // Log.d(TAG, "ListView was found with address " + listView);
-        // Button button = (Button) listView.findViewById(R.id.show_delete);
-        // button.setOnClickListener(this);
-        // mShowListView = (ListView) viewer.findViewById(R.id.list_show);
-        // mShowListView.addView();
-        // mShowListView = viewer.findViewById(R.id.list_show);
         Log.d(TAG, "Setting created view, list view is at " + mShowListView);
 
         ArrayList<EntryData> showList = new ArrayList<>();
@@ -106,11 +98,7 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        // mShowListView = getView().findViewById(R.id.list_show);
-        // Log.d(TAG, "Setting created view, list view is at " + mShowListView);
-        // updateUI();
-    }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {    }
 
     public void deleteShow(View view) {
         Log.d(TAG, "deleteShow was called with view at " + view);
