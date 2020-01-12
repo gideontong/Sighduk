@@ -47,6 +47,7 @@ class HomeAdapter implements ListAdapter {
         String show = String.valueOf(showTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
+        /*
         Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
                 new String[]{
                         ShowContract.ShowEntry._ID,
@@ -58,6 +59,7 @@ class HomeAdapter implements ListAdapter {
         int uriIndex = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
         Log.d(TAG, "Cursor pos is " + cursor + " with index at " + uriIndex);
         // String uri = cursor.getString(uriIndex);
+        */
         String uri = "wtf";
 
         Log.d(TAG, "Deleting show with name " + show + " and uri " + uri);
