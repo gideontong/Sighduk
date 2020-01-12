@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
     // A function that updates the UI with new database updates
     private void updateUI() {
         ArrayList<EntryData> showList = new ArrayList<>();
@@ -150,21 +151,6 @@ public class MainActivity extends AppCompatActivity {
 
         cursor.close();
         db.close();
-    }
-
-    /*
-    public void deleteShow(View view) {
-        View parent = (View) view.getParent();
-        TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
-        String show = String.valueOf(showTextView.getText());
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-
-        db.delete(ShowContract.ShowEntry.TABLE,
-                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
-                new String[]{show});
-        db.close();
-
-        // updateUI();
     }
      */
 }
