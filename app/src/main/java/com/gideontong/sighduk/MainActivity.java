@@ -20,12 +20,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         setPagerAdapter();
+        setTabLayout();
     }
 
     private void setPagerAdapter(){
         myFragmentPagerAdapter = new CustomFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myFragmentPagerAdapter);
+    }
+
+    private void setTabLayout() {
+        tabLayout.setupWithViewPager(viewPager);
+
+        tabLayout.getTabAt(0).setText("First");
+        tabLayout.getTabAt(1).setText("Second");
     }
 }
