@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
+import com.google.android.material.tabs.TabLayout;
+
 public class CollectionFragment extends Fragment {
     // When requested, this adapter returns a DemoObjectFragment,
     // representing an object in the collection.
@@ -26,8 +28,7 @@ public class CollectionFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        demoCollectionPagerAdapter = new CollectionPagerAdapter(getChildFragmentManager());
-        viewPager = view.findViewById(R.id.pager);
-        viewPager.setAdapter(demoCollectionPagerAdapter);
+        TabLayout tabLayout = view.findViewById(R.id.tab_layout);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
