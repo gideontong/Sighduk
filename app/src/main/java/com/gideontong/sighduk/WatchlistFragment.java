@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.gideontong.sighduk.db.ShowContract;
@@ -32,8 +33,8 @@ public class WatchlistFragment extends Fragment {
     private ShowDbHelper mHelper;
     private ListView mShowListView;
 
-    public WatchlistFragment(Context context) {
-        mHelper = new ShowDbHelper(context);
+    public WatchlistFragment() {
+        // mHelper = new ShowDbHelper(context);
     }
 
     @Override
@@ -41,10 +42,11 @@ public class WatchlistFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // setContentView(R.layout.activity_watchlist);
 
-        // mHelper = new ShowDbHelper(this);
+        mHelper = new ShowDbHelper(getContext());
 
-        // mShowListView = findViewById(R.id.list_show);
-        // updateUI();
+        // mShowListView = getView().findViewById(R.id.list_show);
+        Log.d(TAG, "Attempting to find view, found " + mShowListView);
+        updateUI();
     }
 
     @Override
@@ -57,7 +59,14 @@ public class WatchlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_watchlist, container, false);
+        View viewer = inflater.inflate(R.layout.fragment_watchlist, container, false);
+        mShowListView = viewer.findViewById(R.id.list_show);
+        Log.d(TAG, "Setting created view, list view is at " + mShowListView);
+        return viewer;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) 
     }
 
     public void deleteShow(View view) {
@@ -96,5 +105,37 @@ public class WatchlistFragment extends Fragment {
             // ImageView imageView = findViewById(R.id.show_image);
             // imageView.setImageBitmap(result);
         }
+    }
+
+    // A function that updates the UI with new database updates
+    private void updateUI() {
+        ArrayList<EntryData> showList = new ArrayList<>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
+                null, null, null, null, null);
+        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
+                null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
+            String nextName = cursor.getString(idx);
+
+            urlCursor.moveToNext();
+            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
+
+            showList.add(new EntryData(nextName, grabUrl));
+
+            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
+        }
+
+        HomeAdapter listAdapter = new HomeAdapter(new MainActivity(), showList);
+        Log.d(TAG, "Location of mShowListView is " + mShowListView);
+        mShowListView.setAdapter(listAdapter);
+
+        cursor.close();
+        db.close();
     }
 }
