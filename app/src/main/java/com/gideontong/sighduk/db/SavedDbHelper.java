@@ -18,4 +18,10 @@ public class SavedDbHelper extends SQLiteOpenHelper {
 
         db.execSQL(createTable);
     }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        db.execSQL("DROP TABLE IF EXISTS " + SavedContract.SavedEntry.TABLE);
+        onCreate(db);
+    }
 }
