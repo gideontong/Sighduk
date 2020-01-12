@@ -35,6 +35,6 @@ public class HistoryFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // getView()
+        getView().findViewById(R.id.list_saved).invalidate();
     }
 }
