@@ -36,7 +36,6 @@ public class myAnimeListAPI {
     public void searchCallback(pulledData data) {
 
         if (context != null) {
-            new SearchActivity().animeCallBack(data);
             Intent intent = new Intent(context, animeInfoActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("pulledData", data);
@@ -57,7 +56,7 @@ public class myAnimeListAPI {
 
     public void backgroundSearchAnime(String animeName) {
         try {
-            new searchAnime().execute(animeName);
+            new singleAnimeInfo().execute(animeName);
         } catch (Exception e) {
             System.out.println("kind of ran into an exception...");
         }
@@ -145,10 +144,27 @@ public class myAnimeListAPI {
 
         @Override
         protected pulledData doInBackground(String... queries) {
-
-            String animeID = queries[0];
-            if (animeID == null || animeID == "") return null;
+            String animeID = null;
+            String animeName = queries[0];
+            if (animeName == null || animeName == "") return null;
             OkHttpClient client = new OkHttpClient();
+
+            Request request2 = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/search/anime?q=" + animeName + "&limit=30")
+                    .get()
+                    .build();
+            try (Response response2 = client.newCall(request2).execute()) {
+                JSONObject res = (JSONObject)parser.parse(response2.body().string());
+                JSONArray results = ((JSONArray)res.get("results"));
+                animeID = ((JSONObject)results.toArray()[0]).get("mal_id").toString();
+            }
+            catch (IOException e){
+
+            }
+            catch (ParseException e){
+
+            }
+            if (animeID == null || animeID == "") return null;
 
             Request request = new Request.Builder()
                     .url("https://api.jikan.moe/v3/anime/" + animeID + "")

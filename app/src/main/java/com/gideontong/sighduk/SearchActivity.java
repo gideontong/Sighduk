@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,6 +27,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,19 +47,28 @@ public class SearchActivity extends AppCompatActivity {
     private ListView rShowListView;
     private ShowDbHelper mHelper;
 
+
     boolean animeSearch = false;
     ArrayList<String> resultsList;
     pulledData data;
     ArrayList<String> uriList;
 
     String export = "";
+    ArrayList<String> items;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         rShowListView = (ListView) findViewById(R.id.list_results);
+
+
+
+
         mHelper = new ShowDbHelper(this);
+
+
     }
 
     @Override
@@ -63,6 +76,8 @@ public class SearchActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_search, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
+
 
     public void searchAnime(View view) {
 
@@ -82,6 +97,14 @@ public class SearchActivity extends AppCompatActivity {
             String result = null;
         }
         Log.d(TAG, "EOL");
+    }
+
+    public void onItemClick(View v){
+        System.out.println("CLICK");
+
+        System.out.println("Getting information on: " +((TextView)findViewById(v.getId())).getText());
+        new myAnimeListAPI(v.getContext()).backgroundSearchAnime(((TextView)findViewById(v.getId())).getText().toString());
+
     }
 
     public void searchOnline(View view) {
@@ -110,14 +133,24 @@ public class SearchActivity extends AppCompatActivity {
                     R.layout.item_search_entry,
                     R.id.show_title,
                     data.getTitle());
+
+            //Button button = (Button)findViewById(R.id.show_title);
+
+
             rShowListView.setAdapter(rAdapter);
-            for (int i = 0; i < rAdapter.getCount(); i++){
-                String item = rAdapter.getItem(i);
-                System.out.println(item);
-            }
+
+            rShowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Toast.makeText(SearchActivity.this, items.get(position)+"", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         } else {
             rAdapter.clear();
+
             rAdapter.addAll(data.getTitle());
+
             rAdapter.notifyDataSetChanged();
         }
     }
@@ -154,7 +187,9 @@ public class SearchActivity extends AppCompatActivity {
                     R.layout.item_search_entry,
                     R.id.show_title,
                     resultsList);
+
             rShowListView.setAdapter(rAdapter);
+
         } else {
             rAdapter.clear();
             rAdapter.addAll(resultsList);
@@ -175,10 +210,18 @@ public class SearchActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
         values.put(ShowContract.ShowEntry.COL_SHOW_TITLE, name);
+        if (!animeSearch) {
+            int i = resultsList.indexOf(name);
+            values.put(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL, uriList.get(i));
+            Log.d(TAG, "Attempting to add uri " + uriList.get(i));
+        }
+        else if (animeSearch){
+            int i = data.find(name);
+            values.put(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL, data.getImage_url().get(i));
+            Log.d(TAG, "Attempting to add image url "+data.getImage_url().get(i));
+        }
 
-        int i = resultsList.indexOf(name);
-        values.put(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL, uriList.get(i));
-        Log.d(TAG, "Attempting to add uri " + uriList.get(i));
+
 
         db.insertWithOnConflict(ShowContract.ShowEntry.TABLE,
                 null,
@@ -193,6 +236,14 @@ public class SearchActivity extends AppCompatActivity {
 
 
     static JSONParser parser = new JSONParser();
+
+    private View.OnClickListener buttonListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            System.out.println("Getting information on: " +((TextView)findViewById(v.getId())).getText());
+            new myAnimeListAPI(v.getContext()).backgroundSearchAnime(((TextView)findViewById(v.getId())).getText().toString());
+        }
+    };
+
 
 
     private class searchAnimeAsync extends AsyncTask<String, Void, pulledData> {
