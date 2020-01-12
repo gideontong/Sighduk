@@ -1,4 +1,4 @@
 package com.gideontong.sighduk;
 
-public class WatchlistActivity {
+public class HistoryActivity {
 }
