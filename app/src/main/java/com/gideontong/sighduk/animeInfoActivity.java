@@ -40,14 +40,31 @@ public class animeInfoActivity extends AppCompatActivity {
                 System.out.println("YO BRUH I ADDED "+animeTitle.getText());
             }
         });
+        if (data.getName().get(0) != null) {
+            animeTitle.setText(data.getName().get(0));
+        } else { animeTitle.setText("No information was found"); }
+        
+        if (data.getScore().get(0) != null) {
+            animeScore.setText(data.getName().get(0));
+        } else { animeScore.setText("No information was found"); }
 
-        animeTitle.setText(data.getName().get(0));
-        animeScore.setText(data.getScore().get(0));
+        if (data.getRank().get(0) != null) {
+            animeRank.setText(data.getName().get(0));
+        } else { animeRank.setText("No information was found"); }
+
+        if (data.getSynopsis().get(0) != null) {
+            synopsisText.setText(data.getName().get(0));
+        } else { synopsisText.setText("No information was found"); }
+
+        if (data.getImage_url().get(0) != null) {
+            Picasso.with(this)
+                    .load(data.getImage_url().get(0))
+                    .into(animeImage);
+        } else { System.out.println("No image URL found..."); }
+        /*animeScore.setText(data.getScore().get(0));
         animeRank.setText(data.getRank().get(0));
-        synopsisText.setText(data.getSynopsis().get(0));
-        Picasso.with(this)
-                .load(data.getImage_url().get(0))
-                .into(animeImage);
+        synopsisText.setText(data.getSynopsis().get(0));*/
+
 
         //Intent intent = new Intent(animeInfoActivity.this, search_item.class);
         //startActivity(intent);

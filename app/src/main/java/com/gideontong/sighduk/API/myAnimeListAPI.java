@@ -192,6 +192,118 @@ public class myAnimeListAPI extends AppCompatActivity {
         }
     }
 
+
+    private class topItems extends AsyncTask<String, Void, pulledData> {
+
+        @Override
+        protected pulledData doInBackground(String... queries) {
+
+            OkHttpClient client = new OkHttpClient();
+            String type = queries[0];
+            Request request = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/top/"+type+"/"+1)
+                    .get()
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                if (type == "anime" || type == "manga") {
+                    JSONObject json = (JSONObject) parser.parse(response.body().string());
+                    JSONArray results = ((JSONArray) json.get("top"));
+                    ArrayList<String> title = new ArrayList<>();
+                    ArrayList<String> image_url = new ArrayList<>();
+                    ArrayList<String> url = new ArrayList<>();
+                    ArrayList<String> synopsis = new ArrayList<>();
+                    ArrayList<String> rank = new ArrayList<>();
+                    ArrayList<Long> episodes = new ArrayList<>();
+                    ArrayList<String> score = new ArrayList<>();
+                    for (int i = 0; i < results.size(); i++) {
+                        title.add(i, ((JSONObject) results.toArray()[i]).get("title").toString());
+                        image_url.add(i, ((JSONObject) results.toArray()[i]).get("image_url").toString());
+                        url.add(i, ((JSONObject) results.toArray()[i]).get("url").toString());
+                        rank.add(i, ((JSONObject) results.toArray()[i]).get("rank").toString());
+                        if ((((JSONObject) results.toArray()[i])).get("synopsis") != null){
+                            synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
+                        } else {
+                            synopsis.add(i, null);
+                        }
+                        episodes.add(i, ((Long) ((JSONObject) results.toArray()[i]).get("episodes")));
+                        if ((((JSONObject) results.toArray()[i]).get("score")) != null) {
+                            score.add(i, (((JSONObject) results.toArray()[i]).get("score")).toString());
+                        } else {
+                            score.add(i, null);
+                        }
+                    }
+                    System.out.println(results);
+                    if (type == "anime"){
+                        return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                    }
+                    else if (type == "manga"){
+                        return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                    }
+                    else return null;
+                }
+                else if (type == "people") {
+                    JSONObject json = (JSONObject)parser.parse(response.body().string());
+                    JSONArray results = ((JSONArray)json.get("top"));
+                    ArrayList<String> title = new ArrayList<>();
+                    ArrayList<String> image_url = new ArrayList<>();
+                    ArrayList<String> url = new ArrayList<>();
+
+                    for(int i = 0; i < results.size(); i++){
+                        title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
+                        image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
+                        url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
+                    }
+                    System.out.println(title);
+                    System.out.println(image_url);
+                    System.out.println(url);
+                    System.out.println("-----------------------------------------------------------------------------------------");
+                    System.out.println(json);
+                    return new pulledData(title, image_url, url, null, null, null, null, null);
+
+                }
+                else if (type == "characters"){
+                    JSONObject json = (JSONObject)parser.parse(response.body().string());
+                    System.out.println(json);
+                    JSONArray results = ((JSONArray)json.get("top"));
+                    ArrayList<String> title = new ArrayList<>();
+                    ArrayList<String> image_url = new ArrayList<>();
+                    ArrayList<String> url = new ArrayList<>();
+
+                    for(int i = 0; i < results.size(); i++){
+                        title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
+                        image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
+                        url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
+                    }
+                    System.out.println(title);
+                    System.out.println(image_url);
+                    System.out.println(url);
+                    System.out.println("-----------------------------------------------------------------------------------------");
+                    System.out.println(json);
+                    return new pulledData(title, image_url, url, null, null, null, null, null);
+
+                }
+                else {
+                    System.out.println("Something went wrong... Sorry!");
+                    return null;
+                }
+            }
+            catch (IOException e){
+                return null;
+            }
+            catch (ParseException e){
+                return null;
+            }
+        }
+
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(pulledData result) {
+            searchCallback(result);
+            // new SearchActivity().searchCallback(result);
+        }
+    }
+
     /*public static pulledData searchGenre(String genre, String type, int limit, int page) throws IOException, ParseException{
 
         if (type != "anime" && type != "manga") return null;
