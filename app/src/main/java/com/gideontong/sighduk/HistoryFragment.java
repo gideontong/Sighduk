@@ -7,9 +7,9 @@ import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
 
-public class SecondFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
-    public SecondFragment() {}
+    public HistoryFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
