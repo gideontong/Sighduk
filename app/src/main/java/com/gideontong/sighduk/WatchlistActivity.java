@@ -36,7 +36,6 @@ public class WatchlistActivity extends AppCompatActivity {
 
     private ShowDbHelper mHelper;
     private ListView mShowListView;
-    private Button testSearchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
