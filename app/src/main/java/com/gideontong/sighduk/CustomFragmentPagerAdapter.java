@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
-
+    // private ShowDbHelper mHelper;
 
     public CustomFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -15,7 +15,7 @@ public class CustomFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new WatchlistFragment(new MainActivity());
+                return new WatchlistFragment();
             case 1:
                 return new HistoryFragment();
             default:

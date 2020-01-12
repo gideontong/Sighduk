@@ -3,27 +3,31 @@ package com.gideontong.sighduk;
 import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import com.gideontong.sighduk.API.myAnimeListAPI;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     CustomFragmentPagerAdapter myFragmentPagerAdapter;
     private ShowDbHelper mHelper;
+    private ListView mShowListView;
 
     ViewPager viewPager;
     TabLayout tabLayout;
@@ -38,7 +42,11 @@ public class MainActivity extends AppCompatActivity {
 
         setPagerAdapter();
 
+<<<<<<< HEAD
         new myAnimeListAPI().backgroundSearchAnime("Naruto");
+=======
+        // new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
+>>>>>>> 2f17c9945e13de28893f89ae10f0c67811df2d09
 
         setTabLayout();
     }
@@ -112,5 +120,37 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    // A function that updates the UI with new database updates
+    private void updateUI() {
+        ArrayList<EntryData> showList = new ArrayList<>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
+                null, null, null, null, null);
+        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
+                null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
+            String nextName = cursor.getString(idx);
+
+            urlCursor.moveToNext();
+            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
+
+            showList.add(new EntryData(nextName, grabUrl));
+
+            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
+        }
+
+        HomeAdapter listAdapter = new HomeAdapter(new MainActivity(), showList);
+        Log.d(TAG, "Location of mShowListView is " + mShowListView);
+        mShowListView.setAdapter(listAdapter);
+
+        cursor.close();
+        db.close();
     }
 }
