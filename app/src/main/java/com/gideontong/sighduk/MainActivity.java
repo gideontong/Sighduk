@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setPagerAdapter(){
-        myFragmentPagerAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        myFragmentPagerAdapter = new CustomFragmentPagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(myFragmentPagerAdapter);
     }
 }
