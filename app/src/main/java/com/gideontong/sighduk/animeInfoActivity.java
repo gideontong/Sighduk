@@ -43,7 +43,7 @@ public class animeInfoActivity extends AppCompatActivity {
         if (data.getName().get(0) != null) {
             animeTitle.setText(data.getName().get(0));
         } else { animeTitle.setText("No information was found"); }
-        
+
         if (data.getScore().get(0) != null) {
             animeScore.setText(data.getName().get(0));
         } else { animeScore.setText("No information was found"); }

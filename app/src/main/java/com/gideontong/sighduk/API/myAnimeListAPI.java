@@ -1,7 +1,12 @@
 package com.gideontong.sighduk.API;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,12 +27,22 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class myAnimeListAPI extends AppCompatActivity {
+public class myAnimeListAPI {
+
+    private Context context;
+
+    // pulledData returnData;
 
     public void searchCallback(pulledData data){
-        Intent intent = new Intent(myAnimeListAPI.this, animeInfoActivity.class);
+
+        Intent intent = new Intent(context, animeInfoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("pulledData", data);
-        startActivity(intent);
+        context.startActivity(intent);
+    }
+
+    public myAnimeListAPI(Context context){
+        this.context = context;
     }
 
     public void backgroundSearchAnime(String animeName){
@@ -112,6 +127,7 @@ public class myAnimeListAPI extends AppCompatActivity {
         @Override
         protected void onPostExecute(pulledData result) {
             searchCallback(result);
+
             // new SearchActivity().searchCallback(result);
         }
     }
@@ -187,7 +203,10 @@ public class myAnimeListAPI extends AppCompatActivity {
         // This is called when doInBackground() is finished
         @Override
         protected void onPostExecute(pulledData result) {
-            searchCallback(result);
+            //searchCallback(result);
+            /*Intent intent = new Intent(getApplicationContext(), animeInfoActivity.class);
+            intent.putExtra("pulledData", result);
+            startActivity(intent);*/
             // new SearchActivity().searchCallback(result);
         }
     }

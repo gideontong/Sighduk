@@ -44,13 +44,19 @@ public class MainActivity extends AppCompatActivity {
     private ListView mShowListView;
     private Button testSearchButton;
 
+    public void createAnimeInfo(pulledData data) {
+        Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
+        intent.putExtra("pulledData", data);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
 //---------------------------------------------------------------------------------------------
-            new myAnimeListAPI().backgroundSearchAnime("Naruto");
+            new myAnimeListAPI(this.getApplicationContext()).backgroundSearchAnime("Naruto");
+
             /*Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
             intent.putExtra("pulledData", animeData);
             startActivity(intent);*/
