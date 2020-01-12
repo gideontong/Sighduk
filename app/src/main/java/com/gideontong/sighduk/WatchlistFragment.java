@@ -63,7 +63,10 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View viewer = inflater.inflate(R.layout.fragment_watchlist, container, false);
-        // Button button = (Button) viewer.findViewById(R.id.show_delete);
+        // ListView listView = (ListView) viewer.findViewById(R.id.list_show);
+        // View listViewer = (View) listView.getView
+        // Log.d(TAG, "ListView was found with address " + listView);
+        // Button button = (Button) listView.findViewById(R.id.show_delete);
         // button.setOnClickListener(this);
         // mShowListView = (ListView) viewer.findViewById(R.id.list_show);
         // mShowListView.addView();
@@ -129,6 +132,7 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        Log.d(TAG, "A button press was detected!");
         switch(view.getId()) {
             case R.id.show_delete:
                 Log.d(TAG, "Delete action was triggered!");
