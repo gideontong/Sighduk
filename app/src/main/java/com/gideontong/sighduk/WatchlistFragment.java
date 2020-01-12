@@ -1,7 +1,5 @@
 package com.gideontong.sighduk;
 
-import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,9 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -25,7 +21,6 @@ import com.gideontong.sighduk.db.ShowDbHelper;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class WatchlistFragment extends Fragment {
 
@@ -114,35 +109,5 @@ public class WatchlistFragment extends Fragment {
         }
     }
 
-    // A function that updates the UI with new database updates
-    private void updateUI() {
-        ArrayList<EntryData> showList = new ArrayList<>();
-        SQLiteDatabase db = mHelper.getReadableDatabase();
 
-        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
-                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
-                null, null, null, null, null);
-        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
-                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
-                null, null, null, null, null);
-        while(cursor.moveToNext()) {
-            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
-            String nextName = cursor.getString(idx);
-
-            urlCursor.moveToNext();
-            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
-            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
-
-            showList.add(new EntryData(nextName, grabUrl));
-
-            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
-        }
-
-        HomeAdapter listAdapter = new HomeAdapter(new MainActivity(), showList);
-        Log.d(TAG, "Location of mShowListView is " + mShowListView);
-        mShowListView.setAdapter(listAdapter);
-
-        cursor.close();
-        db.close();
-    }
 }
