@@ -15,9 +15,9 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new FirstFragment();
+                return new WatchlistFragment();
             case 1:
-                return new SecondFragment();
+                return new HistoryFragment();
             default:
                 return null;
         }
