@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center_vertical">
+    android:layout_gravity="center_vertical"
+    android:clickable="true"
+    android:focusable="true">
 
     <Button
         android:id="@+id/show_delete"
@@ -10,8 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text="Add"
-        android:onClick="addToDatabase"/>
+        android:onClick="addToDatabase"
+        android:text="Add" />
 
     <include
         android:id="@+id/show_title"
