@@ -12,9 +12,12 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.gideontong.sighduk.db.ShowContract;
+import com.gideontong.sighduk.db.ShowDbHelper;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivty";
+
+    private ShowDbHelper mHelper;
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
