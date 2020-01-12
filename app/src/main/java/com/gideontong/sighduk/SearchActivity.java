@@ -129,7 +129,7 @@ public class SearchActivity extends AppCompatActivity {
             rAdapter = new ArrayAdapter<>(this,
                     android.R.layout.simple_list_item_1,
                     data.getTitle());
-
+            rShowListView.setAdapter(rAdapter);
             //Button button = (Button)findViewById(R.id.show_title);
 
 
