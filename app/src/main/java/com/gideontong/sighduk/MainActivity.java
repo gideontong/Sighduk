@@ -12,17 +12,19 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.gideontong.sighduk.API.myAnimeListAPI;
 import com.gideontong.sighduk.db.ShowContract;
+import com.gideontong.sighduk.db.ShowDbHelper;
 import com.google.android.material.tabs.TabLayout;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
 
     CustomFragmentPagerAdapter myFragmentPagerAdapter;
+    private ShowDbHelper mHelper;
+
     ViewPager viewPager;
     TabLayout tabLayout;
 

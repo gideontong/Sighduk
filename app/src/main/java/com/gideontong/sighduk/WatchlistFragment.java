@@ -39,49 +39,18 @@ public class WatchlistFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_watchlist);
+        // setContentView(R.layout.activity_watchlist);
 
-        mHelper = new ShowDbHelper(this);
+        // mHelper = new ShowDbHelper(this);
 
-        mShowListView = findViewById(R.id.list_show);
-        updateUI();
+        // mShowListView = findViewById(R.id.list_show);
+        // updateUI();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        updateUI();
-    }
-
-    // A function that updates the UI with new database updates
-    private void updateUI() {
-        ArrayList<EntryData> showList = new ArrayList<>();
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-
-        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
-                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
-                null, null, null, null, null);
-        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
-                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
-                null, null, null, null, null);
-        while(cursor.moveToNext()) {
-            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
-            String nextName = cursor.getString(idx);
-
-            urlCursor.moveToNext();
-            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
-            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
-
-            showList.add(new EntryData(nextName, grabUrl));
-
-            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
-        }
-
-        HomeAdapter listAdapter = new HomeAdapter(this, showList);
-        mShowListView.setAdapter(listAdapter);
-
-        cursor.close();
-        db.close();
+        // updateUI();
     }
 
     @Override
@@ -102,7 +71,7 @@ public class WatchlistFragment extends Fragment {
                 new String[]{show});
         db.close();
 
-        updateUI();
+        // updateUI();
     }
 
     private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
@@ -124,8 +93,8 @@ public class WatchlistFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Bitmap result) {
-            ImageView imageView = findViewById(R.id.show_image);
-            imageView.setImageBitmap(result);
+            // ImageView imageView = findViewById(R.id.show_image);
+            // imageView.setImageBitmap(result);
         }
     }
 }
