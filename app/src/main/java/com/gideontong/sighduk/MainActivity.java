@@ -8,7 +8,7 @@ import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
-    FragmentPagerAdapter myFragmentPagerAdapter;
+    CustomFragmentPagerAdapter myFragmentPagerAdapter;
     ViewPager viewPager;
 
     @Override
