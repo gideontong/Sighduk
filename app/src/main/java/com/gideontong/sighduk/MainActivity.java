@@ -111,13 +111,61 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.searchBtn:
+            /*case R.id.searchBtn:
                 Intent searchIntent = new Intent(this, LocalSearchActivity.class);
                 startActivity(searchIntent);
-                return true;
+                return true;*/
 
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    // A function that updates the UI with new database updates
+    private void updateUI() {
+        ArrayList<EntryData> showList = new ArrayList<>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
+                null, null, null, null, null);
+        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
+                null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
+            String nextName = cursor.getString(idx);
+
+            urlCursor.moveToNext();
+            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
+
+            showList.add(new EntryData(nextName, grabUrl));
+
+            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
+        }
+
+        HomeAdapter listAdapter = new HomeAdapter(new MainActivity(), showList);
+        Log.d(TAG, "Location of mShowListView is " + mShowListView);
+        mShowListView.setAdapter(listAdapter);
+
+        cursor.close();
+        db.close();
+    }
+
+    /*
+    public void deleteShow(View view) {
+        View parent = (View) view.getParent();
+        TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
+        String show = String.valueOf(showTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        db.delete(ShowContract.ShowEntry.TABLE,
+                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
+                new String[]{show});
+        db.close();
+
+        // updateUI();
+    }
+     */
 }

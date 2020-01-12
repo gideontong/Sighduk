@@ -4,7 +4,7 @@
     tools:context="com.gideontong.sighduk.WatchlistActivity" >
 
     <item
-        android:id="@+id/searchBtn"
+        android:id="@+id/tvdbSearch"
         android:icon="@android:drawable/ic_menu_search"
         android:title="Search Entries"
         app:showAsAction="always" />

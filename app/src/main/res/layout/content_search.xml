@@ -8,29 +8,44 @@
     tools:showIn="@layout/activity_search"
     tools:context=".SearchActivity">
 
+    <EditText
+        android:id="@+id/searchText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:ems="10"
+        android:hint="Search..."
+        android:inputType="text"
+        android:textSize="20sp" />
+
     <LinearLayout
         android:id="@+id/onlineSearchBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/searchText"
+        android:layout_marginTop="0dp"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/searchText"
-            android:layout_width="217dp"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:hint="Search TVdb..."
-            android:inputType="text"
-            android:textSize="20sp" />
-
         <Button
-            android:id="@+id/searchBtn"
+            android:id="@+id/tvdbSearch"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:layout_weight="1"
-            android:text="Search"
-            android:onClick="searchOnline">
+            android:onClick="searchOnline"
+            android:text="Search TVdb">
+
+        </Button>
+
+        <Button
+            android:id="@+id/animeSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:layout_weight="1"
+            android:onClick="searchAnime"
+            android:text="Search Anime">
 
         </Button>
 

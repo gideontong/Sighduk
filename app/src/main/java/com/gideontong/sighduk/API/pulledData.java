@@ -13,8 +13,9 @@ public class pulledData implements Serializable {
     private ArrayList<Long> episodes = null;
     private ArrayList<String> score = null;
     private ArrayList<String> rank = null;
+    private ArrayList<String> id = null;
 
-    public pulledData(ArrayList<String> title, ArrayList<String> image_url, ArrayList<String> url, ArrayList<String> synopsis, ArrayList<Long> episodes, ArrayList<String> score, ArrayList<String> rank, ArrayList<String> name){
+    public pulledData(ArrayList<String> title, ArrayList<String> image_url, ArrayList<String> url, ArrayList<String> synopsis, ArrayList<Long> episodes, ArrayList<String> score, ArrayList<String> rank, ArrayList<String> name, ArrayList<String> id){
         this.title = title;
         this.name = name;
         this.image_url = image_url;
@@ -23,6 +24,7 @@ public class pulledData implements Serializable {
         this.episodes = episodes;
         this.score = score;
         this.rank = rank;
+        this.id = id;
     }
 
     public ArrayList<String> getTitle(){
@@ -55,5 +57,20 @@ public class pulledData implements Serializable {
 
     public ArrayList<Long> getEpisodes(){
         return episodes;
+    }
+
+    public ArrayList<String> getID(){
+        return id;
+    }
+
+    public int find(String name){
+        int index = 0;
+        for (int i = 0; i < this.title.size(); i++){
+            if (this.title.get(i).equalsIgnoreCase(name)){
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 }
