@@ -1,17 +1,19 @@
 package com.gideontong.sighduk;
 
+import android.os.Bundle;
+
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 
-public class DemoCollectionPagerAdapter extends FragmentStatePagerAdapter {
-    public DemoCollectionPagerAdapter(FragmentManager fm) {
+public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
+    public CollectionPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
     @Override
     public Fragment getItem(int i) {
-        Fragment fragment = new DemoObjectFragment();
+        Fragment fragment = new MainFragment();
         Bundle args = new Bundle();
         // Our object is just an integer :-P
         args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1);
