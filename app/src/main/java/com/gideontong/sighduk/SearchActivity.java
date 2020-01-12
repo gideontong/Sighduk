@@ -23,12 +23,18 @@ import com.gideontong.sighduk.db.ShowDbHelper;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
@@ -67,8 +73,7 @@ public class SearchActivity extends AppCompatActivity {
             // Networking test = new Networking();
             // String result = test.search(query);
             //System.out.println(this);
-            System.out.println(new myAnimeListAPI());
-            new myAnimeListAPI().backgroundSearchAnime(query);
+            new searchAnimeAsync().execute(query);
         } catch(Exception e) {
             Log.d(TAG, "We tried but we got " + e);
             String result = null;
@@ -107,7 +112,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         } else {
             rAdapter.clear();
-            rAdapter.addAll(resultsList);
+            rAdapter.addAll(data.getTitle());
             rAdapter.notifyDataSetChanged();
         }
     }
@@ -181,6 +186,81 @@ public class SearchActivity extends AppCompatActivity {
         finish();
     }
 
+
+    static JSONParser parser = new JSONParser();
+
+
+    private class searchAnimeAsync extends AsyncTask<String, Void, pulledData> {
+
+        @Override
+        protected pulledData doInBackground(String... queries) {
+
+            String animeName = queries[0];
+            System.out.println("Searching for...! "+animeName);
+            if (animeName == null || animeName == "") return null;
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/search/anime?q=" + animeName + "&limit=30")
+                    .get()
+                    .build();
+
+            try (Response response = client.newCall(request).execute()) {
+                //System.out.println(response.body().string());
+                JSONObject json = (JSONObject) parser.parse(response.body().string());
+                JSONArray results = ((JSONArray) json.get("results"));
+                ArrayList<String> title = new ArrayList<>();
+                ArrayList<String> image_url = new ArrayList<>();
+                ArrayList<String> url = new ArrayList<>();
+                ArrayList<String> synopsis = new ArrayList<>();
+                ArrayList<Long> episodes = new ArrayList<>();
+                ArrayList<String> score = new ArrayList<>();
+                ArrayList<String> rank = new ArrayList<>();
+                ArrayList<String> id = new ArrayList<>();
+
+                for (int i = 0; i < results.size(); i++) {
+                    title.add(i, ((JSONObject) results.toArray()[i]).get("title").toString());
+                    image_url.add(i, ((JSONObject) results.toArray()[i]).get("image_url").toString());
+                    url.add(i, ((JSONObject) results.toArray()[i]).get("url").toString());
+                    synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
+                    episodes.add(i, ((Long) ((JSONObject) results.toArray()[i]).get("episodes")));
+                    id.add(i, ((JSONObject)results.toArray()[i]).get("mal_id").toString());
+                    if ((((JSONObject) results.toArray()[i]).get("rank")) != null) {
+                        rank.add(i, (((JSONObject) results.toArray()[i]).get("rank")).toString());
+                    } else {
+                        rank.add(i, null);
+                    }
+                    if ((((JSONObject) results.toArray()[i]).get("score")) != null) {
+                        score.add(i, (((JSONObject) results.toArray()[i]).get("score")).toString());
+                    } else {
+                        score.add(i, null);
+                    }
+                }
+                System.out.println(title);
+                System.out.println(image_url);
+                System.out.println(url);
+                System.out.println(synopsis);
+                System.out.println(episodes);
+                System.out.println(score);
+                System.out.println("-----------------------------------------------------------------------------------------");
+                System.out.println(json);
+
+                return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, id);
+            } catch (IOException e) {
+                return null;
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(pulledData result) {
+            animeCallBack(result);
+
+            // new SearchActivity().searchCallback(result);
+        }
+    }
 
     private class BackgroundSearch extends AsyncTask<String, Void, String> {
         private static final String TAG = "BackgroundSearch";

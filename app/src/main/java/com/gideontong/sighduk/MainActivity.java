@@ -42,11 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         setPagerAdapter();
 
-<<<<<<< HEAD
-        new myAnimeListAPI().backgroundSearchAnime("Naruto");
-=======
         // new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
->>>>>>> 2f17c9945e13de28893f89ae10f0c67811df2d09
 
         setTabLayout();
     }
@@ -112,10 +108,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.tvdbSearch:
+            /*case R.id.searchBtn:
                 Intent searchIntent = new Intent(this, LocalSearchActivity.class);
                 startActivity(searchIntent);
-                return true;
+                return true;*/
 
             default:
                 return super.onOptionsItemSelected(item);

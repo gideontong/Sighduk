@@ -29,24 +29,33 @@ import okhttp3.Response;
 
 public class myAnimeListAPI {
 
-    //private Context context;
+    private Context context;
 
     // pulledData returnData;
 
-    public void searchCallback(pulledData data){
+    public void searchCallback(pulledData data) {
 
+        if (context != null) {
+            new SearchActivity().animeCallBack(data);
+            Intent intent = new Intent(context, animeInfoActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("pulledData", data);
+            context.startActivity(intent);
+        }
+    }
+
+    public void tableCallback(pulledData data){
         new SearchActivity().animeCallBack(data);
-        /*Intent intent = new Intent(context, animeInfoActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.putExtra("pulledData", data);
-        context.startActivity(intent);*/
     }
 
-    public myAnimeListAPI(){
-        //this.context = context;
+    public myAnimeListAPI(Context context) {
+        this.context = context;
+    }
+    public myAnimeListAPI() {
+        this.context = null;
     }
 
-    public void backgroundSearchAnime(String animeName){
+    public void backgroundSearchAnime(String animeName) {
         try {
             new searchAnime().execute(animeName);
         } catch (Exception e) {
@@ -60,6 +69,7 @@ public class myAnimeListAPI {
     private static HashMap<String, Integer> AnimeGenres = new HashMap<>();
     private static HashMap<String, Integer> MangaGenres = new HashMap<>();
 
+
     private class searchAnime extends AsyncTask<String, Void, pulledData> {
 
         @Override
@@ -70,17 +80,14 @@ public class myAnimeListAPI {
             OkHttpClient client = new OkHttpClient();
 
             Request request = new Request.Builder()
-                    .url("https://api.jikan.moe/v3/search/anime?q="+animeName+"&limit=30")
+                    .url("https://api.jikan.moe/v3/search/anime?q=" + animeName + "&limit=30")
                     .get()
                     .build();
 
             try (Response response = client.newCall(request).execute()) {
                 //System.out.println(response.body().string());
-
-
-
-                JSONObject json = (JSONObject)parser.parse(response.body().string());
-                JSONArray results = ((JSONArray)json.get("results"));
+                JSONObject json = (JSONObject) parser.parse(response.body().string());
+                JSONArray results = ((JSONArray) json.get("results"));
                 ArrayList<String> title = new ArrayList<>();
                 ArrayList<String> image_url = new ArrayList<>();
                 ArrayList<String> url = new ArrayList<>();
@@ -89,32 +96,23 @@ public class myAnimeListAPI {
                 ArrayList<String> score = new ArrayList<>();
                 ArrayList<String> rank = new ArrayList<>();
                 ArrayList<String> id = new ArrayList<>();
-                for(int i = 0; i < results.size(); i++){
-                    Request request2 = new Request.Builder()
-                            .url("https://api.jikan.moe/v3/anime/"+((JSONObject)results.toArray()[i]).get("mal_id").toString())
-                            .get()
-                            .build();
-                    try (Response response2 = client.newCall(request2).execute()) {
-                        JSONObject importantResponse = (JSONObject)parser.parse(response2.body().string());
-                        title.add(i, (importantResponse).get("title").toString());
-                        image_url.add(i, (importantResponse).get("image_url").toString());
-                        url.add(i, (importantResponse).get("url").toString());
-                        synopsis.add(i, (importantResponse).get("synopsis").toString());
-                        episodes.add(i, ((Long)(importantResponse).get("episodes")));
-                        id.add(i, (importantResponse).get("mal_id").toString());
-                        if (((importantResponse).get("rank")) != null) {
-                            rank.add(i, ((importantResponse).get("rank")).toString());
-                        } else {
-                            rank.add(i, null);
-                        }
-                        if (((importantResponse).get("score")) != null) {
-                            score.add(i, ((importantResponse).get("score")).toString());
-                        } else {
-                            score.add(i, null);
-                        }
+
+                for (int i = 0; i < results.size(); i++) {
+                    title.add(i, ((JSONObject) results.toArray()[i]).get("title").toString());
+                    image_url.add(i, ((JSONObject) results.toArray()[i]).get("image_url").toString());
+                    url.add(i, ((JSONObject) results.toArray()[i]).get("url").toString());
+                    synopsis.add(i, ((JSONObject) results.toArray()[i]).get("synopsis").toString());
+                    episodes.add(i, ((Long) ((JSONObject) results.toArray()[i]).get("episodes")));
+                    id.add(i, ((JSONObject)results.toArray()[i]).get("mal_id").toString());
+                    if ((((JSONObject) results.toArray()[i]).get("rank")) != null) {
+                        rank.add(i, (((JSONObject) results.toArray()[i]).get("rank")).toString());
+                    } else {
+                        rank.add(i, null);
                     }
-                    catch (IOException e){
-                        return null;
+                    if ((((JSONObject) results.toArray()[i]).get("score")) != null) {
+                        score.add(i, (((JSONObject) results.toArray()[i]).get("score")).toString());
+                    } else {
+                        score.add(i, null);
                     }
                 }
                 System.out.println(title);
@@ -127,14 +125,91 @@ public class myAnimeListAPI {
                 System.out.println(json);
 
                 return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, id);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 return null;
-            }
-            catch (ParseException e){
+            } catch (ParseException e) {
                 return null;
             }
         }
+
+        // This is called when doInBackground() is finished
+        @Override
+        protected void onPostExecute(pulledData result) {
+            tableCallback(result);
+
+            // new SearchActivity().searchCallback(result);
+        }
+    }
+
+    private class singleAnimeInfo extends AsyncTask<String, Void, pulledData> {
+
+        @Override
+        protected pulledData doInBackground(String... queries) {
+
+            String animeID = queries[0];
+            if (animeID == null || animeID == "") return null;
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url("https://api.jikan.moe/v3/anime/" + animeID + "")
+                    .get()
+                    .build();
+
+            //System.out.println(response.body().string());
+
+
+            /*String title;
+            String image_url;
+            String url;
+            String synopsis;
+            Long episodes;
+            String score;
+            String rank;
+            String id;*/
+
+                ArrayList<String> title = new ArrayList<>();
+                ArrayList<String> image_url = new ArrayList<>();
+                ArrayList<String> url = new ArrayList<>();
+                ArrayList<String> synopsis = new ArrayList<>();
+                ArrayList<Long> episodes = new ArrayList<>();
+                ArrayList<String> score = new ArrayList<>();
+                ArrayList<String> rank = new ArrayList<>();
+                ArrayList<String> id = new ArrayList<>();
+            try (Response response2 = client.newCall(request).execute()) {
+                JSONObject importantResponse = (JSONObject) parser.parse(response2.body().string());
+                title.add((importantResponse).get("title").toString());
+                image_url.add((importantResponse).get("image_url").toString());
+                url.add((importantResponse).get("url").toString());
+                synopsis.add((importantResponse).get("synopsis").toString());
+                episodes.add(((Long) (importantResponse).get("episodes")));
+                id.add((importantResponse).get("mal_id").toString());
+                if (((importantResponse).get("rank")) != null) {
+                    rank.add(((importantResponse).get("rank")).toString());
+                } else {
+                    rank.add(null);
+                }
+                if (((importantResponse).get("score")) != null) {
+                    score.add(((importantResponse).get("score")).toString());
+                } else {
+                    score.add(null);
+                }
+                System.out.println(title);
+                System.out.println(image_url);
+                System.out.println(url);
+                System.out.println(synopsis);
+                System.out.println(episodes);
+                System.out.println(score);
+                System.out.println("-----------------------------------------------------------------------------------------");
+
+                return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, id);
+
+            } catch (IOException e) {
+                return null;
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+
 
         // This is called when doInBackground() is finished
         @Override
