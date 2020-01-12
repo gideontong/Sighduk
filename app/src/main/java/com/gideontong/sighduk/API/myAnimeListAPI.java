@@ -10,7 +10,6 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.gideontong.sighduk.MainActivity;
 import com.gideontong.sighduk.animeInfoActivity;
 
 import org.json.simple.JSONArray;
@@ -75,6 +74,9 @@ public class myAnimeListAPI {
 
             try (Response response = client.newCall(request).execute()) {
                 //System.out.println(response.body().string());
+
+
+
                 JSONObject json = (JSONObject)parser.parse(response.body().string());
                 JSONArray results = ((JSONArray)json.get("results"));
                 ArrayList<String> title = new ArrayList<>();
@@ -86,22 +88,30 @@ public class myAnimeListAPI {
                 ArrayList<String> rank = new ArrayList<>();
 
                 for(int i = 0; i < results.size(); i++){
-                    title.add(i, ((JSONObject)results.toArray()[i]).get("title").toString());
-                    image_url.add(i, ((JSONObject)results.toArray()[i]).get("image_url").toString());
-                    url.add(i, ((JSONObject)results.toArray()[i]).get("url").toString());
-                    synopsis.add(i, ((JSONObject)results.toArray()[i]).get("synopsis").toString());
-                    episodes.add(i, ((Long)((JSONObject)results.toArray()[i]).get("episodes")));
-                    if ((((JSONObject)results.toArray()[i]).get("rank")) != null) {
-                        rank.add(i, (((JSONObject)results.toArray()[i]).get("rank")).toString());
+                    Request request2 = new Request.Builder()
+                            .url("https://api.jikan.moe/v3/anime/"+((JSONObject)results.toArray()[i]).get("mal_id").toString())
+                            .get()
+                            .build();
+                    try (Response response2 = client.newCall(request2).execute()) {
+                        JSONObject importantResponse = (JSONObject)parser.parse(response2.body().string());
+                        title.add(i, (importantResponse).get("title").toString());
+                        image_url.add(i, (importantResponse).get("image_url").toString());
+                        url.add(i, (importantResponse).get("url").toString());
+                        synopsis.add(i, (importantResponse).get("synopsis").toString());
+                        episodes.add(i, ((Long)(importantResponse).get("episodes")));
+                        if (((importantResponse).get("rank")) != null) {
+                            rank.add(i, ((importantResponse).get("rank")).toString());
+                        } else {
+                            rank.add(i, null);
+                        }
+                        if (((importantResponse).get("score")) != null) {
+                            score.add(i, ((importantResponse).get("score")).toString());
+                        } else {
+                            score.add(i, null);
+                        }
                     }
-                    else {
-                        rank.add(i, null);
-                    }
-                    if ((((JSONObject)results.toArray()[i]).get("score")) != null) {
-                        score.add(i, (((JSONObject)results.toArray()[i]).get("score")).toString());
-                    }
-                    else {
-                        score.add(i, null);
+                    catch (IOException e){
+                        return null;
                     }
                 }
                 System.out.println(title);

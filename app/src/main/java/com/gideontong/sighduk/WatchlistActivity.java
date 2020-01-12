@@ -41,18 +41,13 @@ public class WatchlistActivity extends AppCompatActivity {
     private ShowDbHelper mHelper;
     private ListView mShowListView;
 
-    public void createAnimeInfo(pulledData data) {
-        Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
-        intent.putExtra("pulledData", data);
-        startActivity(intent);
-    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlist);
 
 //---------------------------------------------------------------------------------------------
-            new myAnimeListAPI(this.getApplicationContext()).backgroundSearchAnime("Naruto");
+            new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
 
             /*Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
             intent.putExtra("pulledData", animeData);
