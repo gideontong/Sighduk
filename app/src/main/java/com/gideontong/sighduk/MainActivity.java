@@ -15,12 +15,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-<<<<<<< HEAD
 import com.gideontong.sighduk.API.myAnimeListAPI;
-=======
 import com.gideontong.sighduk.db.ShowContract;
 import com.google.android.material.tabs.TabLayout;
->>>>>>> 8530ffae9829dcca4ed3a61c5d0c9ad302fce9b0
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -38,11 +35,8 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
 
         setPagerAdapter();
-<<<<<<< HEAD
         new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
-=======
         setTabLayout();
->>>>>>> 8530ffae9829dcca4ed3a61c5d0c9ad302fce9b0
     }
 
     private void setPagerAdapter(){
