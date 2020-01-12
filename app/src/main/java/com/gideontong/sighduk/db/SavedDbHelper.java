@@ -1,4 +1,6 @@
 package com.gideontong.sighduk.db;
 
-public class SavedDbHelper {
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class SavedDbHelper extends SQLiteOpenHelper {
 }
