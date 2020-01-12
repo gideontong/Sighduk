@@ -1,6 +1,8 @@
 package com.gideontong.sighduk;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.gideontong.sighduk.db.SavedContract;
+import com.gideontong.sighduk.db.SavedDbHelper;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 import com.squareup.picasso.Picasso;
@@ -23,6 +27,7 @@ class HomeAdapter implements ListAdapter {
 
     ArrayList<EntryData> arrayList;
     private ShowDbHelper mHelper;
+    private SavedDbHelper kHelper;
     Context context;
 
     public HomeAdapter(Context context, ArrayList<EntryData> arrayList) {
@@ -30,20 +35,48 @@ class HomeAdapter implements ListAdapter {
         this.context=context;
 
         mHelper = new ShowDbHelper(context);
+        kHelper = new SavedDbHelper(context);
 
         Log.d(TAG, "Setting home adapter with an ArrayList");
     }
 
     public void deleteShow(View view) {
         View parent = (View) view.getParent();
+        Log.d(TAG, "The parent is " + parent.getParent().getParent().getParent().getParent());
         TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
         String show = String.valueOf(showTextView.getText());
         SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{
+                        ShowContract.ShowEntry._ID,
+                        ShowContract.ShowEntry.COL_SHOW_TITLE,
+                        ShowContract.ShowEntry.COL_SHOW_IMAGE_URL
+                },
+                ShowContract.ShowEntry.COL_SHOW_TITLE + " LIKE '" + show + "'",
+                null, null, null, null);
+        int uriIndex = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+        Log.d(TAG, "Cursor pos is " + cursor + " with index at " + uriIndex);
+        // String uri = cursor.getString(uriIndex);
+        String uri = "wtf";
+
+        Log.d(TAG, "Deleting show with name " + show + " and uri " + uri);
 
         db.delete(ShowContract.ShowEntry.TABLE,
                 ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
                 new String[]{show});
         db.close();
+
+        SQLiteDatabase saved = kHelper.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(SavedContract.SavedEntry.COL_SHOW_TITLE, show);
+        values.put(SavedContract.SavedEntry.COL_SHOW_IMAGE_URL, uri);
+
+        saved.insertWithOnConflict(SavedContract.SavedEntry.TABLE,
+                null,
+                values,
+                SQLiteDatabase.CONFLICT_REPLACE);
+        saved.close();
 
         // updateUI();
     }

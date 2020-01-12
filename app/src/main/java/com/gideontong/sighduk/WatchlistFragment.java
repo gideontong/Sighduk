@@ -2,16 +2,12 @@ package com.gideontong.sighduk;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,9 +15,6 @@ import androidx.fragment.app.Fragment;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class WatchlistFragment extends Fragment implements View.OnClickListener {
@@ -100,24 +93,6 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {    }
 
-    /*
-    public void deleteShow(View view) {
-        Log.d(TAG, "deleteShow was called with view at " + view);
-        View parent = (View) view.getParent();
-        TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
-        String show = String.valueOf(showTextView.getText());
-        SQLiteDatabase db = mHelper.getWritableDatabase();
-
-        db.delete(ShowContract.ShowEntry.TABLE,
-                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
-                new String[]{show});
-        db.close();
-
-        // updateUI();
-    }
-
-     */
-
     @Override
     public void onClick(View view) {
         /*
@@ -130,34 +105,4 @@ public class WatchlistFragment extends Fragment implements View.OnClickListener 
         }
          */
     }
-
-    /*
-
-    private class DownloadImage extends AsyncTask<String, Void, Bitmap> {
-        @Override
-        protected Bitmap doInBackground(String... params) {
-            try {
-                URL url = new URL(params[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.setDoInput(true);
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap myBitmap = BitmapFactory.decodeStream(input);
-                return myBitmap;
-            }catch (Exception e){
-                Log.d(TAG,e.getMessage());
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap result) {
-            // ImageView imageView = findViewById(R.id.show_image);
-            // imageView.setImageBitmap(result);
-        }
-    }
-
-     */
-
-
 }
