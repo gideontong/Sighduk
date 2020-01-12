@@ -1,5 +1,6 @@
 package com.gideontong.sighduk;
 
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 public class CollectionFragment extends Fragment {
