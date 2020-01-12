@@ -2,6 +2,7 @@ package com.gideontong.sighduk;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.gideontong.sighduk.db.ShowContract;
+import com.gideontong.sighduk.db.ShowDbHelper;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ class HomeAdapter implements ListAdapter {
     public static final String TAG = "HomeAdapter";
 
     ArrayList<EntryData> arrayList;
+    private ShowDbHelper mHelper;
     Context context;
 
     public HomeAdapter(Context context, ArrayList<EntryData> arrayList) {
@@ -26,6 +30,22 @@ class HomeAdapter implements ListAdapter {
 
         Log.d(TAG, "Setting home adapter with an ArrayList");
     }
+
+    /*
+    public void deleteShow(View view) {
+        View parent = (View) view.getParent();
+        TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
+        String show = String.valueOf(showTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        db.delete(ShowContract.ShowEntry.TABLE,
+                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
+                new String[]{show});
+        db.close();
+
+        // updateUI();
+    }
+     */
 
     @Override
     public boolean areAllItemsEnabled() {
@@ -67,11 +87,11 @@ class HomeAdapter implements ListAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Log.d(TAG, "Starting entryList arrayList tagging");
+        // Log.d(TAG, "Starting entryList arrayList tagging");
 
         EntryData entryData = arrayList.get(position);
 
-        Log.d(TAG, "entryData memory address is " + entryData);
+        // Log.d(TAG, "entryData memory address is " + entryData);
         if(convertView == null) {
             Log.d(TAG, "The context should be " + context);
             LayoutInflater layoutInflater = LayoutInflater.from(context);
