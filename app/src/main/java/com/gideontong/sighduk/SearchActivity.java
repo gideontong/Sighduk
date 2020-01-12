@@ -114,7 +114,7 @@ public class SearchActivity extends AppCompatActivity {
     public void addToDatabase(View view) {
         TextView nameBox = findViewById(R.id.show_title);
         String name = String.valueOf(nameBox.getText());
-        // new MainActivity().addShowInBackground(name);
+        // new WatchlistActivity().addShowInBackground(name);
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
 
@@ -131,7 +131,7 @@ public class SearchActivity extends AppCompatActivity {
                 SQLiteDatabase.CONFLICT_REPLACE);
         db.close();
 
-        // go back to MainActivity view
+        // go back to WatchlistActivity view
         setContentView(R.layout.activity_search);
         finish();
     }
