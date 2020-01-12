@@ -40,15 +40,6 @@ public class WatchlistActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlist);
 
-//---------------------------------------------------------------------------------------------
-
-
-            /*Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
-            intent.putExtra("pulledData", animeData);
-            startActivity(intent);*/
-
-//---------------------------------------------------------------------------------------------
-
 
         mHelper = new ShowDbHelper(this);
 

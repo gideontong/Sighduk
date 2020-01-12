@@ -62,4 +62,15 @@ public class pulledData implements Serializable {
     public ArrayList<String> getID(){
         return id;
     }
+
+    public int find(String name){
+        int index = 0;
+        for (int i = 0; i < this.title.size(); i++){
+            if (this.title.get(i).equalsIgnoreCase(name)){
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
 }

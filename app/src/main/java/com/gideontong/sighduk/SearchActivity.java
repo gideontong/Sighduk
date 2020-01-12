@@ -43,7 +43,9 @@ public class SearchActivity extends AppCompatActivity {
     private ListView rShowListView;
     private ShowDbHelper mHelper;
 
+    boolean animeSearch = false;
     ArrayList<String> resultsList;
+    pulledData data;
     ArrayList<String> uriList;
 
     String export = "";
@@ -64,6 +66,7 @@ public class SearchActivity extends AppCompatActivity {
 
     public void searchAnime(View view) {
 
+        animeSearch = true;
         Log.d(TAG, "Search anime button was pressed!");
         View parent = (View) view.getParent();
         EditText searchBox =  findViewById(R.id.searchText);
@@ -82,6 +85,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void searchOnline(View view) {
+        animeSearch = false;
         Log.d(TAG, "Search button was pressed!");
         View parent = (View) view.getParent();
         EditText searchBox = (EditText) findViewById(R.id.searchText);
@@ -100,6 +104,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void animeCallBack(pulledData data){
+        this.data = data;
         if (rAdapter == null) {
             rAdapter = new ArrayAdapter<>(this,
                     R.layout.item_search_entry,
