@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
 
         setTabLayout();
+        Log.d(TAG, "MainActivity onCreate was called, executed successfully with tabs.");
     }
 
     private void setPagerAdapter(){
