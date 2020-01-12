@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private void setTabLayout() {
         tabLayout.setupWithViewPager(viewPager);
 
-        tabLayout.getTabAt(0).setText("First");
-        tabLayout.getTabAt(1).setText("Second");
+        tabLayout.getTabAt(0).setText("Watchlist");
+        tabLayout.getTabAt(1).setText("History");
     }
 }
