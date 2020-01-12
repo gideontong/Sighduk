@@ -1,12 +1,12 @@
 package com.gideontong.sighduk;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import com.gideontong.sighduk.db.ShowDbHelper;
 
-public class MainFragment extends AppCompatActivity {
-    public static final String TAG = "MainActivty";
+public class MainFragment extends Fragment {
+    public static final String TAG = "MainFragment";
 
     private ShowDbHelper mHelper;
 
