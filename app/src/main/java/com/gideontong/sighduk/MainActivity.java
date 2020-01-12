@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                                         values,
                                         SQLiteDatabase.CONFLICT_REPLACE);
                                 db.close();
-                                updateUI();
+                                // updateUI();
                             }
                         })
                         .setNegativeButton("Cancel", null)
