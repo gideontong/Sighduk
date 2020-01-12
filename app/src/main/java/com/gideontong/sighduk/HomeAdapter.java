@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gideontong.sighduk.db.ShowContract;
@@ -28,10 +30,11 @@ class HomeAdapter implements ListAdapter {
         this.arrayList=arrayList;
         this.context=context;
 
+        mHelper = new ShowDbHelper(context);
+
         Log.d(TAG, "Setting home adapter with an ArrayList");
     }
 
-    /*
     public void deleteShow(View view) {
         View parent = (View) view.getParent();
         TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
@@ -45,7 +48,6 @@ class HomeAdapter implements ListAdapter {
 
         // updateUI();
     }
-     */
 
     @Override
     public boolean areAllItemsEnabled() {
@@ -97,14 +99,16 @@ class HomeAdapter implements ListAdapter {
             LayoutInflater layoutInflater = LayoutInflater.from(context);
             convertView = layoutInflater.inflate(R.layout.item_show, null);
 
-            // ListView listView = (ListView) convertView.findViewById(R.id.list_show);
+            final Button delete = (Button) convertView.findViewById(R.id.show_delete);
+            Log.d(TAG, "I found a button at " + delete);
 
-            // Log.d(TAG, "ListView memory address is " + listView);
-            /* convertView.setOnClickListener(new View.OnClickListener() {
+            delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d(TAG, "A button was pressed at " + v);
+                    deleteShow(v);
                 }
-            }); */
+            });
             TextView title = convertView.findViewById(R.id.show_title);
             Log.d(TAG, "title memory address is " + title);
             ImageView imag = convertView.findViewById(R.id.show_image);
