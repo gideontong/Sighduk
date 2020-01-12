@@ -1,4 +1,6 @@
 package com.gideontong.sighduk;
 
-public class CollectionPagerAdapter {
+import androidx.fragment.app.FragmentStatePagerAdapter;
+
+public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
 }
