@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gideontong.sighduk.API.pulledData;
 import com.gideontong.sighduk.db.ShowDbHelper;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -23,8 +25,8 @@ public class animeInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.anime_show_info);
 
-        getIntent().getSerializableExtra("pulledData");
-        
+        pulledData data = (pulledData)getIntent().getSerializableExtra("pulledData");
+
         final TextView animeTitle = findViewById(R.id.animeTitle);
         final TextView animeScore = findViewById(R.id.scoreValue);
         final TextView animeRank = findViewById(R.id.rankValue);
@@ -39,7 +41,13 @@ public class animeInfoActivity extends AppCompatActivity {
             }
         });
 
-
+        animeTitle.setText(data.getName().get(0));
+        animeScore.setText(data.getScore().get(0));
+        animeRank.setText(data.getRank().get(0));
+        synopsisText.setText(data.getSynopsis().get(0));
+        Picasso.with(this)
+                .load(data.getImage_url().get(0))
+                .into(animeImage);
 
         //Intent intent = new Intent(animeInfoActivity.this, search_item.class);
         //startActivity(intent);

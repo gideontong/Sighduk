@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -49,18 +50,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 //---------------------------------------------------------------------------------------------
-        try {
-            pulledData animeData = myAnimeListAPI.searchAnime("Naruto", 16, 1);
-            Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
+            new myAnimeListAPI().backgroundSearchAnime("Naruto");
+            /*Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
             intent.putExtra("pulledData", animeData);
-            startActivity(intent);
-        } catch (IOException e) {
-            System.out.println("ow an IOException");
-        }
-        catch (ParseException e) {
-            System.out.println("ow a ParseException");
-        }
-
+            startActivity(intent);*/
 
 //---------------------------------------------------------------------------------------------
 
