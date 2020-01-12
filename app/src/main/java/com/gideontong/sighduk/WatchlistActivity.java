@@ -10,6 +10,8 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
+import com.gideontong.sighduk.API.myAnimeListAPI;
+import com.gideontong.sighduk.API.pulledData;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 
@@ -24,10 +26,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class WatchlistActivity extends AppCompatActivity {
     private static final String TAG = "WatchlistActivity";
@@ -39,6 +45,16 @@ public class WatchlistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_watchlist);
+
+//---------------------------------------------------------------------------------------------
+
+
+            /*Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
+            intent.putExtra("pulledData", animeData);
+            startActivity(intent);*/
+
+//---------------------------------------------------------------------------------------------
+
 
         mHelper = new ShowDbHelper(this);
 
