@@ -10,6 +10,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gideontong.sighduk.SearchActivity;
 import com.gideontong.sighduk.animeInfoActivity;
 
 import org.json.simple.JSONArray;
@@ -28,20 +29,21 @@ import okhttp3.Response;
 
 public class myAnimeListAPI {
 
-    private Context context;
+    //private Context context;
 
     // pulledData returnData;
 
     public void searchCallback(pulledData data){
 
-        Intent intent = new Intent(context, animeInfoActivity.class);
+        new SearchActivity().animeCallBack(data);
+        /*Intent intent = new Intent(context, animeInfoActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("pulledData", data);
-        context.startActivity(intent);
+        context.startActivity(intent);*/
     }
 
-    public myAnimeListAPI(Context context){
-        this.context = context;
+    public myAnimeListAPI(){
+        //this.context = context;
     }
 
     public void backgroundSearchAnime(String animeName){
@@ -86,7 +88,7 @@ public class myAnimeListAPI {
                 ArrayList<Long> episodes = new ArrayList<>();
                 ArrayList<String> score = new ArrayList<>();
                 ArrayList<String> rank = new ArrayList<>();
-
+                ArrayList<String> id = new ArrayList<>();
                 for(int i = 0; i < results.size(); i++){
                     Request request2 = new Request.Builder()
                             .url("https://api.jikan.moe/v3/anime/"+((JSONObject)results.toArray()[i]).get("mal_id").toString())
@@ -99,6 +101,7 @@ public class myAnimeListAPI {
                         url.add(i, (importantResponse).get("url").toString());
                         synopsis.add(i, (importantResponse).get("synopsis").toString());
                         episodes.add(i, ((Long)(importantResponse).get("episodes")));
+                        id.add(i, (importantResponse).get("mal_id").toString());
                         if (((importantResponse).get("rank")) != null) {
                             rank.add(i, ((importantResponse).get("rank")).toString());
                         } else {
@@ -123,7 +126,7 @@ public class myAnimeListAPI {
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
 
-                return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, id);
             }
             catch (IOException e) {
                 return null;
@@ -194,10 +197,10 @@ public class myAnimeListAPI {
                 }
                 System.out.println(results);
                 if (type == "anime"){
-                    return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                    return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, null);
                 }
                 else if (type == "manga"){
-                    return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                    return new pulledData(title, image_url, url, synopsis, null, score, null, null, null);
                 }
                 return null;
             }
@@ -264,10 +267,10 @@ public class myAnimeListAPI {
                     }
                     System.out.println(results);
                     if (type == "anime"){
-                        return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                        return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, null);
                     }
                     else if (type == "manga"){
-                        return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                        return new pulledData(title, image_url, url, synopsis, null, score, null, null, null);
                     }
                     else return null;
                 }
@@ -288,7 +291,7 @@ public class myAnimeListAPI {
                     System.out.println(url);
                     System.out.println("-----------------------------------------------------------------------------------------");
                     System.out.println(json);
-                    return new pulledData(title, image_url, url, null, null, null, null, null);
+                    return new pulledData(title, image_url, url, null, null, null, null, null, null);
 
                 }
                 else if (type == "characters"){
@@ -309,7 +312,7 @@ public class myAnimeListAPI {
                     System.out.println(url);
                     System.out.println("-----------------------------------------------------------------------------------------");
                     System.out.println(json);
-                    return new pulledData(title, image_url, url, null, null, null, null, null);
+                    return new pulledData(title, image_url, url, null, null, null, null, null, null);
 
                 }
                 else {
@@ -456,10 +459,10 @@ public class myAnimeListAPI {
                 }
                 System.out.println(results);
                 if (type == "anime"){
-                    return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null);
+                    return new pulledData(title, image_url, url, synopsis, episodes, score, rank, null, null);
                 }
                 else if (type == "manga"){
-                    return new pulledData(title, image_url, url, synopsis, null, score, null, null);
+                    return new pulledData(title, image_url, url, synopsis, null, score, null, null, null);
                 }
                 else return null;
             }
@@ -480,7 +483,7 @@ public class myAnimeListAPI {
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
-                return new pulledData(title, image_url, url, null, null, null, null, null);
+                return new pulledData(title, image_url, url, null, null, null, null, null, null);
 
             }
             else if (type == "characters"){
@@ -501,7 +504,7 @@ public class myAnimeListAPI {
                 System.out.println(url);
                 System.out.println("-----------------------------------------------------------------------------------------");
                 System.out.println(json);
-                return new pulledData(title, image_url, url, null, null, null, null, null);
+                return new pulledData(title, image_url, url, null, null, null, null, null, null);
 
             }
             else {

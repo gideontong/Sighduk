@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.gideontong.sighduk.API.myAnimeListAPI;
+import com.gideontong.sighduk.API.pulledData;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 
@@ -54,10 +56,30 @@ public class SearchActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void searchAnime(View view) {
+
+        Log.d(TAG, "Search anime button was pressed!");
+        View parent = (View) view.getParent();
+        EditText searchBox =  findViewById(R.id.searchText);
+        String query = String.valueOf(searchBox.getText());
+        try {
+            Log.d(TAG, "Searching " + query);
+            // Networking test = new Networking();
+            // String result = test.search(query);
+            //System.out.println(this);
+            System.out.println(new myAnimeListAPI());
+            new myAnimeListAPI().backgroundSearchAnime(query);
+        } catch(Exception e) {
+            Log.d(TAG, "We tried but we got " + e);
+            String result = null;
+        }
+        Log.d(TAG, "EOL");
+    }
+
     public void searchOnline(View view) {
         Log.d(TAG, "Search button was pressed!");
         View parent = (View) view.getParent();
-        EditText searchBox = (EditText) parent.findViewById(R.id.searchText);
+        EditText searchBox = (EditText) findViewById(R.id.searchText);
         String query = String.valueOf(searchBox.getText());
         try {
             Log.d(TAG, "Searching " + query);
@@ -70,6 +92,24 @@ public class SearchActivity extends AppCompatActivity {
             String result = null;
         }
         Log.d(TAG, "EOL");
+    }
+
+    public void animeCallBack(pulledData data){
+        if (rAdapter == null) {
+            rAdapter = new ArrayAdapter<>(this,
+                    R.layout.item_search_entry,
+                    R.id.show_title,
+                    data.getTitle());
+            rShowListView.setAdapter(rAdapter);
+            for (int i = 0; i < rAdapter.getCount(); i++){
+                String item = rAdapter.getItem(i);
+                System.out.println(item);
+            }
+        } else {
+            rAdapter.clear();
+            rAdapter.addAll(resultsList);
+            rAdapter.notifyDataSetChanged();
+        }
     }
 
     public void searchCallback(String string) {

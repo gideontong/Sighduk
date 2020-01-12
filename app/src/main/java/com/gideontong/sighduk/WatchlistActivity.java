@@ -10,8 +10,6 @@ import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
-import com.gideontong.sighduk.API.myAnimeListAPI;
-import com.gideontong.sighduk.API.pulledData;
 import com.gideontong.sighduk.db.ShowContract;
 import com.gideontong.sighduk.db.ShowDbHelper;
 
@@ -26,14 +24,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.simple.parser.ParseException;
-
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 public class WatchlistActivity extends AppCompatActivity {
     private static final String TAG = "WatchlistActivity";
@@ -148,7 +142,7 @@ public class WatchlistActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            case R.id.searchBtn:
+            case R.id.tvdbSearch:
                 Intent searchIntent = new Intent(this, LocalSearchActivity.class);
                 startActivity(searchIntent);
                 return true;
