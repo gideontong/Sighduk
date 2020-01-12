@@ -7,4 +7,9 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
     public CollectionPagerAdapter(FragmentManager fm) {
         super(fm);
     }
+
+    @Override
+    public Fragment getItem(int i) {
+        return null;
+    }
 }
