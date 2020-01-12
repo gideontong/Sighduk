@@ -47,7 +47,7 @@ public class WatchlistActivity extends AppCompatActivity {
         setContentView(R.layout.activity_watchlist);
 
 //---------------------------------------------------------------------------------------------
-            new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
+
 
             /*Intent intent = new Intent(MainActivity.this, animeInfoActivity.class);
             intent.putExtra("pulledData", animeData);

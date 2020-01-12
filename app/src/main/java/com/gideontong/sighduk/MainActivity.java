@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import com.gideontong.sighduk.API.myAnimeListAPI;
+
 public class MainActivity extends AppCompatActivity {
 
     CustomFragmentPagerAdapter myFragmentPagerAdapter;
@@ -19,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
 
         setPagerAdapter();
+        new myAnimeListAPI(this).backgroundSearchAnime("Naruto");
     }
 
     private void setPagerAdapter(){
