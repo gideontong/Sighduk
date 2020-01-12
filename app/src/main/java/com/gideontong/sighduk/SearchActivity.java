@@ -193,11 +193,12 @@ public class SearchActivity extends AppCompatActivity {
         // new WatchlistActivity().addShowInBackground(name);
 
         RelativeLayout row = (RelativeLayout)view.getParent();
-        Button child = (Button)row.getChildAt(0);
+        // Button child = (Button)row.getChildAt(0);
+        Button child = row.findViewById(R.id.show_title);
         String name = child.getText().toString();
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
-        Log.d(TAG, name);
+        Log.d(TAG, row + " " + name + " " + child);
         ContentValues values = new ContentValues();
         values.put(ShowContract.ShowEntry.COL_SHOW_TITLE, name);
         if (!animeSearch) {
