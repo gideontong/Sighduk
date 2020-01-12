@@ -127,7 +127,8 @@ public class SearchActivity extends AppCompatActivity {
         this.data = data;
         if (rAdapter == null) {
             rAdapter = new ArrayAdapter<>(this,
-                    android.R.layout.simple_list_item_1,
+                    R.layout.item_search_entry,
+                    R.id.show_title,
                     data.getTitle());
             rShowListView.setAdapter(rAdapter);
             //Button button = (Button)findViewById(R.id.show_title);
@@ -192,11 +193,11 @@ public class SearchActivity extends AppCompatActivity {
         // new WatchlistActivity().addShowInBackground(name);
 
         RelativeLayout row = (RelativeLayout)view.getParent();
-        TextView child = (TextView)row.getChildAt(0);
+        Button child = (Button)row.getChildAt(0);
         String name = child.getText().toString();
 
         SQLiteDatabase db = mHelper.getWritableDatabase();
-
+        Log.d(TAG, name);
         ContentValues values = new ContentValues();
         values.put(ShowContract.ShowEntry.COL_SHOW_TITLE, name);
         if (!animeSearch) {
@@ -226,12 +227,6 @@ public class SearchActivity extends AppCompatActivity {
 
     static JSONParser parser = new JSONParser();
 
-    private View.OnClickListener buttonListener = new View.OnClickListener() {
-        public void onClick(View v) {
-            System.out.println("Getting information on: " +((TextView)findViewById(v.getId())).getText());
-            new myAnimeListAPI(v.getContext()).backgroundSearchAnime(((TextView)findViewById(v.getId())).getText().toString());
-        }
-    };
 
 
 
