@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.gideontong.sighduk.db.ShowDbHelper;
-
 public class MainFragment extends Fragment {
     public static final String TAG = "MainFragment";
 
