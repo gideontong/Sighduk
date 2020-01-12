@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,7 +27,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class WatchlistFragment extends Fragment {
+public class WatchlistFragment extends Fragment implements View.OnClickListener {
 
     private static final String TAG = "WatchlistFragment";
 
@@ -53,6 +54,7 @@ public class WatchlistFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        getView().findViewById(R.id.list_show).invalidate();
         // updateUI();
     }
 
@@ -61,6 +63,11 @@ public class WatchlistFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View viewer = inflater.inflate(R.layout.fragment_watchlist, container, false);
+        // ListView listView = (ListView) viewer.findViewById(R.id.list_show);
+        // View listViewer = (View) listView.getView
+        // Log.d(TAG, "ListView was found with address " + listView);
+        // Button button = (Button) listView.findViewById(R.id.show_delete);
+        // button.setOnClickListener(this);
         // mShowListView = (ListView) viewer.findViewById(R.id.list_show);
         // mShowListView.addView();
         // mShowListView = viewer.findViewById(R.id.list_show);
@@ -109,6 +116,7 @@ public class WatchlistFragment extends Fragment {
     }
 
     public void deleteShow(View view) {
+        Log.d(TAG, "deleteShow was called with view at " + view);
         View parent = (View) view.getParent();
         TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
         String show = String.valueOf(showTextView.getText());
@@ -120,6 +128,17 @@ public class WatchlistFragment extends Fragment {
         db.close();
 
         // updateUI();
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.d(TAG, "A button press was detected!");
+        switch(view.getId()) {
+            case R.id.show_delete:
+                Log.d(TAG, "Delete action was triggered!");
+                deleteShow(view);
+                break;
+        }
     }
 
     private class DownloadImage extends AsyncTask<String, Void, Bitmap> {

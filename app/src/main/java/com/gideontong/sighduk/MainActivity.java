@@ -9,8 +9,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -108,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
 
-            /*case R.id.searchBtn:
+            case R.id.searchBtn:
                 Intent searchIntent = new Intent(this, LocalSearchActivity.class);
                 startActivity(searchIntent);
-                return true;*/
+                return true;
 
             default:
                 return super.onOptionsItemSelected(item);
@@ -149,4 +151,20 @@ public class MainActivity extends AppCompatActivity {
         cursor.close();
         db.close();
     }
+
+    /*
+    public void deleteShow(View view) {
+        View parent = (View) view.getParent();
+        TextView showTextView = (TextView) parent.findViewById(R.id.show_title);
+        String show = String.valueOf(showTextView.getText());
+        SQLiteDatabase db = mHelper.getWritableDatabase();
+
+        db.delete(ShowContract.ShowEntry.TABLE,
+                ShowContract.ShowEntry.COL_SHOW_TITLE + " = ?",
+                new String[]{show});
+        db.close();
+
+        // updateUI();
+    }
+     */
 }
