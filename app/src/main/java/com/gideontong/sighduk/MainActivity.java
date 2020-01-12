@@ -1,10 +1,14 @@
 package com.gideontong.sighduk;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 public class MainActivity extends AppCompatActivity {
 
-    MyFragmentPagerAdapter myFragmentPagerAdapter;
+    FragmentPagerAdapter myFragmentPagerAdapter;
     ViewPager viewPager;
 
     @Override
