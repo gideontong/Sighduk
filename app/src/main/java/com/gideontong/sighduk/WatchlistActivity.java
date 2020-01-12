@@ -1,3 +1,11 @@
+/*
+ * This file is no longer used and is kept for copying code and functions
+ * into other programs. Please do :NOT call functions inside this file.
+ * Thanks!
+ */
+
+
+
 package com.gideontong.sighduk;
 
 import android.content.ContentValues;
