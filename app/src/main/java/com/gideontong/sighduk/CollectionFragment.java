@@ -1,9 +1,11 @@
 package com.gideontong.sighduk;
 
-public class CollectionDemoFragment extends Fragment {
+import androidx.viewpager.widget.ViewPager;
+
+public class CollectionFragment extends Fragment {
     // When requested, this adapter returns a DemoObjectFragment,
     // representing an object in the collection.
-    DemoCollectionPagerAdapter demoCollectionPagerAdapter;
+    CollectionPagerAdapter demoCollectionPagerAdapter;
     ViewPager viewPager;
 
     @Nullable
