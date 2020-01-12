@@ -16,7 +16,7 @@ public class CollectionPagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = new MainFragment();
         Bundle args = new Bundle();
         // Our object is just an integer :-P
-        args.putInt(DemoObjectFragment.ARG_OBJECT, i + 1);
+        args.putInt("object", i + 1);
         fragment.setArguments(args);
         return fragment;
     }
