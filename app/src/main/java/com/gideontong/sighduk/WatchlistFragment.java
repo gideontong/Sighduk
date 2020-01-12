@@ -1,5 +1,6 @@
 package com.gideontong.sighduk;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,6 +22,7 @@ import com.gideontong.sighduk.db.ShowDbHelper;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class WatchlistFragment extends Fragment {
 
@@ -61,6 +63,31 @@ public class WatchlistFragment extends Fragment {
         // mShowListView.addView();
         // mShowListView = viewer.findViewById(R.id.list_show);
         Log.d(TAG, "Setting created view, list view is at " + mShowListView);
+
+        ArrayList<EntryData> showList = new ArrayList<>();
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_TITLE},
+                null, null, null, null, null);
+        Cursor urlCursor = db.query(ShowContract.ShowEntry.TABLE,
+                new String[]{ShowContract.ShowEntry._ID, ShowContract.ShowEntry.COL_SHOW_IMAGE_URL},
+                null, null, null, null, null);
+        while(cursor.moveToNext()) {
+            int idx = cursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_TITLE);
+            String nextName = cursor.getString(idx);
+
+            urlCursor.moveToNext();
+            int uriIdx = urlCursor.getColumnIndex(ShowContract.ShowEntry.COL_SHOW_IMAGE_URL);
+            String grabUrl = "https://www.thetvdb.com" + urlCursor.getString(uriIdx);
+
+            showList.add(new EntryData(nextName, grabUrl));
+
+            Log.d(TAG, "Task was added with name " + cursor.getString(idx));
+        }
+
+        db.close();
+
         return viewer;
     }
 
